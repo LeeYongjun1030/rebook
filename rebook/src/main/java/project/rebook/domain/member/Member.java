@@ -19,6 +19,7 @@ public class Member {
 
     private String password;
 
+    @Enumerated(EnumType.STRING)
     private Grade grade;
 
     private int money;

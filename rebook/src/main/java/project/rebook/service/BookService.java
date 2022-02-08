@@ -27,4 +27,8 @@ public class BookService {
     public List<Book> findAll() {
         return bookRepository.findAll();
     }
+
+    public void clear() {
+        bookRepository.clear();
+    }
 }

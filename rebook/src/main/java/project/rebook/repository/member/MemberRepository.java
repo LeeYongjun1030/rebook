@@ -11,4 +11,6 @@ public interface MemberRepository {
     public Member findById(Long id);
 
     public List<Member> findAll();
+
+    public void clear();
 }

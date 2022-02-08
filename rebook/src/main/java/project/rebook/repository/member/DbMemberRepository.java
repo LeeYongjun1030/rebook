@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import project.rebook.domain.member.Member;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
 
 @Repository
@@ -32,5 +33,10 @@ public class DbMemberRepository implements MemberRepository {
     public List<Member> findAll() {
         return em.createQuery("select m from Member m", Member.class)
                 .getResultList();
+    }
+
+    @Override
+    public void clear() {
+        em.createQuery("delete from Member").executeUpdate();
     }
 }

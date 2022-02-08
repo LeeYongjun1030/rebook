@@ -11,4 +11,6 @@ public interface BookRepository {
     public Book findById(Long id);
 
     public List<Book> findAll();
+
+    public void clear();
 }

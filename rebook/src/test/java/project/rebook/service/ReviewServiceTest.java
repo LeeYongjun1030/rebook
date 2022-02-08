@@ -1,33 +1,40 @@
 package project.rebook.service;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import project.rebook.domain.Review;
 import project.rebook.domain.book.Book;
+import project.rebook.domain.book.Category;
 import project.rebook.domain.member.Member;
-import project.rebook.repository.review.ReviewRepository;
-import project.rebook.repository.member.MemberRepository;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
+@Transactional
 class ReviewServiceTest {
 
-    @Autowired
-    ReviewRepository reviewRepository;
+    @Autowired ReviewService reviewService;
+    @Autowired MemberService memberService;
+    @Autowired BookService bookService;
 
-    @Autowired
-    ReviewService reviewService;
+    @BeforeEach
+    void beforeEach() {
+        reviewService.clear();
+        memberService.clear();
+    }
 
-    @Autowired
-    MemberService memberService;
 
-    @Autowired
-    MemberRepository memberRepository;
-
+    @AfterEach
+    void afterEach() {
+        reviewService.clear();
+        memberService.clear();
+    }
     @Test
     void save() {
         //given
@@ -35,7 +42,7 @@ class ReviewServiceTest {
         Long saveId = reviewService.save(review);
 
         //when
-        Review findReview = reviewRepository.findById(saveId);
+        Review findReview = reviewService.findById(saveId);
 
         //then
         assertThat(findReview).isEqualTo(review);
@@ -59,14 +66,14 @@ class ReviewServiceTest {
         memberB.setNickname("member B");
         Long saveIdB = memberService.save(memberB);
 
-        Book bookA = new Book();
-        bookA.setBookName("book A");
+        Book bookA = new Book("bookA", "star", Category.SCIENCE, 10000);
+        bookService.save(bookA);
 
-        Book bookB = new Book();
-        bookB.setBookName("book B");
+        Book bookB = new Book("bookB", "moon", Category.SCIENCE, 20000);
+        bookService.save(bookB);
 
-        Book bookC = new Book();
-        bookC.setBookName("book C");
+        Book bookC = new Book("bookC", "sun", Category.SCIENCE, 30000);
+        bookService.save(bookC);
 
         Review review1 = new Review();
         review1.setComment("comment from member A to book A");

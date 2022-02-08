@@ -3,14 +3,80 @@ package project.rebook.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import project.rebook.repository.member.DbMemberRepository;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import project.rebook.domain.member.Grade;
+import project.rebook.domain.member.Member;
+import project.rebook.service.MemberService;
+import project.rebook.web.AddMemberForm;
+
+import java.util.Optional;
 
 @Controller
-@RequestMapping
+@RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberController {
+
+    private final MemberService memberService;
+
+
+    /**
+     * 회원 가입 폼
+     */
+    @GetMapping("/add")
+    public String add(@ModelAttribute AddMemberForm addMemberForm) {
+        return "/member/addForm";
+    }
+
+    @PostMapping("/add")
+    public String addMember(@Validated @ModelAttribute AddMemberForm addMemberForm, BindingResult bindingResult) {
+
+        // 아이디, 닉네임 중복 검사
+        idDuplicateTest(addMemberForm, bindingResult);
+        nicknameDuplicateTest(addMemberForm, bindingResult);
+
+
+        // 검증 오류로 인한 회원 가입 실패
+        if (bindingResult.hasErrors()) {
+            return "/member/addForm";
+        }
+
+
+        // 회원가입 성공 -> 회원 정보 초기화
+        Member member = new Member();
+        member.setNickname(addMemberForm.getNickname());
+        member.setLoginId(addMemberForm.getLoginId());
+        member.setPassword(addMemberForm.getPassword());
+
+        // GRADE, money 정보 초기화
+        member.setGrade(Grade.NORMAL);
+        member.setMoney(0);
+
+        //회원 저장
+        memberService.save(member);
+
+        return "redirect:/";
+    }
+
+    private void idDuplicateTest(AddMemberForm addMemberForm, BindingResult bindingResult) {
+        String loginId = addMemberForm.getLoginId();
+        Optional<Member> any = memberService.findAll().stream()
+                .filter(member -> member.getLoginId().equals(loginId))
+                .findAny();
+        if (!any.isEmpty()) { //아이디 중복
+            bindingResult.rejectValue("loginId", "duplicate");
+        }
+    }
+
+    private void nicknameDuplicateTest(AddMemberForm addMemberForm, BindingResult bindingResult) {
+        String nickname = addMemberForm.getNickname();
+        Optional<Member> any = memberService.findAll().stream()
+                .filter(member -> member.getNickname().equals(nickname))
+                .findAny();
+        if (!any.isEmpty()) { //닉네임 중복
+            bindingResult.rejectValue("nickname", "duplicate");
+        }
+    }
 
 }

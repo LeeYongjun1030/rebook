@@ -31,4 +31,8 @@ public class ReviewService {
         return reviewRepository.findByBookId(bookId);
     }
 
+    public void clear() {
+        reviewRepository.clear();
+    }
+
 }

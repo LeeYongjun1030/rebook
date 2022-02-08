@@ -1,8 +1,11 @@
 package project.rebook.service;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import project.rebook.domain.member.Grade;
 import project.rebook.domain.member.Member;
 import project.rebook.repository.member.MemberRepository;
@@ -12,10 +15,19 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
+@Transactional
 class MemberServiceTest {
 
     @Autowired MemberService memberService;
-    @Autowired MemberRepository memberRepository;
+
+    @BeforeEach
+    void beforeEach() {
+        memberService.clear();
+    }
+    @AfterEach
+    void afterEach() {
+        memberService.clear();
+    }
 
     @Test
     void save() {
@@ -33,15 +45,13 @@ class MemberServiceTest {
         //then
         Member findMember = memberService.findById(memberId);
 
-        assertThat(findMember.getLoginId()).isEqualTo(member.getLoginId());
-        assertThat(findMember.getPassword()).isEqualTo(member.getPassword());
-        assertThat(findMember.getGrade()).isEqualTo(member.getGrade());
-        assertThat(findMember.getMoney()).isEqualTo(member.getMoney());
+        assertThat(findMember).isEqualTo(member);
 
     }
 
     @Test
     void findAll() {
+
         //given
         Member member = new Member();
         member.setNickname("hi");
@@ -56,10 +66,6 @@ class MemberServiceTest {
 
         //then
         assertThat(findMembers.size()).isEqualTo(2);
-
-
-
-
     }
 
 }

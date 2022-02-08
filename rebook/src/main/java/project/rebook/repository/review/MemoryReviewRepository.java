@@ -40,4 +40,9 @@ public class MemoryReviewRepository implements ReviewRepository {
                 .filter(review -> review.getBook().getId().equals(bookId))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void clear() {
+        store.clear();
+    }
 }

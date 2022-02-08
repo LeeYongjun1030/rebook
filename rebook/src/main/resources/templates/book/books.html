@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <link th:href="@{/css/bootstrap.min.css}"
+        href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container" style="max-width: 600px">
+  <div class="py-5 text-center">
+    <h2 >책 목록</h2>
+  </div>
+
+  <hr class="my-4">
+  <div>
+    <table class="table">
+      <thead>
+      <tr>
+        <th th:text="#{label.book.bookName}">책이름</th>
+        <th th:text="#{label.book.publisher}">출판사</th>
+        <th th:text="#{label.book.category}">카테고리</th>
+        <th th:text="#{label.book.price}">가격</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="book : ${books}">
+        <td><a href="item.html" th:href="@{/books/{bookId}(bookId=${book.id})}" th:text="${book.bookName}">책이름</a></td>
+        <td th:text="${book.publisher}">출판사</td>
+        <td th:text="${book.category}">카테고리</td>
+        <td th:text="${book.price}">가격</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div> <!-- /container -->
+
+</body>
+</html>

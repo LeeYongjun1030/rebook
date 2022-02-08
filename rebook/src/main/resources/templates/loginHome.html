@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head >
+  <meta charset="utf-8">
+  <link th:href="@{/css/bootstrap.min.css}"
+        href="../css/bootstrap.min.css" rel="stylesheet">
+  <style>
+ .container {
+ max-width: 560px;
+ }
+ </style>
+</head>
+<body>
+<div class="container">
+  <div class="jumbotron">
+    <h1>REBOOK HOME</h1>
+    <p class="lead">로그인 정보</p>
+    <div>
+      <label for="memberNickname">회원 닉네임</label>
+      <input type="text" id="memberNickname" name="memberNickname" class="form-control" value="닉네임" th:value="${member.nickname}" readonly>
+    </div>
+    <div>
+      <label for="memberGrade">회원 등급</label>
+      <input type="text" id="memberGrade" name="memberGrade" class="form-control" value="등급" th:value="${member.grade}" readonly>
+    <p>
+      <a class="btn btn-lg btn-dark" href="/login/logout">로그 아웃</a>
+    </p>
+    </div>
+    <p class="lead">책 목록</p>
+    <p>
+      <a class="btn btn-lg btn-dark" href="/books">책 목록 보기</a>
+      <!--            <a class="btn btn-lg btn-dark" href="/items">상품 목록</a>-->
+    </p>
+    <p class="lead">주문 기능</p>
+    <p>
+      <a class="btn btn-lg btn-info" href="/order">책 주문</a>
+      <a class="btn btn-lg btn-info" href="/orders">주문 내역</a>
+    </p>
+  </div>
+</div> <!-- /container -->
+</body>
+</html>

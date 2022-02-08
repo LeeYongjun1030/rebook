@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2 >책 상세</h2>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary float-end"
+                    onclick="location.href='home.html'"
+                    th:onclick="|location.href='@{/review/add/{bookId}(bookId=${book.id})}'|"
+                    type="button" th:text="#{page.addReview}">리뷰 쓰기</button>
+        </div>
+    </div>
+
+    <hr class="my-4">
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th th:text="#{label.review.member}">작성자</th>
+                <th th:text="#{label.review.rate}">별점</th>
+                <th th:text="#{label.review.comment}">코멘트</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="book : ${books}">
+                <td><a href="item.html" th:href="@{/books/{bookId}(bookId=${book.id})}" th:text="${book.bookName}">책이름</a></td>
+                <td th:text="${book.publisher}">출판사</td>
+                <td th:text="${book.category}">카테고리</td>
+                <td th:text="${book.price}">가격</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div> <!-- /container -->
+
+</body>
+</html>
