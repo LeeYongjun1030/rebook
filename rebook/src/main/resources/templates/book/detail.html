@@ -32,11 +32,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="book : ${books}">
-                <td><a href="item.html" th:href="@{/books/{bookId}(bookId=${book.id})}" th:text="${book.bookName}">책이름</a></td>
-                <td th:text="${book.publisher}">출판사</td>
-                <td th:text="${book.category}">카테고리</td>
-                <td th:text="${book.price}">가격</td>
+            <tr th:each="review : ${reviews}">
+                <td th:text="${review.member.getNickname}">작성자</td>
+                <td th:text="${review.rate}">별점</td>
+                <td th:text="${review.comment}">코멘트</td>
             </tr>
             </tbody>
         </table>

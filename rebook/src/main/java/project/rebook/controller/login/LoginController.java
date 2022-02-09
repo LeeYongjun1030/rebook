@@ -41,7 +41,7 @@ public class LoginController {
         //아이디, 비밀번호 일치 여부 확인
         Member loginMember = login(loginForm);
         if (loginMember == null) {
-            bindingResult.reject("loginId", "로그인 정보가 올바르지 않습니다.");
+            bindingResult.reject("fail");
         }
 
         if (bindingResult.hasErrors()) {

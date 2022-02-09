@@ -7,7 +7,7 @@ import project.rebook.domain.book.Book;
 import project.rebook.domain.member.Member;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Getter @Setter
@@ -21,7 +21,7 @@ public class Review {
 
     private int rate;
 
-    private Date date;
+    private LocalDate date;
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")

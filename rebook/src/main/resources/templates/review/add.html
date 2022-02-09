@@ -16,37 +16,40 @@
 </head>
 <body>
 <div class="container">
-    <div class="py-5 text-center">
-        <h2>회원 가입</h2>
-    </div>
-    <h4 class="mb-3">회원 정보 입력</h4>
-    <form action="" th:action th:object="${addMemberForm}" method="post">
+
+    <h4 class="mb-3">책 리뷰 등록</h4>
+    <hr class="my-4">
+
+    <form action="" th:action th:object="${addReviewForm}" method="post">
         <div th:if="${#fields.hasGlobalErrors()}">
             <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
         </div>
+
+        <!-- SELECT -->
         <div>
-            <label for="loginId">로그인 ID</label>
-            <input type="text" id="loginId" th:field="*{loginId}" class="form-control" th:errorclass="field-error">
-            <div class="field-error" th:errors="*{loginId}" />
-        </div>
+            <div>평점</div>
+            <div class="field-error" th:errors="*{rate}" />
+            <select  th:field="*{rate}" class="form-select">
+                <option value=0>=평점 주기=</option>
+                <option th:value=1>1점</option>
+                <option th:value=2>2점</option>
+                <option th:value=3>3점</option>
+                <option th:value=4>4점</option>
+                <option th:value=5>5점</option>
+            </select>
         <div>
-            <label for="password">비밀번호</label>
-            <input type="password" id="password" th:field="*{password}" class="form-control" th:errorclass="field-error">
-            <div class="field-error" th:errors="*{password}" />
-        </div>
-        <div>
-            <label for="nickname">닉네임</label>
-            <input type="text" id="nickname" th:field="*{nickname}" class="form-control" th:errorclass="field-error">
-            <div class="field-error" th:errors="*{nickname}" />
+            <label for="comment">리뷰</label>
+            <input type="text" id="comment" th:field="*{comment}" class="form-control" th:errorclass="field-error">
+            <div class="field-error" th:errors="*{comment}" />
         </div>
         <hr class="my-4">
         <div class="row">
             <div class="col">
-                <button class="w-100 btn btn-primary btn-lg" type="submit">회원 가입</button>
+                <button class="w-100 btn btn-primary btn-lg" type="submit">등록</button>
             </div>
             <div class="col">
                 <button class="w-100 btn btn-secondary btn-lg"
-                        onclick="location.href='home.html'" th:onclick="|location.href='@{/}'|" type="button">취소</button>
+                        onclick="location.href='home.html'" th:onclick="|location.href='@{/books/{bookId}(bookId=${book.id})}'|" type="button">취소</button>
             </div>
         </div>
     </form>

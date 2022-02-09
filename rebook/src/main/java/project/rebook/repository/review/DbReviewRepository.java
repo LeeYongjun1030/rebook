@@ -39,8 +39,7 @@ public class DbReviewRepository implements ReviewRepository {
     public List<Review> findByBookId(Long bookId) {
         return em.createQuery(
                 "select r from Review r" +
-                        " join r.member m" +
-                        " where m.id = :bookId", Review.class)
+                        " where r.book.id = :bookId", Review.class)
                 .setParameter("bookId", bookId)
                 .getResultList();
     }
