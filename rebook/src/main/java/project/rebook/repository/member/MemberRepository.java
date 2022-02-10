@@ -12,5 +12,7 @@ public interface MemberRepository {
 
     public List<Member> findAll();
 
+    public void updateGrade(Member member);
+
     public void clear();
 }

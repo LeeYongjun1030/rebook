@@ -9,28 +9,26 @@
 
 <div class="container" style="max-width: 600px">
     <div class="py-5 text-center">
-        <h2 >책 상세</h2>
+        <h2 >내가 쓴 리뷰 보기</h2>
     </div>
 
     <p>
         <a href="/">홈</a>
     </p>
 
-    <div class="row">
-        <div class="col">
-            <button class="btn btn-primary float-end"
-                    onclick="location.href='home.html'"
-                    th:onclick="|location.href='@{/review/add/{bookId}(bookId=${book.id})}'|"
-                    type="button" th:text="#{page.addReview}">리뷰 쓰기</button>
-        </div>
-    </div>
-
     <hr class="my-4">
+
+    <p>
+        <b><a th:text="${member.getNickname}"></a></b>님이 작성한 리뷰는 총
+        <a th:text="${#lists.size(reviews)}"></a>개로,<br>
+        현재 등급 <a th:text="${member.getGrade}"></a> 입니다.
+    </p>
+
     <div>
         <table class="table">
             <thead>
             <tr>
-                <th th:text="#{label.review.member}">작성자</th>
+                <th th:text="#{label.review.book}">책 이름</th>
                 <th th:text="#{label.review.rate}">별점</th>
                 <th th:text="#{label.review.comment}">코멘트</th>
                 <th th:text="#{label.review.date}">작성날짜</th>
@@ -38,7 +36,7 @@
             </thead>
             <tbody>
             <tr th:each="review : ${reviews}">
-                <td th:text="${review.member.getNickname}">작성자</td>
+                <td th:text="${review.book.bookName}">책 이름</td>
                 <td th:text="${review.rate}">별점</td>
                 <td th:text="${review.comment}">코멘트</td>
                 <td th:text="${review.date}">작성날짜</td>

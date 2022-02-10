@@ -44,6 +44,7 @@ public class DbReviewRepository implements ReviewRepository {
                 .getResultList();
     }
 
+
     @Override
     public void clear() {
         em.createQuery("delete from Review").executeUpdate();

@@ -2,6 +2,7 @@ package project.rebook.repository.member;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
+import project.rebook.domain.member.Grade;
 import project.rebook.domain.member.Member;
 import project.rebook.repository.member.MemberRepository;
 
@@ -34,6 +35,13 @@ public class MemoryMemberRepository implements MemberRepository {
     public List<Member> findAll() {
         return new ArrayList<>(store.values());
 
+    }
+
+    @Override
+    public void updateGrade(Member member) {
+        Member findMember = findById(member.getId());
+        findMember.setGrade(Grade.VIP);
+        store.put(findMember.getId(), findMember);
     }
 
     @Override

@@ -22,13 +22,21 @@
     <div>
       <label for="memberGrade">회원 등급</label>
       <input type="text" id="memberGrade" name="memberGrade" class="form-control" value="등급" th:value="${member.grade}" readonly>
-    <p>
-      <a class="btn btn-lg btn-dark" href="/login/logout">로그 아웃</a>
-    </p>
+      <p>
+        <a class="btn btn-primary float-end" href="/review/list">내가 쓴 리뷰 보기</a>
+      </p>
+
+      <p>
+        <a class="btn btn-primary float-end" href="/logout">로그 아웃</a>
+      </p>
     </div>
+
+
+
+
     <p class="lead">책 목록</p>
     <p>
-      <a class="btn btn-lg btn-dark" href="/books">책 목록 보기</a>
+      <a class="btn btn-primary float-end" href="/books">책 목록 보기</a>
       <!--            <a class="btn btn-lg btn-dark" href="/items">상품 목록</a>-->
     </p>
     <p class="lead">주문 기능</p>

@@ -28,6 +28,10 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
+    public void updateGrade(Member member) {
+        memberRepository.updateGrade(member);
+    }
+
     public void clear() {
         memberRepository.clear();
     }
