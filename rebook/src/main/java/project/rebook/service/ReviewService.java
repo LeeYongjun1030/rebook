@@ -34,4 +34,8 @@ public class ReviewService {
     public void clear() {
         reviewRepository.clear();
     }
+
+    public void delete(Review review) {
+        reviewRepository.delete(review);
+    }
 }

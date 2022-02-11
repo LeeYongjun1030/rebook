@@ -13,8 +13,7 @@ import project.rebook.domain.member.Member;
 import project.rebook.service.BookService;
 import project.rebook.service.MemberService;
 import project.rebook.service.ReviewService;
-import project.rebook.web.AddReviewForm;
-import project.rebook.web.SessionConst;
+import project.rebook.web.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -61,12 +60,13 @@ public class ReviewController {
         }
 
         // 리뷰 등록 성공 -> 생성 및 저장
-        Review review = new Review();
-        review.setRate(addReviewForm.getRate());
-        review.setComment(addReviewForm.getComment());
-        review.setDate(LocalDate.now());
-        review.setMember(loginMember);
-        review.setBook(bookService.findById(bookId));
+        Review review = new Review(
+                addReviewForm.getComment(),
+                addReviewForm.getRate(),
+                LocalDate.now(),
+                loginMember,
+                bookService.findById(bookId)
+        );
         reviewService.save(review);
 
 
@@ -83,12 +83,58 @@ public class ReviewController {
      */
     @GetMapping("/list")
     public String reviewList(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+                             @ModelAttribute DeleteReview deleteReview,
                              Model model) {
-        Long memberId = loginMember.getId();
-        List<Review> reviews = reviewService.findByMemberId(memberId);
 
-        model.addAttribute("member", loginMember);
-        model.addAttribute("reviews", reviews);
+        // Dto를 사용하여 멤버의 민감 정보가 노출되지 않도록 한다.
+        MemberDto memberDto = new MemberDto();
+        memberDto.setNickname(loginMember.getNickname());
+        memberDto.setGrade(loginMember.getGrade());
+        model.addAttribute("member", memberDto);
+
+        // 모델에 넘겨줄 reviews Dto 생성
+        List<Review> reviews = reviewService.findByMemberId(loginMember.getId());
+        List<ReviewDeleteDto> reviewDeleteDtos = createReviewDto(reviews);
+        model.addAttribute("reviews", reviewDeleteDtos);
+
         return "review/reviews";
+    }
+
+
+    /**
+     * 내가 쓴 리뷰 삭제 기능
+     */
+    @PostMapping("/list")
+    public String reviewListPost(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+                             @ModelAttribute DeleteReview deleteReview,
+                             Model model) {
+
+        // 리뷰 삭제 기능
+        if(deleteReview.getIds() != null){
+            List<Long> ids = deleteReview.getIds();
+            for (Long reviewId : ids) {
+                Review review = reviewService.findById(reviewId);
+                reviewService.delete(review);
+            }
+        }
+
+        return "redirect:/review/list";
+    }
+
+
+
+    private List<ReviewDeleteDto> createReviewDto(List<Review> reviews) {
+        List<ReviewDeleteDto> reviewDeleteDtos = new ArrayList<>();
+        for (Review review : reviews) {
+            ReviewDeleteDto reviewDeleteDto = new ReviewDeleteDto();
+            reviewDeleteDto.setId(review.getId());
+            reviewDeleteDto.setBookName(review.getBook().getBookName());
+            reviewDeleteDto.setRate(review.getRate());
+            reviewDeleteDto.setComment(review.getComment());
+            reviewDeleteDto.setDate(review.getDate());
+
+            reviewDeleteDtos.add(reviewDeleteDto);
+        }
+        return reviewDeleteDtos;
     }
 }

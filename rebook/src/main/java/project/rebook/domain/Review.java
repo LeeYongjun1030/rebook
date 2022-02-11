@@ -1,6 +1,7 @@
 package project.rebook.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Controller;
 import project.rebook.domain.book.Book;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor
 public class Review {
 
     @Id @GeneratedValue
@@ -31,4 +33,11 @@ public class Review {
     @JoinColumn(name = "BOOK_ID")
     private Book book;
 
+    public Review(String comment, int rate, LocalDate date, Member member, Book book) {
+        this.comment = comment;
+        this.rate = rate;
+        this.date = date;
+        this.member = member;
+        this.book = book;
+    }
 }

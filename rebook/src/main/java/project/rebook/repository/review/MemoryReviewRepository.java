@@ -42,6 +42,11 @@ public class MemoryReviewRepository implements ReviewRepository {
     }
 
     @Override
+    public void delete(Review review) {
+        //
+    }
+
+    @Override
     public void clear() {
         store.clear();
     }

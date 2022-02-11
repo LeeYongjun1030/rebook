@@ -14,6 +14,8 @@ public interface ReviewRepository {
 
     public List<Review> findByBookId(Long bookId);
 
+    public void delete(Review review);
+
     public void clear();
 
 }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import project.rebook.domain.member.Member;
+import project.rebook.web.MemberDto;
 import project.rebook.web.SessionConst;
 
 @Controller
@@ -22,7 +23,11 @@ public class HomeController {
         }
 
         // 세션이 유지되면 로그인으로 이동
-        model.addAttribute("member", loginMember);
+        MemberDto memberDto = new MemberDto();
+        memberDto.setNickname(loginMember.getNickname());
+        memberDto.setGrade(loginMember.getGrade());
+
+        model.addAttribute("member", memberDto);
         return "loginHome";
     }
 }

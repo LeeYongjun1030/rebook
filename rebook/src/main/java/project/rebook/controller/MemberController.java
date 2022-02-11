@@ -44,13 +44,13 @@ public class MemberController {
 
 
         // 회원가입 성공 -> 회원 정보 초기화
-        Member member = new Member();
-        member.setNickname(addMemberForm.getNickname());
-        member.setLoginId(addMemberForm.getLoginId());
-        member.setPassword(addMemberForm.getPassword());
+        Member member = new Member(
+                addMemberForm.getNickname(),
+                addMemberForm.getLoginId(),
+                addMemberForm.getPassword(),
+                Grade.NORMAL);
 
-        // GRADE, money 정보 초기화
-        member.setGrade(Grade.NORMAL);
+        //  money 정보 초기화
         member.setMoney(0);
 
         //회원 저장

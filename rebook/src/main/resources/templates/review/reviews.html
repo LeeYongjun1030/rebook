@@ -24,6 +24,7 @@
         현재 등급 <a th:text="${member.getGrade}"></a> 입니다.
     </p>
 
+    <form action="" th:action method="post">
     <div>
         <table class="table">
             <thead>
@@ -31,19 +32,30 @@
                 <th th:text="#{label.review.book}">책 이름</th>
                 <th th:text="#{label.review.rate}">별점</th>
                 <th th:text="#{label.review.comment}">코멘트</th>
-                <th th:text="#{label.review.date}">작성날짜</th>
+                <th th:text="#{label.review.date}">작성 날짜</th>
+                <th th:text="#{label.review.delete}">삭제</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="review : ${reviews}">
-                <td th:text="${review.book.bookName}">책 이름</td>
+                <td th:text="${review.bookName}">책 이름</td>
                 <td th:text="${review.rate}">별점</td>
                 <td th:text="${review.comment}">코멘트</td>
-                <td th:text="${review.date}">작성날짜</td>
+                <td th:text="${review.date}">작성 날짜</td>
+
+                <td>
+                    <div class="form-check">
+                        <input type="checkbox" th:field="${deleteReview.ids}"
+                               th:value="${review.id}"
+                               th:class="form-check-input">
+                    </div>
+                </td>
             </tr>
             </tbody>
         </table>
+        <button class="w-100 btn btn-primary btn-lg" type="submit">삭제</button>
     </div>
+    </form>
 
 </div> <!-- /container -->
 

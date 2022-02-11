@@ -1,12 +1,14 @@
 package project.rebook.domain.book;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor
 public class Book {
 
     @Id @GeneratedValue
@@ -21,9 +23,6 @@ public class Book {
     private Category category;
 
     private int price;
-
-
-    public Book(){ }
 
     public Book(String bookName, String publisher, Category category, int price) {
         this.bookName = bookName;
