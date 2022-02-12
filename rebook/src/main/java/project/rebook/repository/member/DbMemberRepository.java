@@ -37,8 +37,11 @@ public class DbMemberRepository implements MemberRepository {
     }
 
     @Override
-    public void updateGrade(Member member) {
-        member.setGrade(Grade.VIP); // 변경 감지 -> 자동 update
+    public void updateGrade(Long id, Grade grade) {
+        Member member = findById(id);
+        if (!grade.equals(member.getGrade())){
+            member.setGrade(grade); // em 변경 감지 -> 자동 update
+        }
     }
 
     @Override

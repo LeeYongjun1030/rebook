@@ -1,4 +1,4 @@
-package project.rebook.controller.login;
+package project.rebook.controller;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +26,9 @@ public class LoginController {
 
     private final MemberService memberService;
 
+    /**
+     * 로그인
+     */
     @GetMapping("/login")
     public String loginForm(@ModelAttribute LoginForm loginForm) {
         return "login/loginForm";
@@ -53,6 +56,9 @@ public class LoginController {
         return "redirect:" + redirectURL;
     }
 
+    /**
+     * 로그아웃
+     */
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);

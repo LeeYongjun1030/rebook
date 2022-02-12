@@ -32,7 +32,7 @@ public class initDb {
         bookService.save(new Book("book E", "moon", Category.SCIENCE, 50000));
 
         // 테스트용 회원 생성
-        Long memberId = memberService.save(new Member("관리자", "123", "123", Grade.NORMAL));
+        Long memberId = memberService.save(new Member("관리자", "manager123", "manager123", Grade.NORMAL));
 
         // 테스트용 리뷰 생성
         Member findMember = memberService.findById(memberId);
@@ -41,7 +41,5 @@ public class initDb {
         reviewService.save(review);
         Review review2 = new Review("재밌네요!!", 4, LocalDate.now(), findMember, findBook);
         reviewService.save(review2);
-        Review review3 = new Review("꿀잼!!", 5, LocalDate.now(), findMember, findBook);
-        reviewService.save(review3);
     }
 }

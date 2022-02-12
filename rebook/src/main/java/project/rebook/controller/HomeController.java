@@ -14,6 +14,9 @@ import project.rebook.web.SessionConst;
 @RequestMapping
 public class HomeController {
 
+    /**
+     * 홈 화면
+     */
     @GetMapping
     public String home(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
 

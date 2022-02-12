@@ -36,12 +36,10 @@ public class MemberController {
         idDuplicateTest(addMemberForm, bindingResult);
         nicknameDuplicateTest(addMemberForm, bindingResult);
 
-
         // 검증 오류로 인한 회원 가입 실패
         if (bindingResult.hasErrors()) {
             return "/member/addForm";
         }
-
 
         // 회원가입 성공 -> 회원 정보 초기화
         Member member = new Member(
@@ -50,7 +48,7 @@ public class MemberController {
                 addMemberForm.getPassword(),
                 Grade.NORMAL);
 
-        //  money 정보 초기화
+        // money 정보 초기화
         member.setMoney(0);
 
         //회원 저장
@@ -64,7 +62,7 @@ public class MemberController {
         Optional<Member> any = memberService.findAll().stream()
                 .filter(member -> member.getLoginId().equals(loginId))
                 .findAny();
-        if (!any.isEmpty()) { //아이디 중복
+        if (any.isPresent()) { //아이디 중복
             bindingResult.rejectValue("loginId", "duplicate");
         }
     }
@@ -74,7 +72,7 @@ public class MemberController {
         Optional<Member> any = memberService.findAll().stream()
                 .filter(member -> member.getNickname().equals(nickname))
                 .findAny();
-        if (!any.isEmpty()) { //닉네임 중복
+        if (any.isPresent()) { //닉네임 중복
             bindingResult.rejectValue("nickname", "duplicate");
         }
     }

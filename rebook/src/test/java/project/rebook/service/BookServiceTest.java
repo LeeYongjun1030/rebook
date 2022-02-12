@@ -22,16 +22,6 @@ class BookServiceTest {
 
     @Autowired BookService bookService;
 
-    @BeforeEach
-    void beforeEach() {
-        bookService.clear();
-    }
-
-    @AfterEach
-    void afterEach() {
-        bookService.clear();
-    }
-
     @Test
     void save() {
         //given
@@ -59,7 +49,7 @@ class BookServiceTest {
         List<Book> findBooks = bookService.findAll();
 
         //then
-        assertThat(findBooks.size()).isEqualTo(2);
+        assertThat(findBooks).contains(book, book2);
 
 
     }

@@ -1,7 +1,5 @@
 package project.rebook.service;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,20 +21,6 @@ class ReviewServiceTest {
     @Autowired MemberService memberService;
     @Autowired BookService bookService;
 
-    @BeforeEach
-    void beforeEach() {
-        reviewService.clear();
-        memberService.clear();
-        bookService.clear();
-    }
-
-
-    @AfterEach
-    void afterEach() {
-        reviewService.clear();
-        memberService.clear();
-        bookService.clear();
-    }
     @Test
     void save() {
         //given
@@ -114,8 +98,8 @@ class ReviewServiceTest {
         }
 
         //then
-        assertThat(reviewFromMemberA.size()).isEqualTo(2); // 멤버 A가 쓴 리뷰는 2개여야 한다.
-        assertThat(reviewFromMemberB.size()).isEqualTo(2); // 멤버 B가 쓴 리뷰는 2개여야 한다.
+        assertThat(reviewFromMemberA).contains(review1, review2); // 멤버 A가 쓴 리뷰는 2개여야 한다.
+        assertThat(reviewFromMemberB).contains(review3, review4); // 멤버 B가 쓴 리뷰는 2개여야 한다.
     }
 
     @Test
@@ -164,18 +148,11 @@ class ReviewServiceTest {
 
         //when
         List<Review> reviewFromBookA = reviewService.findByBookId(saveIdA);
-        for (Review review : reviewFromBookA) {
-            System.out.println("review.getComment = " + review.getComment());
-        }
-
         List<Review> reviewFromBookB = reviewService.findByBookId(saveIdB);
-        for (Review review : reviewFromBookB) {
-            System.out.println("review.getComment = " + review.getComment());
-        }
 
         //then
-        assertThat(reviewFromBookA.size()).isEqualTo(1); // 책 A에는 리뷰가 1개 있어야 한다.
-        assertThat(reviewFromBookB.size()).isEqualTo(2); // 책 B에는 리뷰가 2개 있어야 한다.
+        assertThat(reviewFromBookA).contains(review1); // 책 A에는 리뷰가 1개 있어야 한다.
+        assertThat(reviewFromBookB).contains(review2, review3); // 책 B에는 리뷰가 2개 있어야 한다.
     }
 
 }

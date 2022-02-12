@@ -1,5 +1,6 @@
 package project.rebook.repository.member;
 
+import project.rebook.domain.member.Grade;
 import project.rebook.domain.member.Member;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface MemberRepository {
 
     public List<Member> findAll();
 
-    public void updateGrade(Member member);
+    public void updateGrade(Long id, Grade grade);
 
     public void clear();
 }

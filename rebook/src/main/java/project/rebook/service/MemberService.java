@@ -3,6 +3,7 @@ package project.rebook.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import project.rebook.domain.member.Grade;
 import project.rebook.domain.member.Member;
 import project.rebook.repository.member.MemberRepository;
 
@@ -28,8 +29,8 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
-    public void updateGrade(Member member) {
-        memberRepository.updateGrade(member);
+    public void updateGrade(Long id, Grade grade) {
+        memberRepository.updateGrade(id, grade);
     }
 
     public void clear() {

@@ -38,9 +38,9 @@ public class MemoryMemberRepository implements MemberRepository {
     }
 
     @Override
-    public void updateGrade(Member member) {
-        Member findMember = findById(member.getId());
-        findMember.setGrade(Grade.VIP);
+    public void updateGrade(Long id, Grade grade) {
+        Member findMember = findById(id);
+        findMember.setGrade(grade);
         store.put(findMember.getId(), findMember);
     }
 

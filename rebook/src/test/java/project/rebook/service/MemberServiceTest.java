@@ -20,15 +20,6 @@ class MemberServiceTest {
 
     @Autowired MemberService memberService;
 
-    @BeforeEach
-    void beforeEach() {
-        memberService.clear();
-    }
-    @AfterEach
-    void afterEach() {
-        memberService.clear();
-    }
-
     @Test
     void save() {
         //given
@@ -65,7 +56,7 @@ class MemberServiceTest {
         List<Member> findMembers = memberService.findAll();
 
         //then
-        assertThat(findMembers.size()).isEqualTo(2);
+        assertThat(findMembers).contains(member, member2);
     }
 
 }

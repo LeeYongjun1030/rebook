@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import project.rebook.domain.Review;
 import project.rebook.domain.book.Book;
+import project.rebook.domain.member.Grade;
 import project.rebook.domain.member.GradeConst;
 import project.rebook.domain.member.Member;
 import project.rebook.service.BookService;
@@ -15,11 +16,8 @@ import project.rebook.service.MemberService;
 import project.rebook.service.ReviewService;
 import project.rebook.web.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -69,14 +67,12 @@ public class ReviewController {
         );
         reviewService.save(review);
 
-
-        // 리뷰 개수에 따른 멤버 등급 향상
-        if(reviewService.findByMemberId(loginMember.getId()).size()== GradeConst.REVIEWS_VIP){
-            memberService.updateGrade(loginMember);
-        }
+        // 리뷰 개수에 따른 멤버 등급 조정
+        updateMemberGrade(loginMember);
 
         return "redirect:/books/" + bookId;
     }
+
 
     /**
      * 내가 쓴 리뷰 보기
@@ -118,9 +114,23 @@ public class ReviewController {
             }
         }
 
+        // 리뷰 개수에 따른 멤버 등급 조정
+        updateMemberGrade(loginMember);
+
         return "redirect:/review/list";
     }
 
+
+    private void updateMemberGrade(Member loginMember) {
+        Long memberId = loginMember.getId();
+        if (reviewService.findByMemberId(memberId).size() >= GradeConst.REVIEWS_VIP) {
+            memberService.updateGrade(memberId, Grade.VIP);
+            loginMember.setGrade(Grade.VIP);
+        } else {
+            memberService.updateGrade(memberId, Grade.NORMAL);
+            loginMember.setGrade(Grade.NORMAL);
+        }
+    }
 
 
     private List<ReviewDeleteDto> createReviewDto(List<Review> reviews) {
