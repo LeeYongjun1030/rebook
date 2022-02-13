@@ -11,7 +11,9 @@ import project.rebook.domain.OrderBook;
 import project.rebook.domain.book.Book;
 import project.rebook.domain.member.Member;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -65,22 +67,17 @@ class OrderServiceTest {
         // given
         Book book1 = new Book();
         book1.setPrice(3000);
-        bookService.save(book1);
+        Long bookId1 = bookService.save(book1);
 
         Book book2 = new Book();
         book2.setPrice(4000);
-        bookService.save(book2);
+        Long bookId2 = bookService.save(book2);
 
-        OrderBook orderBook1 = new OrderBook();
-        orderBook1.setBook(book1);
-        orderBook1.setQuantity(3);
+        Map<Long, Integer> orderInfo = new HashMap<>();
+        orderInfo.put(bookId1, 3);
+        orderInfo.put(bookId2, 5);
 
-        OrderBook orderBook2 = new OrderBook();
-        orderBook2.setBook(book2);
-        orderBook2.setQuantity(5);
-
-        Order order = new Order();
-        order.setOrderBooks(orderBook1, orderBook2);
+        Order order = orderService.order(null, orderInfo);
         Long orderId = orderService.save(order);
 
         //when

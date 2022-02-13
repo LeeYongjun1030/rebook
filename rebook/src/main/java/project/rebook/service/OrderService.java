@@ -5,9 +5,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.rebook.domain.Order;
 import project.rebook.domain.OrderBook;
+import project.rebook.domain.member.Member;
+import project.rebook.repository.book.BookRepository;
 import project.rebook.repository.order.OrderRepository;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -15,6 +20,7 @@ import java.util.List;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final BookRepository bookRepository;
 
     public Long save(Order order) {
         return orderRepository.save(order);
@@ -36,6 +42,24 @@ public class OrderService {
         orderRepository.clear();
     }
 
+
+    /**
+     * orderBook, order를 만드는 메서드는 이미 클래스 안에 static으로 작성해두었다.
+     * 여기선 그 기능을 이용하여 직접 order를 작성해주는 서비스를 만들면 된다.
+     * 인자로 받는 orderInfo의 키는 책 id, 값은 주문 수량이다.
+     */
+    public Order order(Member member, Map<Long, Integer> orderInfo) {
+
+        List<OrderBook> orderBooks = new ArrayList<>();
+        for (Long bookId : orderInfo.keySet()) {
+            Integer quantity = orderInfo.get(bookId);
+
+            OrderBook orderBook = OrderBook.makeOrderBook(bookRepository.findById(bookId), quantity);
+            orderBooks.add(orderBook);
+        }
+        return Order.makeOrder(member, orderBooks);
+    }
+
     public int getOrderTotalPrice(Order order) {
         int totalPrice = 0;
 
@@ -45,7 +69,6 @@ public class OrderService {
             int quantity = orderBook.getQuantity();
             totalPrice += price * quantity;
         }
-
         return totalPrice;
     }
 }

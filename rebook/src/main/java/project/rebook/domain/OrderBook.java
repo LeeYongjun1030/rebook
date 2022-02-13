@@ -3,6 +3,7 @@ package project.rebook.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.aspectj.weaver.ast.Or;
 import project.rebook.domain.book.Book;
 
 import javax.persistence.*;
@@ -25,4 +26,14 @@ public class OrderBook {
     @ManyToOne
     @JoinColumn(name = "BOOK_ID")
     private Book book;
+
+
+    public static OrderBook makeOrderBook(Book book, int quantity) {
+        OrderBook orderBook = new OrderBook();
+        orderBook.setBook(book);
+        orderBook.setQuantity(quantity);
+        return orderBook;
+    }
+
+
 }
