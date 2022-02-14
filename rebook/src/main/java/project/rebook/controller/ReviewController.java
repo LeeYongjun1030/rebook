@@ -93,6 +93,7 @@ public class ReviewController {
         List<ReviewDeleteDto> reviewDeleteDtos = createReviewDto(reviews);
         model.addAttribute("reviews", reviewDeleteDtos);
 
+        model.addAttribute("vipReview", GradeConst.REVIEWS_VIP);
         return "review/reviews";
     }
 

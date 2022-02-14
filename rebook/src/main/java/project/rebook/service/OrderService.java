@@ -3,8 +3,10 @@ package project.rebook.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import project.rebook.domain.DiscountPolicy;
 import project.rebook.domain.Order;
 import project.rebook.domain.OrderBook;
+import project.rebook.domain.member.Grade;
 import project.rebook.domain.member.Member;
 import project.rebook.repository.book.BookRepository;
 import project.rebook.repository.order.OrderRepository;
@@ -21,6 +23,8 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final BookRepository bookRepository;
+    private final DiscountPolicy discountPolicy;
+
 
     public Long save(Order order) {
         return orderRepository.save(order);
@@ -70,5 +74,19 @@ public class OrderService {
             totalPrice += price * quantity;
         }
         return totalPrice;
+    }
+
+    public int getOrderTotalQuantities(Order order) {
+        int totalQuantities = 0;
+
+        List<OrderBook> orderBooks = order.getOrderBooks();
+        for (OrderBook orderBook : orderBooks) {
+            totalQuantities += orderBook.getQuantity();
+        }
+        return totalQuantities;
+    }
+
+    public int getTotalPriceWithDiscount(Member member, int totalPrice) {
+        return discountPolicy.discount(member, totalPrice);
     }
 }

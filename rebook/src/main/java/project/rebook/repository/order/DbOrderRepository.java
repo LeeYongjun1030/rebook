@@ -36,11 +36,7 @@ public class DbOrderRepository implements OrderRepository {
 
     @Override
     public void delete(Order order) {
-        em.createQuery(
-                "delete from Order o" +
-                        " where o.id = :orderId")
-                .setParameter("orderId", order.getId())
-                .executeUpdate();
+        em.remove(order);
     }
 
     @Override

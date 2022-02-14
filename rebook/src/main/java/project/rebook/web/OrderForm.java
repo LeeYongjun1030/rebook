@@ -1,15 +1,17 @@
 package project.rebook.web;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
-import project.rebook.domain.book.Book;
+import org.hibernate.validator.constraints.Range;
 
-import java.util.HashMap;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
-import java.util.Map;
 
 @Getter @Setter
 public class OrderForm {
+
     private List<Long> ids;
+
     private List<Integer> quantities;
 }

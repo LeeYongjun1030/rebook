@@ -30,7 +30,7 @@
         <td><a href="item.html" th:href="@{/books/{bookId}(bookId=${book.id})}" th:text="${book.bookName}">책이름</a></td>
         <td th:text="${book.publisher}">출판사</td>
         <td th:text="${book.category}">카테고리</td>
-        <td th:text="${book.price}">가격</td>
+        <td th:text="${#numbers.formatInteger(book.price, 3, 'COMMA')}">가격</td>
       </tr>
       </tbody>
     </table>

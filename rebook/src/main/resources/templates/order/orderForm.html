@@ -26,7 +26,6 @@
                 <th th:text="#{label.book.publisher}">출판사</th>
                 <th th:text="#{label.book.category}">카테고리</th>
                 <th th:text="#{label.book.price}">가격</th>
-<!--                <th th:text="#{label.book.quantity}">수량</th>-->
             </tr>
             </thead>
             <tbody>
@@ -39,11 +38,7 @@
                 <td th:text="${book.bookName}">책이름</td>
                 <td th:text="${book.publisher}">출판사</td>
                 <td th:text="${book.category}">카테고리</td>
-                <td th:text="${book.price}">가격</td>
-<!--                <td>-->
-<!--                    <input type="text" th:text="" th:field="*{quantities}" class="form-control">-->
-<!--                </td>-->
-
+                <td th:text="${#numbers.formatInteger(book.price, 3, 'COMMA')}">가격</td>
             </tr>
             </tbody>
         </table>

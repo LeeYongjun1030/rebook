@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <link th:href="@{/css/bootstrap.min.css}"
+        href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container" style="max-width: 600px">
+  <div class="py-5 text-center">
+    <h2 >주문 상세</h2>
+  </div>
+
+  <p>
+    <a href="/">홈</a>
+  </p>
+
+  <hr class="my-4">
+
+  <p>
+    <b><a th:text="${order.memberName}"></a></b>님이 주문한 책은 총
+    <a th:text="${order.totalOrderQuantities}"></a>권이며,<br>
+    전체 가격은 <a th:text="${#numbers.formatInteger(order.totalOrderPrice, 3, 'COMMA')}"></a>원 입니다.<br>
+    회원님의 등급은 <a th:text="${member.grade}"></a>이며,<br>
+    등급 할인을 적용한 최종 결제 금액은 <a th:text="${#numbers.formatInteger(totalPriceWithDiscount, 3, 'COMMA')}"></a>원입니다.<br><br>
+
+
+    주문 일자 : <a th:text="${order.localDate}"></a>
+  </p>
+
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-primary float-end"
+              th:onclick="|location.href='@{/order/cancel/{orderId}(orderId=${order.id})}'|"
+              type="button" th:text="#{button.orderCancel}">주문 취소</button>
+    </div>
+  </div>
+
+  <hr class="my-4">
+  <div>
+    <table class="table">
+      <thead>
+      <tr>
+        <th th:text="#{label.book.bookName}">책 이름</th>
+        <th th:text="#{label.orderBook.quantity}">수량</th>
+        <th th:text="#{label.book.price}">가격</th>
+        <th th:text="#{label.orderBook.price}">총 가격</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="orderBook : ${orderBooks}">
+        <td th:text="${orderBook.book.bookName}">책 이름</td>
+        <td th:text="${orderBook.quantity}">수량</td>
+        <td th:text="${#numbers.formatInteger(orderBook.book.price, 3, 'COMMA')}">가격</td>
+        <td th:text="${#numbers.formatInteger(orderBook.quantity*orderBook.book.price, 3, 'COMMA')}">총 가격</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div> <!-- /container -->
+
+</body>
+</html>

@@ -25,11 +25,12 @@ public class initDb {
     @PostConstruct
     public void initData() {
         // 책
-        Long bookId = bookService.save(new Book("book A", "star", Category.SCIENCE, 10000));
-        bookService.save(new Book("book B", "star", Category.COMPUTER, 20000));
-        bookService.save(new Book("book C", "sun", Category.ECONOMY, 30000));
-        bookService.save(new Book("book D", "sun", Category.COMPUTER, 40000));
-        bookService.save(new Book("book E", "moon", Category.SCIENCE, 50000));
+        Long bookId = bookService.save(new Book("자바 프로그래밍 입문", "이지퍼블리싱", Category.COMPUTER, 25000));
+        bookService.save(new Book("이것이 Mysql이다.", "한빛미디어", Category.COMPUTER, 32000));
+        bookService.save(new Book("NFT 레볼루션", "더퀘스트", Category.ECONOMY, 16200));
+        bookService.save(new Book("부의 추월차선", "토트", Category.ECONOMY, 15000));
+        bookService.save(new Book("이기적 유전자", "리처드 도킨스", Category.SCIENCE, 18000));
+        bookService.save(new Book("코스모스", "사이언스북스", Category.SCIENCE, 16600));
 
         // 테스트용 회원 생성
         Long memberId = memberService.save(new Member("관리자", "manager123", "manager123", Grade.NORMAL));

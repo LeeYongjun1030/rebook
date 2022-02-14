@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <link th:href="@{/css/bootstrap.min.css}"
+        href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container" style="max-width: 600px">
+  <div class="py-5 text-center">
+    <h2 >나의 주문 목록</h2>
+  </div>
+  <p>
+    <a href="/">홈</a>
+  </p>
+  <hr class="my-4">
+  <div>
+    <table class="table">
+      <thead>
+      <tr>
+        <th th:text="#{label.order.id}">주문 번호</th>
+        <th th:text="#{label.order.date}">주문 일시</th>
+        <th th:text="#{label.order.totalQuantities}">총 수량</th>
+        <th th:text="#{label.order.totalPrice}">총 가격</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="order : ${orders}">
+        <td><a class="btn btn-info text-white" th:href="@{/orders/{orderId}(orderId=${order.id})}">상세 보기</a></td>
+        <td th:text="${order.localDate}">주문 일시</td>
+        <td th:text="${order.totalOrderQuantities}">총 수량</td>
+        <td th:text="${#numbers.formatInteger(order.totalOrderPrice, 3, 'COMMA')}">총 가격</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div> <!-- /container -->
+
+</body>
+</html>

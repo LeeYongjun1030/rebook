@@ -46,11 +46,7 @@ public class DbReviewRepository implements ReviewRepository {
 
     @Override
     public void delete(Review review) {
-        em.createQuery(
-                "delete from Review r" +
-                " where r.id = :reviewId")
-                .setParameter("reviewId", review.getId())
-                .executeUpdate();
+        em.remove(review);
     }
 
     @Override

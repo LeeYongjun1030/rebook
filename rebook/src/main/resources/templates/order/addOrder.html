@@ -4,6 +4,12 @@
   <meta charset="utf-8">
   <link th:href="@{/css/bootstrap.min.css}"
         href="../css/bootstrap.min.css" rel="stylesheet">
+  <style>
+ .field-error {
+ border-color: #dc3545;
+ color: #dc3545;
+ }
+ </style>
 </head>
 <body>
 
@@ -29,15 +35,19 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each = "book : ${books}">
+        <tr th:each = "book, i : ${books}">
           <td th:text="${book.bookName}">책이름</td>
           <td th:text="${book.publisher}">출판사</td>
           <td th:text="${book.category}">카테고리</td>
-          <td th:text="${book.price}">가격</td>
+          <td th:text="${#numbers.formatInteger(book.price, 3, 'COMMA')}">가격</td>
           <td>
-              <input type="text" th:field="*{quantities}" class="form-control">
+            <select th:field="*{quantities}" class="form-select">
+              <option th:each="quantity : ${#numbers.sequence(1,99)}"
+                      th:value="${quantity}"
+                      th:text="${quantity}"></option>
+            </select>
+            <input type="hidden" th:value="${book.id}" name="ids">
           </td>
-
         </tr>
         </tbody>
       </table>
