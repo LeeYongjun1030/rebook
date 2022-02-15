@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import project.rebook.domain.Order;
 import project.rebook.domain.OrderBook;
 import project.rebook.domain.book.Book;
+import project.rebook.domain.member.Grade;
 import project.rebook.domain.member.Member;
 
 import java.util.HashMap;
@@ -88,4 +89,21 @@ class OrderServiceTest {
         assertThat(orderTotalPrice).isEqualTo(3000*3 + 4000*5);
     }
 
+    @Test
+    void getDiscountPrice() {
+
+        //NORMAL 멤버의 경우 가격 할인이 적용되지 않아야 한다.
+        Member member = new Member();
+        member.setGrade(Grade.NORMAL);
+        int totalPriceWithDiscount = orderService.getTotalPriceWithDiscount(member, 10000);
+        assertThat(totalPriceWithDiscount).isEqualTo(10000);
+
+        //VIP 멤버의 경우 가격 할인이 적용되어야 한다.
+        Member member2 = new Member();
+        member2.setGrade(Grade.VIP);
+        int totalPriceWithDiscount2 = orderService.getTotalPriceWithDiscount(member2, 10000);
+        assertThat(totalPriceWithDiscount2).isEqualTo(9000);
+
+
+    }
 }
