@@ -12,10 +12,9 @@ public class AddMemberForm {
     /**
      * 닉네임
      * 2~8자
-     * 한글, 영어 사용 가능
-     * 숫자 사용 불가
+     * 한글 사용 가능
      */
-    @Size(min = 2, max = 8)
+    @Pattern(regexp="[가-힣]{2,8}")
     private String nickname;
 
     /**
@@ -23,16 +22,15 @@ public class AddMemberForm {
      * 6~12자
      * 영문, 숫자
      */
-    @NotEmpty
+    @Pattern(regexp="^(?=.*[0-9])(?=.*[a-z]).{6,12}$")
     private String loginId;
 
     /**
      * 비밀 번호
      * 6~12자
-     * 영문, 숫자 반드시 포함
+     * 영문, 숫자
      */
-    @NotEmpty
-    @Pattern(regexp="[a-zA-Z1-9]{6,12}")
+    @Pattern(regexp="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,12}$")
     private String password;
 
 }
