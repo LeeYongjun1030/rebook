@@ -38,11 +38,13 @@
 <br><br>
 <기타>  
 데이터베이스는 메모리, h2, mysql을 유동적으로 쓸 수 있도록 설계한다.
+등급에 따른 가격 할인 정책은 수시로 바뀔 수 있도록 설계한다.
+
 
 
 ## 2. 도메인 모델과 테이블 설계
 도메인: 회원, 책, 리뷰, 주문<br>
- ![image](https://user-images.githubusercontent.com/78812317/152682483-422f3f0a-28af-4760-832a-51bc486686ea.png)
+![image](https://user-images.githubusercontent.com/78812317/154215024-8251ff72-5d72-4d7e-a5ab-0766ae8eec42.png)
 
 
 ## 3. 개발과 구현
@@ -76,10 +78,8 @@ member와 review 엔티티는 1대N 매핑<br>
 book와 review 엔티티는 1대N 매핑<br>
 member와 order 엔티티는 1대N 매핑<br>
 order와 book 엔티티는 N대N 매핑<br><br>
-
 이때 order와 book 사이에 orderBook 엔티티를 두어 N대N 매핑을 1대N 매핑과 N대1 매핑으로 분리시킨다.<br>
 그러면 orderBook 엔티티에서 order와 book의 id를 FK를 관리하게 된다.<br><br>
-
 엔티티 매핑의 기본은 단방향으로 이루어지지만, order 객체를 통해 orderBook 객체에 접근할 수 있도록 <br>
 order 클래스 안에 orderBook 리스트 객체를 담도록 한다.<br>
 이때 CASCADE 설정을 CascadeType.ALL로 설정한다. 그러면 부모 객체인 order 객체가 엔티티 매니저에 의해 persist될 때 orderBook 객체도 자동으로 persist된다. <br>
@@ -91,7 +91,6 @@ order 클래스 안에 orderBook 리스트 객체를 담도록 한다.<br>
 검증에 오류가 있다면 폼 객체를 다시 보여주도록 한다.<br>
 회원가입 시에는 아이디, 닉네임의 중복 여부도 검증하도록 한다.<br>
 검증 실패에 대한 에러 메시지는 resources안에 errors.properties 파일을 별도로 두어 에러 메시지를 관리하도록 한다.<br><br>
-
 로그인 성공 시에는 세션을 생성하여 정해진 시간동안 세션 정보를 계속 사용할 수 있도록 한다.<br>
 주문, 리뷰 작성 페이지에는 비로그인 사용자가 접속하면 안되므로 로그인 여부를 확인하는 절차를 거쳐야 한다.<br>
 이를 위해 스프링 인터셉터를 사용한다. <br>
@@ -115,9 +114,24 @@ order 엔티티를 조회할 때 orderBook를 페치 조인으로 한번에 긁�
 
 
 ## 4. 완성 및 실행
-사진 넣기<br>
+### 홈 화면(로그인 전)
+![image](https://user-images.githubusercontent.com/78812317/154215546-179caacf-847b-4fee-bfd6-bd978507577c.png) 
+
+### 회원 가입
+상황에 따라 다양한 오류 메시지를 표시해준다.
+![image](https://user-images.githubusercontent.com/78812317/154215756-bd9f821a-864a-4bca-a913-fe4bb96e1c05.png)
+
+### 로그인
+![image](https://user-images.githubusercontent.com/78812317/154215895-307cadff-c96a-47f9-926f-865d9d2d3fb0.png)
+
+### 홈 화면(로그인)
+![image](https://user-images.githubusercontent.com/78812317/154216022-bf25a91c-a6d0-4655-a7f3-d12f6bccbaf3.png)
 
 
+### 책 목록
+![image](https://user-images.githubusercontent.com/78812317/154216355-b6a304a6-2306-460d-a689-795c076eef00.png)
+
+### 책 상세 화면
 
 ## 5. 마치며
 그동안 공부했던 내용을 프로젝트를 직접 만들어봄으로써 잘 정리할 수 있었다.<br>
