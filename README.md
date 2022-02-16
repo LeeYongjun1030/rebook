@@ -140,32 +140,32 @@ order 엔티티를 조회할 때 orderBook를 페치 조인으로 한번에 긁�
 ### 리뷰 작성 화면
 별점은 selection을 이용하여 1점부터 5점까지 선택할 수 있다.<br>
 리뷰는 2자 이상, 30자 이내로 적을 수 있으며 이에 맞지 않을 시 오류 메시지가 보인다.<br>
-![image](https://user-images.githubusercontent.com/78812317/154218184-69ab181c-2cc6-43fa-aa43-35978b7067fc.png)
+![image](https://user-images.githubusercontent.com/78812317/154220496-b8c44e99-0f72-4ff0-996e-8f6d809116ec.png)
 
 
 ### 리뷰 보기
 내가 쓴 리뷰 목록들을 볼 수 있다.<br>
 원하는 리뷰를 체크박스로 선택하여 삭제할 수 있다.<br>
 리뷰 개수에 따른 나의 등급 정보를 확인할 수 있다.<br>
-![image](https://user-images.githubusercontent.com/78812317/154218588-c524cfa9-2670-402d-b065-6e17843f5161.png)
+![image](https://user-images.githubusercontent.com/78812317/154220718-37dd9ce8-0c7f-4c29-9d8d-95e8ec65ff9c.png)
 
 
 
 ### 책 주문하기
 원하는 책을 선택하여 수량을 선택하여 주문할 수 있다.<br>
-![image](https://user-images.githubusercontent.com/78812317/154218684-e51c64f7-741d-41fc-8c12-63d2279e23ad.png)
-![image](https://user-images.githubusercontent.com/78812317/154218751-daa9ad60-26da-45a5-bae1-8404a0a148f7.png)
+![image](https://user-images.githubusercontent.com/78812317/154220821-dc6e3041-bae1-49e2-986b-cf807e9ec78f.png)
+![image](https://user-images.githubusercontent.com/78812317/154220863-c06ebd36-b53e-462a-ba4b-426fb5b845bf.png)
 
 
 ### 주문 목록 보기
 내가 주문했던 모든 주문 목록을 조회할 수 있다.
-![image](https://user-images.githubusercontent.com/78812317/154219372-5e46c224-f4d7-415d-86ff-bcd11289fa81.png)
+![image](https://user-images.githubusercontent.com/78812317/154220935-3c613783-03b1-4666-995b-3966b84ff959.png)
 
 
 ### 주문 상세 보기
 주문 목록에서 주문을 클릭하면 주문 상세 내용과 할인 내용을 확인할 수 있다.
 주문 취소를 눌러 주문을 취소할 수도 있다.
-![image](https://user-images.githubusercontent.com/78812317/154219519-4246b147-50b8-4e8c-80a3-b6799d229e41.png)
+![image](https://user-images.githubusercontent.com/78812317/154220979-3378e107-3582-4d07-b385-c6b8c82047b0.png)
 
 
 ## 5. 마치며
