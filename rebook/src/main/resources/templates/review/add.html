@@ -16,9 +16,10 @@
 </head>
 <body>
 <div class="container">
-
-    <h4 class="mb-3">책 리뷰 등록</h4>
-    <hr class="my-4">
+    <div class="py-5 text-center">
+        <h2>책 리뷰 등록</h2>
+        <hr class="my-4">
+    </div>
 
     <form action="" th:action th:object="${addReviewForm}" method="post">
         <div th:if="${#fields.hasGlobalErrors()}">
