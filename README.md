@@ -1,8 +1,7 @@
  # 리북 Rebook : 책 주문&리뷰 웹사이트
 
 ## 소개
-책을 주문할 수 있고, 책에 리뷰를 달 수 있는 웹사이트 제작 토이 프로젝트  
-스프링(스프링부트), JPA 기술을 활용(Mysql과 연동)
+책을 주문할 수 있고, 책에 리뷰를 달 수 있는 웹사이트 제작 토이 프로젝트
 
 ## 기술 스택
 <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"><img src="https://img.shields.io/badge/jpa-E31E52?style=for-the-badge&logo=jpa&logoColor=white"><img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
@@ -12,6 +11,8 @@ java11<br>
 gradle<br>
 spring-boot 2.6.3<br>
 
+
+commit df
 
 ## 차례  
 1. 요구 사항 분석  
