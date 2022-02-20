@@ -4,6 +4,15 @@
 책을 주문할 수 있고, 책에 리뷰를 달 수 있는 웹사이트 제작 토이 프로젝트  
 스프링(스프링부트), JPA 기술을 활용(Mysql과 연동)
 
+## 기술 스택
+Springboot, jpa, mysql
+
+
+## 개발 환경
+java11<br>
+gradle<br>
+spring-boot 2.5.3<br>
+
 
 ## 차례  
 1. 요구 사항 분석  
