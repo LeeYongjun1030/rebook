@@ -11,9 +11,6 @@ java11<br>
 gradle<br>
 spring-boot 2.6.3<br>
 
-
-commit df
-
 ## 차례  
 1. 요구 사항 분석  
 2. 도메인 모델과 테이블 설계  
