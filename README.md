@@ -5,13 +5,12 @@
 스프링(스프링부트), JPA 기술을 활용(Mysql과 연동)
 
 ## 기술 스택
-Springboot, jpa, mysql
-
+<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"><img src="https://img.shields.io/badge/jpa-E31E52?style=for-the-badge&logo=jpa&logoColor=white"><img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
 
 ## 개발 환경
 java11<br>
 gradle<br>
-spring-boot 2.5.3<br>
+spring-boot 2.6.3<br>
 
 
 ## 차례  
