@@ -4,7 +4,7 @@
 책을 주문할 수 있고, 책에 리뷰를 달 수 있는 웹사이트 제작 토이 프로젝트
 
 ## 기술 스택
-<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"><img src="https://img.shields.io/badge/jpa-E31E52?style=for-the-badge&logo=jpa&logoColor=white"><img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+<img src="https://img.shields.io/badge/springboot-6DB33F?style=flat&logo=springboot&logoColor=white"><img src="https://img.shields.io/badge/jpa-E31E52?style=flat&logo=jpa&logoColor=white"><img src="https://img.shields.io/badge/mysql-4479A1?style=flat&logo=mysql&logoColor=white"><img src="https://img.shields.io/badge/thymeleaf-005F0F?style=flat&logo=thymeleaf&logoColor=white">
 
 ## 개발 환경
 java11<br>
