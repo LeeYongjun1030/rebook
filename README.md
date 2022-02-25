@@ -10,6 +10,7 @@
 java11<br>
 gradle<br>
 spring-boot 2.6.3<br>
+mysql 8.0.23<br>
 
 ## 개발 일지
 *  [[Feb 7, 2022]member domain create](https://github.com/LeeYongjun1030/rebook/commit/0ab21186312a220322ba584441f30b8acdd35a79)
@@ -30,7 +31,7 @@ spring-boot 2.6.3<br>
 2. 도메인 모델과 테이블 설계  
 3. 개발과 구현  
 4. 완성 및 실행  
-5. 마치며  
+5. 평가  
 
 
 ## 1. 요구사항 분석  
@@ -164,6 +165,7 @@ order 엔티티를 조회할 때 orderBook를 페치 조인으로 한번에 긁�
 ![image](https://user-images.githubusercontent.com/78812317/154221184-a7fb81ce-d4f7-4763-bacc-b2606148a33c.png)
 
 
-## 5. 마치며
+## 5. 평가
 그동안 공부했던 내용을 프로젝트를 직접 만들어봄으로써 잘 정리할 수 있었다.<br>
-스프링 데이터 jpa 기술을 배워 레포지터리까지 좀 더 효율적으로 개발할 수 있도록 해야겠다.<br>
+스프링 데이터 jpa 기술을 배워 레포지터리까지 좀 더 효율적으로 개발할 수 있도록 해야겠다. 레포지터리 개발에 생각보다 많은 시간이 소요되었다. <br>
+시큐리티 분야도 좀 더 배워 보완에 더 대비된 코드를 작성할 수 있도록 해야겠다.<
