@@ -12,20 +12,16 @@ gradle<br>
 spring-boot 2.6.3<br>
 
 ## 개발 일지
-*  [[Feb 7, 2022]member domain create](https://github.com/LeeYongjun1030/rebook/commit/0ab21186312a220322ba584441f30b8acdd35a79)  
+*  [[Feb 7, 2022]member domain create](https://github.com/LeeYongjun1030/rebook/commit/0ab21186312a220322ba584441f30b8acdd35a79)
 *  [[Feb 8, 2022]domain create](https://github.com/LeeYongjun1030/rebook/commit/3b506422c83b1469ba60eaa3c09ca4a91185113b)
- *  [[Feb 9, 2022]login create](https://github.com/LeeYongjun1030/rebook/commit/331f2c404716a05b9340bfde31ef8bdc320962f2)
+*  [[Feb 9, 2022]login create](https://github.com/LeeYongjun1030/rebook/commit/331f2c404716a05b9340bfde31ef8bdc320962f2)
 *  [[Feb 10, 2022]review function create](https://github.com/LeeYongjun1030/rebook/commit/99c10800ebfbf73157844c93c34187bffbb9bbdb)
 *  [[Feb 11, 2022]review create](https://github.com/LeeYongjun1030/rebook/commit/8874f96a27034dcbd88a15c89f573eedbb140cc3)
 *  [[Feb 12, 2022]review delete function create ](https://github.com/LeeYongjun1030/rebook/commit/ca11fcd5e3650fa68d424649ef6144beae5082f5)
 *  [[Feb 13, 2022]order service create](https://github.com/LeeYongjun1030/rebook/commit/a614f95b06b0bedc3b3371aabe8478a4d1bfe9bd)
-
 *  [[Feb 14, 2022]order service create](https://github.com/LeeYongjun1030/rebook/commit/64c4b315fd13319f41f9e09296ba73a727ed267f)
-
 *  [[Feb 14, 2022]order cancel function create](https://github.com/LeeYongjun1030/rebook/commit/039f76210755ab6d0b26123d4c954321df11b6c1)
-
 *  [[Feb 16, 2022]add order service test](https://github.com/LeeYongjun1030/rebook/commit/140dc3faf7ac89c34e794a8863eee58f50948bb2)
-
 *  [[Feb 16, 2022]html modified](https://github.com/LeeYongjun1030/rebook/commit/db649957b4a005550ffc0fea01dfdd873a17a222)
 
 
