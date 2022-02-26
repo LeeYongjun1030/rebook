@@ -26,7 +26,7 @@ public class initDb {
     public void initData() {
         // 책
         Long bookId = bookService.save(new Book("자바 프로그래밍 입문", "이지퍼블리싱", Category.COMPUTER, 25000));
-        bookService.save(new Book("이것이 Mysql이다.", "한빛미디어", Category.COMPUTER, 32000));
+        Long bookId2 = bookService.save(new Book("이것이 Mysql이다.", "한빛미디어", Category.COMPUTER, 32000));
         bookService.save(new Book("NFT 레볼루션", "더퀘스트", Category.ECONOMY, 16200));
         bookService.save(new Book("부의 추월차선", "토트", Category.ECONOMY, 15000));
         bookService.save(new Book("이기적 유전자", "리처드 도킨스", Category.SCIENCE, 18000));
@@ -37,10 +37,13 @@ public class initDb {
 
         // 테스트용 리뷰 생성
         Member findMember = memberService.findById(memberId);
+
         Book findBook = bookService.findById(bookId);
         Review review = new Review("재밌다!!", 5, LocalDate.now(), findMember, findBook);
         reviewService.save(review);
-        Review review2 = new Review("재밌네요!!", 4, LocalDate.now(), findMember, findBook);
+
+        Book findBook2 = bookService.findById(bookId2);
+        Review review2 = new Review("재밌네요!!", 4, LocalDate.now(), findMember, findBook2);
         reviewService.save(review2);
     }
 }

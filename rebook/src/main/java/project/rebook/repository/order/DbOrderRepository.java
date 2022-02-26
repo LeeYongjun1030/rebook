@@ -28,7 +28,9 @@ public class DbOrderRepository implements OrderRepository {
     @Override
     public List<Order> findByMemberId(Long memberId) {
         return em.createQuery(
-                "select o from Order o " +
+                "select distinct o from Order o " +
+                       " join fetch o.orderBooks ob" +
+                       " join fetch ob.book" +
                 " where o.member.id = :memberId", Order.class)
                 .setParameter("memberId", memberId)
                 .getResultList();
