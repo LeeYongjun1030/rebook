@@ -9,10 +9,10 @@
 
 
 ## :wrench: 개발 환경
-:bulb: java11<br>
-:bulb: gradle<br>
-:bulb: spring-boot 2.6.3<br>
-:bulb: mysql 8.0.23<br>
+:bulb: <b>java11<b><br>
+:bulb: <b>gradle<b><br>
+:bulb: <b>spring-boot 2.6.3<b><br>
+:bulb: <b>mysql 8.0.23<b><br>
 
 ## :memo: 개발 일지
 :memo:[[Feb 7, 2022] member domain create](https://github.com/LeeYongjun1030/rebook/commit/0ab21186312a220322ba584441f30b8acdd35a79)<br>
@@ -28,12 +28,12 @@
 :memo:[[Feb 16, 2022] html modified](https://github.com/LeeYongjun1030/rebook/commit/db649957b4a005550ffc0fea01dfdd873a17a222)<br>
 :memo:[[Feb 27, 2022] optimization order list using fetch join](https://github.com/LeeYongjun1030/rebook/commit/51d54453a9e4c0480983c4c5e8f01658398df88b)<br>
 
-## :page_facing_up: 차례  
-:pushpin: 1. 요구 사항 분석  
-:pushpin: 2. 도메인 모델과 테이블 설계  
-:pushpin: 3. 개발과 구현  
-:pushpin: 4. 완성 및 실행  
-:pushpin:: 5. 평가  
+## :pushpin: 차례  
+:pushpin: <b>1. 요구 사항 분석<b>  
+:pushpin: <b>2. 도메인 모델과 테이블 설계<b>  
+:pushpin: <b>3. 개발과 구현<b>  
+:pushpin: <b>4. 완성 및 실행<b>  
+:pushpin: <b>5. 평가<b>  
 
 
 ## :pushpin: 1. 요구사항 분석  
@@ -41,7 +41,7 @@
 ![image](https://user-images.githubusercontent.com/78812317/155678914-87daaa78-df28-4b9f-8911-31daee2ce029.png)
 
 ## :pushpin: 2. 도메인 모델과 테이블 설계
-도메인: 회원, 책, 리뷰, 주문<br>
+:pencil2: <b>회원, 책, 리뷰, 주문<b> <br>
 ![image](https://user-images.githubusercontent.com/78812317/154215024-8251ff72-5d72-4d7e-a5ab-0766ae8eec42.png)
 
 
