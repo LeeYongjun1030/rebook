@@ -112,59 +112,79 @@ order 클래스 안에 orderBook 리스트 객체를 담도록 한다.<br>
 
 
 ## :pushpin:  4. 완성 및 실행
-### :computer: 홈 화면(로그인 전)
-![image](https://user-images.githubusercontent.com/78812317/154215546-179caacf-847b-4fee-bfd6-bd978507577c.png) 
+<details markdown="1">
+<summary> :computer: 홈 화면(로그인 전) </summary>
+<img src="https://user-images.githubusercontent.com/78812317/154215546-179caacf-847b-4fee-bfd6-bd978507577c.png"  width="80%" height="80%"/>
+</details>
 
-### :computer: 회원 가입
+<details markdown="1">
+<summary> :computer: 회원 가입 </summary>
 입력 텍스트를 검증하여 상황에 따라 다양한 오류 메시지를 표시해준다.
-![image](https://user-images.githubusercontent.com/78812317/154215756-bd9f821a-864a-4bca-a913-fe4bb96e1c05.png)
+<img src="https://user-images.githubusercontent.com/78812317/154215756-bd9f821a-864a-4bca-a913-fe4bb96e1c05.png"  width="80%" height="80%"/>
+</details>
 
-### :computer: 로그인
-![image](https://user-images.githubusercontent.com/78812317/154215895-307cadff-c96a-47f9-926f-865d9d2d3fb0.png)
 
-### :computer: 홈 화면(로그인)
+<details markdown="1">
+<summary> :computer: 로그인  </summary>
+<img src="https://user-images.githubusercontent.com/78812317/154215895-307cadff-c96a-47f9-926f-865d9d2d3fb0.png"  width="80%" height="80%"/>
+</details>
+
+
+<details markdown="1">
+<summary> :computer: 홈 화면(로그인) </summary>
 로그인을 하면 내 닉네임과 등급 정보를 표시해준다.
-![image](https://user-images.githubusercontent.com/78812317/154216022-bf25a91c-a6d0-4655-a7f3-d12f6bccbaf3.png)
+<img src="https://user-images.githubusercontent.com/78812317/154216022-bf25a91c-a6d0-4655-a7f3-d12f6bccbaf3.png"  width="80%" height="80%"/>
+</details>
 
-
-### :computer: 책 목록
+<details markdown="1">
+<summary> :computer: 책 목록  </summary>
 모든 책 목록을 볼 수 있다.
-![image](https://user-images.githubusercontent.com/78812317/154216355-b6a304a6-2306-460d-a689-795c076eef00.png)
+<img src="https://user-images.githubusercontent.com/78812317/154216355-b6a304a6-2306-460d-a689-795c076eef00.png"  width="80%" height="80%"/>
+</details>
 
-### :computer: 책 상세 화면
+
+<details markdown="1">
+<summary> :computer: 책 상세 화면  </summary>
 책 목록에서 책을 클릭하면 상세정보와 함께 리뷰 목록을 볼 수 있다.
-![image](https://user-images.githubusercontent.com/78812317/154217850-dbe1c4ca-16e4-4454-96e8-3374c9d03397.png)
+<img src="https://user-images.githubusercontent.com/78812317/154217850-dbe1c4ca-16e4-4454-96e8-3374c9d03397.png"  width="80%" height="80%"/>
+</details>
 
-### :computer: 리뷰 작성 화면
+
+<details markdown="1">
+<summary> :computer: 리뷰 작성 화면 </summary>
 별점은 selection을 이용하여 1점부터 5점까지 선택할 수 있다.<br>
 리뷰는 2자 이상, 30자 이내로 적을 수 있으며 이에 맞지 않을 시 오류 메시지가 보인다.<br>
-![image](https://user-images.githubusercontent.com/78812317/154220496-b8c44e99-0f72-4ff0-996e-8f6d809116ec.png)
+<img src="https://user-images.githubusercontent.com/78812317/154220496-b8c44e99-0f72-4ff0-996e-8f6d809116ec.png"  width="80%" height="80%"/>
+</details>
 
-
-### :computer: 리뷰 보기
+<details markdown="1">
+<summary> :computer: 리뷰 보기  </summary>
 내가 쓴 리뷰 목록들을 볼 수 있다.<br>
 원하는 리뷰를 체크박스로 선택하여 삭제할 수 있다.<br>
 리뷰 개수에 따른 나의 등급 정보를 확인할 수 있다.<br>
-![image](https://user-images.githubusercontent.com/78812317/154220718-37dd9ce8-0c7f-4c29-9d8d-95e8ec65ff9c.png)
+<img src="https://user-images.githubusercontent.com/78812317/154220718-37dd9ce8-0c7f-4c29-9d8d-95e8ec65ff9c.png"  width="80%" height="80%"/>
+</details>
 
 
-
-### :computer: 책 주문하기
+<details markdown="1">
+<summary>:computer: 책 주문하기 </summary>
 원하는 책을 선택하여 수량을 선택하여 주문할 수 있다.<br>
-![image](https://user-images.githubusercontent.com/78812317/154220821-dc6e3041-bae1-49e2-986b-cf807e9ec78f.png)
-![image](https://user-images.githubusercontent.com/78812317/154220863-c06ebd36-b53e-462a-ba4b-426fb5b845bf.png)
+<img src="https://user-images.githubusercontent.com/78812317/154220821-dc6e3041-bae1-49e2-986b-cf807e9ec78f.png"  width="80%" height="80%"/>
+<img src="https://user-images.githubusercontent.com/78812317/154220863-c06ebd36-b53e-462a-ba4b-426fb5b845bf.png"  width="80%" height="80%"/>
+</details>
 
-
-### :computer: 주문 목록 보기
+<details markdown="1">
+<summary> :computer: 주문 목록 보기 </summary>
 내가 주문했던 모든 주문 목록을 조회할 수 있다.
-![image](https://user-images.githubusercontent.com/78812317/154220935-3c613783-03b1-4666-995b-3966b84ff959.png)
+<img src="https://user-images.githubusercontent.com/78812317/154220935-3c613783-03b1-4666-995b-3966b84ff959.png"  width="80%" height="80%"/>
+</details>
 
-
-### :computer: 주문 상세 보기
-주문 목록에서 주문을 클릭하면 주문 상세 내용과 할인 내용을 확인할 수 있다.
+<details markdown="1">
+<summary> :computer: 주문 상세 보기 </summary>
+주문 목록에서 주문을 클릭하면 주문 상세 내용과 할인 내용을 확인할 수 있다.<br>
 주문 취소를 눌러 주문을 취소할 수도 있다.
-![image](https://user-images.githubusercontent.com/78812317/154221184-a7fb81ce-d4f7-4763-bacc-b2606148a33c.png)
-
+<img src="https://user-images.githubusercontent.com/78812317/154221184-a7fb81ce-d4f7-4763-bacc-b2606148a33c.png"  width="80%" height="80%"/>
+</details>
 
 ## :pushpin: 5. 평가
 그동안 공부했던 내용을 프로젝트를 직접 만들어봄으로써 잘 정리할 수 있었다.<br>
