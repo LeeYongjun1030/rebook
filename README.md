@@ -9,10 +9,10 @@
 
 
 ## :wrench: 개발 환경
-:bulb: <b>java11<b><br>
-:bulb: <b>gradle<b><br>
-:bulb: <b>spring-boot 2.6.3<b><br>
-:bulb: <b>mysql 8.0.23<b><br>
+:bulb: <b>java11</b><br>
+:bulb: <b>gradle</b><br>
+:bulb: <b>spring-boot 2.6.3</b><br>
+:bulb: <b>mysql 8.0.23</b><br>
 
 ## :memo: 개발 일지
 :memo:[[Feb 7, 2022] member domain create](https://github.com/LeeYongjun1030/rebook/commit/0ab21186312a220322ba584441f30b8acdd35a79)<br>
@@ -29,11 +29,12 @@
 :memo:[[Feb 27, 2022] optimization order list using fetch join](https://github.com/LeeYongjun1030/rebook/commit/51d54453a9e4c0480983c4c5e8f01658398df88b)<br>
 
 ## :pushpin: 차례  
-:pushpin: <b>1. 요구 사항 분석<b>  
-:pushpin: <b>2. 도메인 모델과 테이블 설계<b>  
-:pushpin: <b>3. 개발과 구현<b>  
-:pushpin: <b>4. 완성 및 실행<b>  
-:pushpin: <b>5. 평가<b>  
+:pushpin: <b>1. 요구 사항 분석</b>  
+:pushpin: <b>2. 도메인 모델과 테이블 설계</b>  
+:pushpin: <b>3. 개발과 구현</b>  
+:pushpin: <b>4. 완성 및 실행</b>  
+:pushpin: <b>5. 트러블슈팅</b>  
+:pushpin: <b>6. 평가</b>  
 
 
 ## :pushpin: 1. 요구사항 분석  
@@ -41,7 +42,7 @@
 ![image](https://user-images.githubusercontent.com/78812317/155678914-87daaa78-df28-4b9f-8911-31daee2ce029.png)
 
 ## :pushpin: 2. 도메인 모델과 테이블 설계
-:pencil2: <b>회원, 책, 리뷰, 주문<b> <br>
+:pencil2: <b>회원, 책, 리뷰, 주문</b> <br>
 ![image](https://user-images.githubusercontent.com/78812317/154215024-8251ff72-5d72-4d7e-a5ab-0766ae8eec42.png)
 
 
@@ -186,7 +187,210 @@ order 클래스 안에 orderBook 리스트 객체를 담도록 한다.<br>
 <img src="https://user-images.githubusercontent.com/78812317/154221184-a7fb81ce-d4f7-4763-bacc-b2606148a33c.png"  width="80%" height="80%"/>
 </details>
 
-## :pushpin: 5. 평가
+
+ 
+## :pushpin: 5. 트러블슈팅
+ 프로젝트의 모든 기능을 완성하고, 핵심 기능들을 실행해가며 실제로 날아가는 쿼리들을 확인하였다. 예상과는 다른 쿼리가 있다면 코드 상의 문제점이 있을 가능성이 있기 때문이다. 그러다 나의 주문 목록을 볼 때 필요 이상의 쿼리가 매우 많이 나가는 것을 발견했다.
+
+ <details>
+<summary>쿼리 보기</summary>
+<div markdown="1">
+
+```java
+
+Hibernate: 
+    select
+        order0_.order_id as order_id1_3_,
+        order0_.local_date as local_da2_3_,
+        order0_.member_id as member_i3_3_ 
+    from
+        orders order0_ 
+    where
+        order0_.member_id=?
+Hibernate: 
+    select
+        member0_.id as id1_1_0_,
+        member0_.grade as grade2_1_0_,
+        member0_.login_id as login_id3_1_0_,
+        member0_.money as money4_1_0_,
+        member0_.nickname as nickname5_1_0_,
+        member0_.password as password6_1_0_ 
+    from
+        member member0_ 
+    where
+        member0_.id=?
+OrderController.orders
+Hibernate: 
+    select
+        orderbooks0_.order_id as order_id4_2_0_,
+        orderbooks0_.order_book_id as order_bo1_2_0_,
+        orderbooks0_.order_book_id as order_bo1_2_1_,
+        orderbooks0_.book_id as book_id3_2_1_,
+        orderbooks0_.order_id as order_id4_2_1_,
+        orderbooks0_.quantity as quantity2_2_1_,
+        book1_.book_id as book_id1_0_2_,
+        book1_.book_name as book_nam2_0_2_,
+        book1_.category as category3_0_2_,
+        book1_.price as price4_0_2_,
+        book1_.publisher as publishe5_0_2_ 
+    from
+        order_book orderbooks0_ 
+    left outer join
+        book book1_ 
+            on orderbooks0_.book_id=book1_.book_id 
+    where
+        orderbooks0_.order_id=?
+Hibernate: 
+    select
+        orderbooks0_.order_id as order_id4_2_0_,
+        orderbooks0_.order_book_id as order_bo1_2_0_,
+        orderbooks0_.order_book_id as order_bo1_2_1_,
+        orderbooks0_.book_id as book_id3_2_1_,
+        orderbooks0_.order_id as order_id4_2_1_,
+        orderbooks0_.quantity as quantity2_2_1_,
+        book1_.book_id as book_id1_0_2_,
+        book1_.book_name as book_nam2_0_2_,
+        book1_.category as category3_0_2_,
+        book1_.price as price4_0_2_,
+        book1_.publisher as publishe5_0_2_ 
+    from
+        order_book orderbooks0_ 
+    left outer join
+        book book1_ 
+            on orderbooks0_.book_id=book1_.book_id 
+    where
+        orderbooks0_.order_id=?
+Hibernate: 
+    select
+        orderbooks0_.order_id as order_id4_2_0_,
+        orderbooks0_.order_book_id as order_bo1_2_0_,
+        orderbooks0_.order_book_id as order_bo1_2_1_,
+        orderbooks0_.book_id as book_id3_2_1_,
+        orderbooks0_.order_id as order_id4_2_1_,
+        orderbooks0_.quantity as quantity2_2_1_,
+        book1_.book_id as book_id1_0_2_,
+        book1_.book_name as book_nam2_0_2_,
+        book1_.category as category3_0_2_,
+        book1_.price as price4_0_2_,
+        book1_.publisher as publishe5_0_2_ 
+    from
+        order_book orderbooks0_ 
+    left outer join
+        book book1_ 
+            on orderbooks0_.book_id=book1_.book_id 
+    where
+        orderbooks0_.order_id=?
+
+```
+
+</div>
+</details>
+ 
+
+### 필요없는 쿼리 지우기
+쿼리를 확인해보니, member를 조회하는 select 문이 나가는 것을 확인되었다. member 정보를 사용하지 않지만 쿼리가 발생한 이유는 현재 Order 클래스가 갖고 있는 Member 프로퍼티가 즉시로딩(default)로 설정되어 있기때문이었다. 이 설정을 지연 로딩으로 설정하면 member 정보를 사용할 때까지 조회를 미루기 때문에 불필요한 쿼리가 발생되는 것을 막을 수 있다.
+ 
+```java
+    @ManyToOne(fetch = FetchType.LAZY) // 지연 로딩으로 설정
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
+```
+
+<details>
+<summary> 개선된 쿼리 1</summary>
+<div markdown="1">
+
+```java
+
+Hibernate: 
+    select
+        order0_.order_id as order_id1_3_,
+        order0_.local_date as local_da2_3_,
+        order0_.member_id as member_i3_3_ 
+    from
+        orders order0_ 
+    where
+        order0_.member_id=?
+OrderController.orders
+Hibernate: 
+    select
+        orderbooks0_.order_id as order_id4_2_0_,
+        orderbooks0_.order_book_id as order_bo1_2_0_,
+        orderbooks0_.order_book_id as order_bo1_2_1_,
+        orderbooks0_.book_id as book_id3_2_1_,
+        orderbooks0_.order_id as order_id4_2_1_,
+        orderbooks0_.quantity as quantity2_2_1_,
+        book1_.book_id as book_id1_0_2_,
+        book1_.book_name as book_nam2_0_2_,
+        book1_.category as category3_0_2_,
+        book1_.price as price4_0_2_,
+        book1_.publisher as publishe5_0_2_ 
+    from
+        order_book orderbooks0_ 
+    left outer join
+        book book1_ 
+            on orderbooks0_.book_id=book1_.book_id 
+    where
+        orderbooks0_.order_id=?
+Hibernate: 
+    select
+        orderbooks0_.order_id as order_id4_2_0_,
+        orderbooks0_.order_book_id as order_bo1_2_0_,
+        orderbooks0_.order_book_id as order_bo1_2_1_,
+        orderbooks0_.book_id as book_id3_2_1_,
+        orderbooks0_.order_id as order_id4_2_1_,
+        orderbooks0_.quantity as quantity2_2_1_,
+        book1_.book_id as book_id1_0_2_,
+        book1_.book_name as book_nam2_0_2_,
+        book1_.category as category3_0_2_,
+        book1_.price as price4_0_2_,
+        book1_.publisher as publishe5_0_2_ 
+    from
+        order_book orderbooks0_ 
+    left outer join
+        book book1_ 
+            on orderbooks0_.book_id=book1_.book_id 
+    where
+        orderbooks0_.order_id=?
+Hibernate: 
+    select
+        orderbooks0_.order_id as order_id4_2_0_,
+        orderbooks0_.order_book_id as order_bo1_2_0_,
+        orderbooks0_.order_book_id as order_bo1_2_1_,
+        orderbooks0_.book_id as book_id3_2_1_,
+        orderbooks0_.order_id as order_id4_2_1_,
+        orderbooks0_.quantity as quantity2_2_1_,
+        book1_.book_id as book_id1_0_2_,
+        book1_.book_name as book_nam2_0_2_,
+        book1_.category as category3_0_2_,
+        book1_.price as price4_0_2_,
+        book1_.publisher as publishe5_0_2_ 
+    from
+        order_book orderbooks0_ 
+    left outer join
+        book book1_ 
+            on orderbooks0_.book_id=book1_.book_id 
+    where
+        orderbooks0_.order_id=?
+
+
+```
+
+</div>
+</details>
+
+### N+1 문제 해결
+또 다른 문제는 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+## :pushpin: 6. 평가
 :blush: 그동안 공부했던 내용을 프로젝트를 직접 만들어봄으로써 잘 정리할 수 있었다.<br>
 :blush: 레포지터리 개발에 생각보다 많은 시간이 소요되었다. 스프링 데이터 jpa 기술을 배워 레포지터리까지 좀 더 효율적으로 개발할 수 있도록 해야겠다. <br>
 :blush: 시큐리티 분야도 좀 더 배워 보완에 더 대비된 코드를 작성할 수 있도록 해야겠다.
