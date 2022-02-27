@@ -193,7 +193,7 @@ order 클래스 안에 orderBook 리스트 객체를 담도록 한다.<br>
  프로젝트의 모든 기능을 완성하고, 핵심 기능들을 실행해가며 실제로 날아가는 쿼리들을 확인하였다. 예상과는 다른 쿼리가 있다면 코드 상의 문제점이 있을 가능성이 있기 때문이다. 그러다 나의 주문 목록을 볼 때 필요 이상의 쿼리가 매우 많이 나가는 것을 발견했다.
 
  <details>
-<summary>쿼리 보기</summary>
+<summary> 발생 쿼리 </summary>
 <div markdown="1">
 
 ```java
@@ -287,17 +287,21 @@ Hibernate:
 </details>
  
 
-### 필요없는 쿼리 지우기
+### :ballot_box_with_check: 필요없는 쿼리 지우기
 쿼리를 확인해보니, member를 조회하는 select 문이 나가는 것을 확인되었다. member 정보를 사용하지 않지만 쿼리가 발생한 이유는 현재 Order 클래스가 갖고 있는 Member 프로퍼티가 즉시로딩(default)로 설정되어 있기때문이었다. 이 설정을 지연 로딩으로 설정하면 member 정보를 사용할 때까지 조회를 미루기 때문에 불필요한 쿼리가 발생되는 것을 막을 수 있다.
  
 ```java
+public class Order{
+    ....
     @ManyToOne(fetch = FetchType.LAZY) // 지연 로딩으로 설정
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
+    ....
+}
 ```
 
 <details>
-<summary> 개선된 쿼리 1</summary>
+<summary> 발생 쿼리</summary>
 <div markdown="1">
 
 ```java
@@ -379,11 +383,10 @@ Hibernate:
 </div>
 </details>
 
-### N+1 문제 해결
+### :ballot_box_with_check: N+1 문제 해결
 또 다른 문제는 각 주문(Order)마다 orderBooks를 조회하는 쿼리문을 발생시킨다는 것이였다. <br>
 이 경우 주문 목록에 100만개의 주문이 있다면, orderBooks를 조회하는 동일한 쿼리문을 100만 번 발생시킨다는 의미였다. <br>
- 
-- 코드 확인
+우선 관련 부분의 코드를 살펴 원인을 파악하기로 했다.<br>
 ```java
     /**
      * 주문 목록 조회
@@ -413,24 +416,337 @@ Hibernate:
 ```
 콘솔 출력을 통해 확인한 결과, 반복문 안에서 각 order 별로 orderBooks를 조회한다는 사실을 확인하였다.<br><br>
 
+:white_check_mark: <b>시도 1. 로딩 설정 변경</b><br>
 첫번째 가설은 @OneToMany의 경우 기본이 지연 로딩으로 설정되어 있는데, 이것이 원인일 수도 있다는 생각에 Eager로 바꾸고 쿼리를 즉시 로딩하는 것으로 바꿔주었다. 
+
 ```java
+public class Order{
+    ....    
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER) // 즉시 로딩으로 변경
-    private List<OrderBook> orderBooks = new ArrayList<>();
+    private List<OrderBook> orderBooks = new ArrayList<>();   
+    ....
+}
 ```
 하지만 쿼리를 확인해보니 쿼리 발생 시점만 달라질 뿐, 발생되는 쿼리는 동일했다.<br>
 Lazy의 경우 반복문 안에서 orderBook 리스트 객체에 접근할 때 쿼리를 날리는 반면,<br>
 Eager의 경우 반복문 진입 전에 order를 조회하는 시점에서 쿼리를 날렸다.<br>
 그러다 문득 JPA를 공부할 때 배웠던 N+1문제에 대해 생각이 났다. <br>
 
-- 페치 조인 사용
-- 
+<br>
 
+:white_check_mark: <b>시도 2. 페치 조인 사용</b><br>
+아래와 같이 페치 조인을 사용하는 쿼리문을 만들어 연관된 객체의 정보들을 한번에 가져오는 방법을 사용하기로 했다.
+
+```java
+public class DbOrderRepository implements OrderRepository {
+    ....    
+    @Override
+    public List<Order> findByMemberId(Long memberId) {
+        return em.createQuery(
+                "select o from Order o " +
+                       " join fetch o.orderBooks ob" +
+                " where o.member.id = :memberId", Order.class)
+                .setParameter("memberId", memberId)
+                .getResultList();
+    }    
+    ....
+}
+
+```
+그러자 데이터가 중복되어 조회되는 상황이 발생하였다. 쿼리를 살펴보니 다음과 같았다.<br>
+
+<details>
+<summary> 발생 쿼리</summary>
+<div markdown="1">
+
+```java
+
+Hibernate: 
+    select
+        order0_.order_id as order_id1_3_0_,
+        orderbooks1_.order_book_id as order_bo1_2_1_,
+        order0_.local_date as local_da2_3_0_,
+        order0_.member_id as member_i3_3_0_,
+        orderbooks1_.book_id as book_id3_2_1_,
+        orderbooks1_.order_id as order_id4_2_1_,
+        orderbooks1_.quantity as quantity2_2_1_,
+        orderbooks1_.order_id as order_id4_2_0__,
+        orderbooks1_.order_book_id as order_bo1_2_0__ 
+    from
+        orders order0_ 
+    inner join
+        order_book orderbooks1_ 
+            on order0_.order_id=orderbooks1_.order_id 
+    where
+        order0_.member_id=?
+Hibernate: 
+    select
+        book0_.book_id as book_id1_0_0_,
+        book0_.book_name as book_nam2_0_0_,
+        book0_.category as category3_0_0_,
+        book0_.price as price4_0_0_,
+        book0_.publisher as publishe5_0_0_ 
+    from
+        book book0_ 
+    where
+        book0_.book_id=?
+Hibernate: 
+    select
+        book0_.book_id as book_id1_0_0_,
+        book0_.book_name as book_nam2_0_0_,
+        book0_.category as category3_0_0_,
+        book0_.price as price4_0_0_,
+        book0_.publisher as publishe5_0_0_ 
+    from
+        book book0_ 
+    where
+        book0_.book_id=?
+Hibernate: 
+    select
+        book0_.book_id as book_id1_0_0_,
+        book0_.book_name as book_nam2_0_0_,
+        book0_.category as category3_0_0_,
+        book0_.price as price4_0_0_,
+        book0_.publisher as publishe5_0_0_ 
+    from
+        book book0_ 
+    where
+        book0_.book_id=?
+Hibernate: 
+    select
+        book0_.book_id as book_id1_0_0_,
+        book0_.book_name as book_nam2_0_0_,
+        book0_.category as category3_0_0_,
+        book0_.price as price4_0_0_,
+        book0_.publisher as publishe5_0_0_ 
+    from
+        book book0_ 
+    where
+        book0_.book_id=?
+Hibernate: 
+    select
+        book0_.book_id as book_id1_0_0_,
+        book0_.book_name as book_nam2_0_0_,
+        book0_.category as category3_0_0_,
+        book0_.price as price4_0_0_,
+        book0_.publisher as publishe5_0_0_ 
+    from
+        book book0_ 
+    where
+        book0_.book_id=?
+Hibernate: 
+    select
+        book0_.book_id as book_id1_0_0_,
+        book0_.book_name as book_nam2_0_0_,
+        book0_.category as category3_0_0_,
+        book0_.price as price4_0_0_,
+        book0_.publisher as publishe5_0_0_ 
+    from
+        book book0_ 
+    where
+        book0_.book_id=?
+
+```
+
+</div>
+</details>
+
+쿼리를 통해 살펴본 바로는, 데이터가 중복 저장되는 이유는 order가 갖고 있는 orderBooks 리스트의 각 orderBook 마다 order와 조인을 해버리기 때문에 동일한 order가 여러번 중복되어 조회되는 것이었다.<br>
+이 문제에 대한 서치의 결과, distinct 명령어가 필요하다는 것을 발견했다. 그래서 다음과 같이 코드를 개선했다. 
+
+<br>
+
+
+:white_check_mark: <b>시도 3. distinct 사용</b><br>
+아래와 같이 distinct 명령어를 추가시켜준다.
+
+```java
+public class DbOrderRepository implements OrderRepository {
+    ....    
+    @Override
+    public List<Order> findByMemberId(Long memberId) {
+        return em.createQuery(
+                "select distinct o from Order o " +
+                       " join fetch o.orderBooks ob" +
+                " where o.member.id = :memberId", Order.class)
+                .setParameter("memberId", memberId)
+                .getResultList();
+    }    
+    ....
+}
+
+```
+
+
+<details>
+<summary> 발생 쿼리</summary>
+<div markdown="1">
+
+```java
+
+Hibernate: 
+    select
+        distinct order0_.order_id as order_id1_3_0_,
+        orderbooks1_.order_book_id as order_bo1_2_1_,
+        order0_.local_date as local_da2_3_0_,
+        order0_.member_id as member_i3_3_0_,
+        orderbooks1_.book_id as book_id3_2_1_,
+        orderbooks1_.order_id as order_id4_2_1_,
+        orderbooks1_.quantity as quantity2_2_1_,
+        orderbooks1_.order_id as order_id4_2_0__,
+        orderbooks1_.order_book_id as order_bo1_2_0__ 
+    from
+        orders order0_ 
+    inner join
+        order_book orderbooks1_ 
+            on order0_.order_id=orderbooks1_.order_id 
+    where
+        order0_.member_id=?
+Hibernate: 
+    select
+        book0_.book_id as book_id1_0_0_,
+        book0_.book_name as book_nam2_0_0_,
+        book0_.category as category3_0_0_,
+        book0_.price as price4_0_0_,
+        book0_.publisher as publishe5_0_0_ 
+    from
+        book book0_ 
+    where
+        book0_.book_id=?
+Hibernate: 
+    select
+        book0_.book_id as book_id1_0_0_,
+        book0_.book_name as book_nam2_0_0_,
+        book0_.category as category3_0_0_,
+        book0_.price as price4_0_0_,
+        book0_.publisher as publishe5_0_0_ 
+    from
+        book book0_ 
+    where
+        book0_.book_id=?
+Hibernate: 
+    select
+        book0_.book_id as book_id1_0_0_,
+        book0_.book_name as book_nam2_0_0_,
+        book0_.category as category3_0_0_,
+        book0_.price as price4_0_0_,
+        book0_.publisher as publishe5_0_0_ 
+    from
+        book book0_ 
+    where
+        book0_.book_id=?
+Hibernate: 
+    select
+        book0_.book_id as book_id1_0_0_,
+        book0_.book_name as book_nam2_0_0_,
+        book0_.category as category3_0_0_,
+        book0_.price as price4_0_0_,
+        book0_.publisher as publishe5_0_0_ 
+    from
+        book book0_ 
+    where
+        book0_.book_id=?
+Hibernate: 
+    select
+        book0_.book_id as book_id1_0_0_,
+        book0_.book_name as book_nam2_0_0_,
+        book0_.category as category3_0_0_,
+        book0_.price as price4_0_0_,
+        book0_.publisher as publishe5_0_0_ 
+    from
+        book book0_ 
+    where
+        book0_.book_id=?
+Hibernate: 
+    select
+        book0_.book_id as book_id1_0_0_,
+        book0_.book_name as book_nam2_0_0_,
+        book0_.category as category3_0_0_,
+        book0_.price as price4_0_0_,
+        book0_.publisher as publishe5_0_0_ 
+    from
+        book book0_ 
+    where
+        book0_.book_id=?
+
+```
+
+</div>
+</details>
+
+distinct를 추가함으로써 order가 중복 조회되는 문제는 해결했지만 여전히 쿼리에는 문제가 존재한다.<br>
+기존에는 orderBook 조회 시 orderBook클래스가 갖고 있는 book 프로퍼티도 조인으로 한번에 가져왔다.(즉시로딩으로 설정되어 있기때문)<br>
+근데 페치조인을 적용하고 쿼리를 살펴보면 order와 orderBook 사이에만 조인이 발생한다. 즉 orderBook 객체가 갖고 있는 book 프로퍼티는 같이 끌어오지 못하는 것이다. 그래서 어쩔 수 없이 새로운 쿼리를 통해 book 정보를 가져오는 것을 볼 수 있다. <br>
  
  
- 
- 
- 
+:white_check_mark: <b>시도 4. orderBook 클래스의 book 프로퍼티에도 지연로딩을 걸어주면 해결이 될까? NO </b><br>
+이전에 살펴봤듯이 조회 시점만 미뤄줄 뿐 반복문 안에서 book에 대한 셀렉트 쿼리가 여전히 나간다.
+
+:white_check_mark: <b>시도 5. book까지 fetch join으로 끌어오기</b><br>
+book 정보까지 한번에 끌어올 수 있도록 아래와 같이 쿼리문을 수정했다.<br>
+
+```java
+public class DbOrderRepository implements OrderRepository {
+    ....    
+    @Override
+    public List<Order> findByMemberId(Long memberId) {
+        return em.createQuery(
+                "select distinct o from Order o " +
+                       " join fetch o.orderBooks ob" +
+                       " join fetch ob.book" +
+                " where o.member.id = :memberId", Order.class)
+                .setParameter("memberId", memberId)
+                .getResultList();
+    }
+    ....
+}
+
+```
+
+<details>
+<summary> 발생 쿼리</summary>
+<div markdown="1">
+
+```java
+
+Hibernate: 
+    select
+        distinct order0_.order_id as order_id1_3_0_,
+        orderbooks1_.order_book_id as order_bo1_2_1_,
+        book2_.book_id as book_id1_0_2_,
+        order0_.local_date as local_da2_3_0_,
+        order0_.member_id as member_i3_3_0_,
+        orderbooks1_.book_id as book_id3_2_1_,
+        orderbooks1_.order_id as order_id4_2_1_,
+        orderbooks1_.quantity as quantity2_2_1_,
+        orderbooks1_.order_id as order_id4_2_0__,
+        orderbooks1_.order_book_id as order_bo1_2_0__,
+        book2_.book_name as book_nam2_0_2_,
+        book2_.category as category3_0_2_,
+        book2_.price as price4_0_2_,
+        book2_.publisher as publishe5_0_2_ 
+    from
+        orders order0_ 
+    inner join
+        order_book orderbooks1_ 
+            on order0_.order_id=orderbooks1_.order_id 
+    inner join
+        book book2_ 
+            on orderbooks1_.book_id=book2_.book_id 
+    where
+        order0_.member_id=?
+
+```
+
+</div>
+</details>
+드디어 쿼리 한 번에 내가 의도하는 모든 정보를 끌어올 수 있게 되었다.<br>
+
+
+:white_check_mark: 결과<br>
+결론적으로 주문을 N개 생성했을 때,<br>
+기존 쿼리가 주문 목록을 가져오기 위해 2+N개의 쿼리를 발생시켰던 반면,<br>
+fetch join을 통해 단 1번의 쿼리로 줄일 수 있게 되었다. <br>
  
 ## :pushpin: 6. 평가
 :blush: 그동안 공부했던 내용을 프로젝트를 직접 만들어봄으로써 잘 정리할 수 있었다.<br>
