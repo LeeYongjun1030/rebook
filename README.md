@@ -380,9 +380,39 @@ Hibernate:
 </details>
 
 ### N+1 문제 해결
-또 다른 문제는 
+또 다른 문제는 각 주문(Order)마다 orderBooks를 조회하는 쿼리문을 발생시킨다는 것이였다. <br>
+이 경우 주문 목록에 100만개의 주문이 있다면, orderBooks를 조회하는 동일한 쿼리문을 100만 번 발생시킨다는 의미였다. <br>
  
- 
+- 코드 확인
+```java
+    /**
+     * 주문 목록 조회
+     */
+    @GetMapping("/orders")
+    public String orders(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+                         Model model) {
+
+        List<Order> orders = orderService.findByMemberId(loginMember.getId());
+        
+        List<OrderDto> orderDtos = new ArrayList<>();
+        for (Order order : orders) {
+            OrderDto orderDto = new OrderDto();
+            orderDto.setId(order.getId());
+            orderDto.setMemberName(loginMember.getNickname());
+            orderDto.setLocalDate(order.getLocalDate());
+            orderDto.setTotalOrderQuantities(orderService.getOrderTotalQuantities(order));
+            orderDto.setTotalOrderPrice(orderService.getOrderTotalPrice(order));
+            orderDtos.add(orderDto);
+        }
+        
+        model.addAttribute("orders", orderDtos);
+
+        return "/order/orders";
+    }
+
+```
+
+
  
  
  
