@@ -411,9 +411,21 @@ Hibernate:
     }
 
 ```
+콘솔 출력을 통해 확인한 결과, 반복문 안에서 각 order 별로 orderBooks를 조회한다는 사실을 확인하였다.<br><br>
 
+첫번째 가설은 @OneToMany의 경우 기본이 지연 로딩으로 설정되어 있는데, 이것이 원인일 수도 있다는 생각에 Eager로 바꾸고 쿼리를 즉시 로딩하는 것으로 바꿔주었다. 
+```java
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER) // 즉시 로딩으로 변경
+    private List<OrderBook> orderBooks = new ArrayList<>();
+```
+하지만 쿼리를 확인해보니 쿼리 발생 시점만 달라질 뿐, 발생되는 쿼리는 동일했다.<br>
+Lazy의 경우 반복문 안에서 orderBook 리스트 객체에 접근할 때 쿼리를 날리는 반면,<br>
+Eager의 경우 반복문 진입 전에 order를 조회하는 시점에서 쿼리를 날렸다.<br>
+그러다 문득 JPA를 공부할 때 배웠던 N+1문제에 대해 생각이 났다. <br>
 
- 
+- 페치 조인 사용
+- 
+
  
  
  
