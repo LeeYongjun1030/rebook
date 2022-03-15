@@ -453,6 +453,25 @@ public class DbOrderRepository implements OrderRepository {
 }
 
 ```
+
+<details>
+<summary> 즉시로딩 VS 페치조인</summary>
+<div markdown="1">
+ 
+ ```
+즉시로딩
+1. order 목록을 우선 끌고옴
+2. 각 order에 대해 연관 객체 정보를 새 쿼리를 날려 끌고옴
+
+페치조인
+1. 내부조인을 발생시켜 연관 객체 정보를 한번에 끌고 옴
+(그냥 조인이랑 다른점은 그냥 조인으로 하면 객체 1개로 해결하지 못함)
+ ```
+ 
+</div>
+</details>
+
+
 그러자 데이터가 중복되어 조회되는 상황이 발생하였다. 쿼리를 살펴보니 다음과 같았다.<br>
 
 <details>
