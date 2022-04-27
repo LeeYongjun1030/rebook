@@ -13,7 +13,7 @@
 
 
 ## :hammer: 기술 스택
-<img src="https://img.shields.io/badge/springboot-6DB33F?style=flat&logo=springboot&logoColor=white"><img src="https://img.shields.io/badge/jpa-E31E52?style=flat&logo=jpa&logoColor=white"><img src="https://img.shields.io/badge/mysql-4479A1?style=flat&logo=mysql&logoColor=white"><img src="https://img.shields.io/badge/thymeleaf-005F0F?style=flat&logo=thymeleaf&logoColor=white">
+- <img src="https://img.shields.io/badge/springboot-6DB33F?style=flat&logo=springboot&logoColor=white"><img src="https://img.shields.io/badge/jpa-E31E52?style=flat&logo=jpa&logoColor=white"><img src="https://img.shields.io/badge/mysql-4479A1?style=flat&logo=mysql&logoColor=white"><img src="https://img.shields.io/badge/thymeleaf-005F0F?style=flat&logo=thymeleaf&logoColor=white">
 
 
 
