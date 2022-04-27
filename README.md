@@ -51,8 +51,8 @@
 
 
 ## :pushpin: 1. 요구사항 분석  
-
-![image](https://user-images.githubusercontent.com/78812317/155678914-87daaa78-df28-4b9f-8911-31daee2ce029.png)
+요구사항 명세서(가상)<br>
+![image](https://user-images.githubusercontent.com/78812317/165491039-b8409cb9-7488-416d-9ae5-7c8605b1b803.png)
 
 ## :pushpin: 2. 도메인 모델과 테이블 설계
 :pencil2: <b>회원, 책, 리뷰, 주문</b> <br>
