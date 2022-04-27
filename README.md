@@ -40,7 +40,6 @@
 - [[Feb 16, 2022] html modified](https://github.com/LeeYongjun1030/rebook/commit/db649957b4a005550ffc0fea01dfdd873a17a222)<br>
 - [[Feb 27, 2022] optimization order list using fetch join](https://github.com/LeeYongjun1030/rebook/commit/51d54453a9e4c0480983c4c5e8f01658398df88b)<br>
 - [[Apr 27, 2022] findByLoginId add , transaction update](https://github.com/LeeYongjun1030/rebook/commit/e23e8c25b0e07ff28c6925305a0bc7b65a9305a4)<br>
-- [[Apr 27, 2022] fetch join update](https://github.com/LeeYongjun1030/rebook/commit/51901e9e9208d1623312f8e4468da5ac1d7cf333)<br>
 
 
 
