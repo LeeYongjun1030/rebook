@@ -1,7 +1,13 @@
  # :blue_book: 리북 Rebook : 책 주문&리뷰 웹사이트
 
 ##  :full_moon_with_face: 소개
-책을 주문할 수 있고, 책에 리뷰를 달 수 있는 웹사이트 제작 토이 프로젝트
+- 책을 주문할 수 있고, 책에 리뷰를 달 수 있는 웹사이트 제작 토이 프로젝트
+
+##  :triangular_flag_on_post: 목적
+- 스프링으로 개발한 첫번째 프로젝트로, 공부한 내용을 총 정리하고 익힌다.<br>
+- 아직 안 배운 것(Security, Spring data jpa, Query dsl)이 많지만 지금까지 배운 것을 직접 작성해보고 활용해본다.<br>
+
+
 
 ## :hammer: 기술 스택
 <img src="https://img.shields.io/badge/springboot-6DB33F?style=flat&logo=springboot&logoColor=white"><img src="https://img.shields.io/badge/jpa-E31E52?style=flat&logo=jpa&logoColor=white"><img src="https://img.shields.io/badge/mysql-4479A1?style=flat&logo=mysql&logoColor=white"><img src="https://img.shields.io/badge/thymeleaf-005F0F?style=flat&logo=thymeleaf&logoColor=white">
@@ -9,32 +15,36 @@
 
 
 ## :wrench: 개발 환경
-:bulb: <b>java11</b><br>
-:bulb: <b>gradle</b><br>
-:bulb: <b>spring-boot 2.6.3</b><br>
-:bulb: <b>mysql 8.0.23</b><br>
+- <b>java11</b><br>
+- <b>gradle</b><br>
+- <b>spring-boot 2.6.3</b><br>
+- <b>mysql 8.0.23</b><br>
 
 ## :memo: 개발 일지
-:memo:[[Feb 7, 2022] member domain create](https://github.com/LeeYongjun1030/rebook/commit/0ab21186312a220322ba584441f30b8acdd35a79)<br>
-:memo:[[Feb 8, 2022] domain create](https://github.com/LeeYongjun1030/rebook/commit/3b506422c83b1469ba60eaa3c09ca4a91185113b)<br>
-:memo:[[Feb 9, 2022] login create](https://github.com/LeeYongjun1030/rebook/commit/331f2c404716a05b9340bfde31ef8bdc320962f2)<br>
-:memo:[[Feb 10, 2022] review function create](https://github.com/LeeYongjun1030/rebook/commit/99c10800ebfbf73157844c93c34187bffbb9bbdb)<br>
-:memo:[[Feb 11, 2022] review create](https://github.com/LeeYongjun1030/rebook/commit/8874f96a27034dcbd88a15c89f573eedbb140cc3)<br>
-:memo:[[Feb 12, 2022] review delete function create ](https://github.com/LeeYongjun1030/rebook/commit/ca11fcd5e3650fa68d424649ef6144beae5082f5)<br>
-:memo:[[Feb 13, 2022] order service create](https://github.com/LeeYongjun1030/rebook/commit/a614f95b06b0bedc3b3371aabe8478a4d1bfe9bd)<br>
-:memo:[[Feb 14, 2022] order service create](https://github.com/LeeYongjun1030/rebook/commit/64c4b315fd13319f41f9e09296ba73a727ed267f)<br>
-:memo:[[Feb 14, 2022] order cancel function create](https://github.com/LeeYongjun1030/rebook/commit/039f76210755ab6d0b26123d4c954321df11b6c1)<br>
-:memo:[[Feb 16, 2022] add order service test](https://github.com/LeeYongjun1030/rebook/commit/140dc3faf7ac89c34e794a8863eee58f50948bb2)<br>
-:memo:[[Feb 16, 2022] html modified](https://github.com/LeeYongjun1030/rebook/commit/db649957b4a005550ffc0fea01dfdd873a17a222)<br>
-:memo:[[Feb 27, 2022] optimization order list using fetch join](https://github.com/LeeYongjun1030/rebook/commit/51d54453a9e4c0480983c4c5e8f01658398df88b)<br>
+- [[Feb 7, 2022] member domain create](https://github.com/LeeYongjun1030/rebook/commit/0ab21186312a220322ba584441f30b8acdd35a79)<br>
+- [[Feb 8, 2022] domain create](https://github.com/LeeYongjun1030/rebook/commit/3b506422c83b1469ba60eaa3c09ca4a91185113b)<br>
+- [[Feb 9, 2022] login create](https://github.com/LeeYongjun1030/rebook/commit/331f2c404716a05b9340bfde31ef8bdc320962f2)<br>
+- [[Feb 10, 2022] review function create](https://github.com/LeeYongjun1030/rebook/commit/99c10800ebfbf73157844c93c34187bffbb9bbdb)<br>
+- [[Feb 11, 2022] review create](https://github.com/LeeYongjun1030/rebook/commit/8874f96a27034dcbd88a15c89f573eedbb140cc3)<br>
+- [[Feb 12, 2022] review delete function create ](https://github.com/LeeYongjun1030/rebook/commit/ca11fcd5e3650fa68d424649ef6144beae5082f5)<br>
+- [[Feb 13, 2022] order service create](https://github.com/LeeYongjun1030/rebook/commit/a614f95b06b0bedc3b3371aabe8478a4d1bfe9bd)<br>
+- [[Feb 14, 2022] order service create](https://github.com/LeeYongjun1030/rebook/commit/64c4b315fd13319f41f9e09296ba73a727ed267f)<br>
+- [[Feb 14, 2022] order cancel function create](https://github.com/LeeYongjun1030/rebook/commit/039f76210755ab6d0b26123d4c954321df11b6c1)<br>
+- [[Feb 16, 2022] add order service test](https://github.com/LeeYongjun1030/rebook/commit/140dc3faf7ac89c34e794a8863eee58f50948bb2)<br>
+- [[Feb 16, 2022] html modified](https://github.com/LeeYongjun1030/rebook/commit/db649957b4a005550ffc0fea01dfdd873a17a222)<br>
+- [[Feb 27, 2022] optimization order list using fetch join](https://github.com/LeeYongjun1030/rebook/commit/51d54453a9e4c0480983c4c5e8f01658398df88b)<br>
+- [[Apr 27, 2022] findByLoginId add , transaction update](https://github.com/LeeYongjun1030/rebook/commit/e23e8c25b0e07ff28c6925305a0bc7b65a9305a4)<br>
+
+
+
 
 ## :pushpin: 차례  
-:pushpin: <b>1. 요구 사항 분석</b>  
-:pushpin: <b>2. 도메인 모델과 테이블 설계</b>  
-:pushpin: <b>3. 개발과 구현</b>  
-:pushpin: <b>4. 완성 및 실행</b>  
-:pushpin: <b>5. 트러블슈팅</b>  
-:pushpin: <b>6. 평가</b>  
+- <b>1. 요구 사항 분석</b>  
+- <b>2. 도메인 모델과 테이블 설계</b>  
+- <b>3. 개발과 구현</b>  
+- <b>4. 완성 및 실행</b>  
+- <b>5. 트러블슈팅</b>  
+- <b>6. 평가</b>  
 
 
 ## :pushpin: 1. 요구사항 분석  
