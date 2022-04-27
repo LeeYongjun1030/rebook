@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class OrderService {
 
@@ -25,23 +24,27 @@ public class OrderService {
     private final BookRepository bookRepository;
     private final DiscountPolicy discountPolicy;
 
-
+    @Transactional
     public Long save(Order order) {
         return orderRepository.save(order);
     }
 
+    @Transactional(readOnly = true)
     public Order findById(Long id) {
         return orderRepository.findById(id);
     }
 
+    @Transactional(readOnly = true)
     public List<Order> findByMemberId(Long memberId) {
         return orderRepository.findByMemberId(memberId);
     }
 
+    @Transactional
     public void delete(Order order) {
         orderRepository.delete(order);
     }
 
+    @Transactional
     public void clear() {
         orderRepository.clear();
     }
@@ -52,6 +55,7 @@ public class OrderService {
      * 여기선 그 기능을 이용하여 직접 order를 작성해주는 서비스를 만들면 된다.
      * 인자로 받는 orderInfo의 키는 책 id, 값은 주문 수량이다.
      */
+    @Transactional
     public Order order(Member member, Map<Long, Integer> orderInfo) {
 
         List<OrderBook> orderBooks = new ArrayList<>();

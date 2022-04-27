@@ -9,25 +9,28 @@ import project.rebook.repository.book.BookRepository;
 import java.util.List;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class BookService {
 
     //bookRepository 자동 주입
     private final BookRepository bookRepository;
 
+    @Transactional
     public Long save(Book book) {
         return bookRepository.save(book);
     }
 
+    @Transactional(readOnly = true)
     public Book findById(Long id) {
         return bookRepository.findById(id);
     }
 
+    @Transactional(readOnly = true)
     public List<Book> findAll() {
         return bookRepository.findAll();
     }
 
+    @Transactional
     public void clear() {
         bookRepository.clear();
     }

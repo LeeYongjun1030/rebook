@@ -66,17 +66,24 @@ public class LoginController {
             session.invalidate();
         }
         return "redirect:/";
-
     }
 
     private Member login(LoginForm loginForm) {
         String loginId = loginForm.getLoginId();
         String password = loginForm.getPassword();
 
-        return memberService.findAll().stream()
-                .filter(m -> m.getLoginId().equals(loginId))
-                .filter(m -> m.getPassword().equals(password))
-                .findFirst()
-                .orElse(null);
+        Member findMember = memberService.findByLoginId(loginId);
+        if (findMember == null) {
+            return null;
+        } else {
+            String findMemberPassword = findMember.getPassword();
+
+            if (password.equals(findMemberPassword)) {
+                return findMember;
+            } else {
+                return null;
+            }
+        }
+
     }
 }

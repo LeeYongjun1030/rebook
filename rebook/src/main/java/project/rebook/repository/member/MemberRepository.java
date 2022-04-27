@@ -11,7 +11,13 @@ public interface MemberRepository {
 
     public Member findById(Long id);
 
+    public Member findByLoginId(String loginId) throws Exception;
+
     public List<Member> findAll();
+
+    public boolean existLoginId(String loginId);
+
+    public boolean existNickname(String nickname);
 
     public void updateGrade(Long id, Grade grade);
 

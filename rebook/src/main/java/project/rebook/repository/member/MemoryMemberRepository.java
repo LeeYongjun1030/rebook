@@ -32,9 +32,23 @@ public class MemoryMemberRepository implements MemberRepository {
     }
 
     @Override
+    public Member findByLoginId(String loginId) throws Exception {
+        return null;
+    }
+
+    @Override
+    public boolean existLoginId(String loginId) {
+        return false;
+    }
+
+    @Override
+    public boolean existNickname(String nickname) {
+        return false;
+    }
+
+    @Override
     public List<Member> findAll() {
         return new ArrayList<>(store.values());
-
     }
 
     @Override

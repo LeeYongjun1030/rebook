@@ -90,10 +90,8 @@ public class OrderController {
     public String orders(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                          Model model) {
 
-        System.out.println("OrderController.orders");
         List<Order> orders = orderService.findByMemberId(loginMember.getId());
 
-        System.out.println("OrderController.orders");
         List<OrderDto> orderDtos = new ArrayList<>();
         for (Order order : orders) {
             OrderDto orderDto = new OrderDto();
@@ -104,7 +102,6 @@ public class OrderController {
             orderDto.setTotalOrderPrice(orderService.getOrderTotalPrice(order));
             orderDtos.add(orderDto);
         }
-        System.out.println("OrderController.orders");
 
         model.addAttribute("orders", orderDtos);
 

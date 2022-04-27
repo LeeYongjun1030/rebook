@@ -20,7 +20,6 @@ public class MemberController {
 
     private final MemberService memberService;
 
-
     /**
      * 회원 가입 폼
      */
@@ -48,9 +47,6 @@ public class MemberController {
                 addMemberForm.getPassword(),
                 Grade.NORMAL);
 
-        // money 정보 초기화
-        member.setMoney(0);
-
         //회원 저장
         memberService.save(member);
 
@@ -59,20 +55,15 @@ public class MemberController {
 
     private void idDuplicateTest(AddMemberForm addMemberForm, BindingResult bindingResult) {
         String loginId = addMemberForm.getLoginId();
-        Optional<Member> any = memberService.findAll().stream()
-                .filter(member -> member.getLoginId().equals(loginId))
-                .findAny();
-        if (any.isPresent()) { //아이디 중복
+        if (memberService.existLoginId(loginId)) { //아이디 중복
             bindingResult.rejectValue("loginId", "duplicate");
         }
+
     }
 
     private void nicknameDuplicateTest(AddMemberForm addMemberForm, BindingResult bindingResult) {
         String nickname = addMemberForm.getNickname();
-        Optional<Member> any = memberService.findAll().stream()
-                .filter(member -> member.getNickname().equals(nickname))
-                .findAny();
-        if (any.isPresent()) { //닉네임 중복
+        if (memberService.existNickname(nickname)) { //닉네임 중복
             bindingResult.rejectValue("nickname", "duplicate");
         }
     }

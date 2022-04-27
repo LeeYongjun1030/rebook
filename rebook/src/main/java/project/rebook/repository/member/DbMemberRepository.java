@@ -31,9 +31,46 @@ public class DbMemberRepository implements MemberRepository {
     }
 
     @Override
+    public Member findByLoginId(String loginId) throws Exception {
+        return em.createQuery(
+                "select m from Member m" +
+                        " where m.loginId = :loginId", Member.class)
+                .setParameter("loginId", loginId)
+                .getSingleResult();
+    }
+
+    @Override
     public List<Member> findAll() {
         return em.createQuery("select m from Member m", Member.class)
                 .getResultList();
+    }
+
+    @Override
+    public boolean existLoginId(String loginId) {
+        try {
+            em.createQuery(
+                    "select m from Member m" +
+                            " where m.loginId = :loginId", Member.class)
+                    .setParameter("loginId", loginId)
+                    .getSingleResult();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean existNickname(String nickname) {
+        try {
+            em.createQuery(
+                    "select m from Member m" +
+                            " where m.nickname = :nickname", Member.class)
+                    .setParameter("nickname", nickname)
+                    .getSingleResult();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
