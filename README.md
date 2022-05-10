@@ -65,6 +65,12 @@
 ### :ballot_box_with_check: 전체 흐름
 :heavy_check_mark: 전체 흐름은 다음과 같다 : 클라이언트 -> 컨트롤러 -> 서비스 -> 리포지토리 -> 데이터베이스<br>
 
+<details markdown="1">
+<summary> :point_right: 왜 컨트롤러와 서비스를 나누는가? </summary>
+
+
+</details>
+
 ### :ballot_box_with_check: 도메인 개발<br>
 :heavy_check_mark: lombok라이브러리를 활용하여 getter, setter, constructor 코드를 간단히 작성<br>
 :heavy_check_mark: 엔티티 매핑을 위해 엔티티 설정 및 PK 생성<br>
