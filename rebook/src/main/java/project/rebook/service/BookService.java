@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import project.rebook.domain.book.Book;
 import project.rebook.repository.book.BookRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,6 +29,16 @@ public class BookService {
     @Transactional(readOnly = true)
     public List<Book> findAll() {
         return bookRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public List<Book> findBooksFromIds(List<Long> ids) {
+        List<Book> books = new ArrayList<>();
+        for (Long id : ids) {
+            Book book = findById(id);
+            books.add(book);
+        }
+        return books;
     }
 
     @Transactional

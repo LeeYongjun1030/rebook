@@ -20,7 +20,7 @@
 
     <p>
         <b><a th:text="${member.getNickname}"></a></b>님이 작성한 리뷰는 총
-        <a th:text="${#lists.size(reviews)}"></a>개로,<br>
+        <a th:text="${member.getNumberOfReviews}"></a>개로,<br>
         현재 등급 <a th:text="${member.getGrade}"></a>입니다.<br><br>
 
         리뷰 <a th:text="${vipReview}"></a>개 작성 시 VIP 등급을 부여받을 수 있으며,<br>

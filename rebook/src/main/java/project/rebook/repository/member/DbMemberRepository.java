@@ -4,11 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import project.rebook.domain.member.Grade;
+import project.rebook.domain.member.GradeConst;
 import project.rebook.domain.member.Member;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Primary
@@ -26,8 +27,7 @@ public class DbMemberRepository implements MemberRepository {
 
     @Override
     public Member findById(Long id) {
-        Member member = em.find(Member.class, id);
-        return member;
+        return em.find(Member.class, id);
     }
 
     @Override
@@ -46,39 +46,26 @@ public class DbMemberRepository implements MemberRepository {
     }
 
     @Override
-    public boolean existLoginId(String loginId) {
-        try {
-            em.createQuery(
-                    "select m from Member m" +
-                            " where m.loginId = :loginId", Member.class)
-                    .setParameter("loginId", loginId)
-                    .getSingleResult();
-            return true;
-        } catch (Exception e) {
-            return false;
+    public void adjustNumberOfReviews(Long memberId, int change) {
+        Member member = findById(memberId);
+        int current = member.getNumberOfReviews();
+        member.setNumberOfReviews(current+change);
+
+        // 리뷰 개수에 따른 등급 업데이트
+        if (member.getNumberOfReviews() >= GradeConst.NUM_of_REVIEWS_to_VIP) {
+            member.setGrade(Grade.VIP);
+        } else {
+            member.setGrade(Grade.NORMAL);
         }
     }
 
     @Override
-    public boolean existNickname(String nickname) {
-        try {
-            em.createQuery(
-                    "select m from Member m" +
-                            " where m.nickname = :nickname", Member.class)
-                    .setParameter("nickname", nickname)
-                    .getSingleResult();
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    @Override
-    public void updateGrade(Long id, Grade grade) {
-        Member member = findById(id);
-        if (!grade.equals(member.getGrade())){
-            member.setGrade(grade); // em 변경 감지 -> 자동 update
-        }
+    public Member findByNickname(String nickname) throws Exception {
+        return em.createQuery(
+                "select m from Member m" +
+                        " where m.nickname = :nickname", Member.class)
+                .setParameter("nickname", nickname)
+                .getSingleResult();
     }
 
     @Override

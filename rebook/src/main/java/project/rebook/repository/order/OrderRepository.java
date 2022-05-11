@@ -12,7 +12,7 @@ public interface OrderRepository {
 
     public List<Order> findByMemberId(Long memberId);
 
-    public void delete(Order order);
+    public void delete(Long id);
 
     public void clear();
 }

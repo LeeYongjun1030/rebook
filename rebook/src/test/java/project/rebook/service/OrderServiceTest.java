@@ -79,7 +79,6 @@ class OrderServiceTest {
         orderInfo.put(bookId2, 5);
 
         Order order = orderService.order(null, orderInfo);
-        Long orderId = orderService.save(order);
 
         //when
         Order findOrder = orderService.findById(orderId);

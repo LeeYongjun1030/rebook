@@ -8,6 +8,7 @@ import project.rebook.domain.member.Member;
 import project.rebook.repository.member.MemberRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,32 +28,19 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public Member findByLoginId(String loginId) {
-        try {
-            return memberRepository.findByLoginId(loginId);
-        } catch (Exception e) {
-            return null;
-        }
+    public Member findByLoginId(String loginId) throws Exception {
+        return memberRepository.findByLoginId(loginId);
     }
 
     @Transactional(readOnly = true)
-    public boolean existLoginId(String loginId) {
-        return memberRepository.existLoginId(loginId);
-    }
+    public Member findByNickname(String nickname) throws Exception{
+        return memberRepository.findByNickname(nickname);
 
-    @Transactional(readOnly = true)
-    public boolean existNickname(String nickname) {
-        return memberRepository.existNickname(nickname);
     }
 
     @Transactional(readOnly = true)
     public List<Member> findAll() {
         return memberRepository.findAll();
-    }
-
-    @Transactional
-    public void updateGrade(Long id, Grade grade) {
-        memberRepository.updateGrade(id, grade);
     }
 
     @Transactional

@@ -37,7 +37,8 @@ public class DbOrderRepository implements OrderRepository {
     }
 
     @Override
-    public void delete(Order order) {
+    public void delete(Long id) {
+        Order order = findById(id);
         em.remove(order);
     }
 

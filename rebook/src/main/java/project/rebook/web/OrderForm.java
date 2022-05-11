@@ -12,6 +12,5 @@ import java.util.List;
 public class OrderForm {
 
     private List<Long> ids;
-
     private List<Integer> quantities;
 }

@@ -1,16 +1,10 @@
 package project.rebook.repository.member;
 
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import project.rebook.domain.member.Grade;
 import project.rebook.domain.member.Member;
-import project.rebook.repository.member.MemberRepository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Repository
 public class MemoryMemberRepository implements MemberRepository {
@@ -32,18 +26,13 @@ public class MemoryMemberRepository implements MemberRepository {
     }
 
     @Override
-    public Member findByLoginId(String loginId) throws Exception {
+    public Member findByLoginId(String loginId) throws Exception{
         return null;
     }
 
     @Override
-    public boolean existLoginId(String loginId) {
-        return false;
-    }
-
-    @Override
-    public boolean existNickname(String nickname) {
-        return false;
+    public Member findByNickname(String nickname) throws Exception {
+        return null;
     }
 
     @Override
@@ -52,10 +41,7 @@ public class MemoryMemberRepository implements MemberRepository {
     }
 
     @Override
-    public void updateGrade(Long id, Grade grade) {
-        Member findMember = findById(id);
-        findMember.setGrade(grade);
-        store.put(findMember.getId(), findMember);
+    public void adjustNumberOfReviews(Long memberId, int change) {
     }
 
     @Override

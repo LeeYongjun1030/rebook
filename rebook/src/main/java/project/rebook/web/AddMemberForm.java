@@ -33,4 +33,7 @@ public class AddMemberForm {
     @Pattern(regexp="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,12}$")
     private String password;
 
+
+
+
 }

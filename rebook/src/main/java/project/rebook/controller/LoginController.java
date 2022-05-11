@@ -1,11 +1,7 @@
 package project.rebook.controller;
-
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +9,8 @@ import project.rebook.domain.member.Member;
 import project.rebook.service.MemberService;
 import project.rebook.web.LoginForm;
 import project.rebook.web.SessionConst;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.net.http.HttpRequest;
-import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -39,21 +32,27 @@ public class LoginController {
                         @RequestParam(defaultValue = "/") String redirectURL,
                         HttpServletRequest request) {
 
-        //아이디, 비밀번호 일치 여부 확인
-        Member loginMember = login(loginForm);
-        if (loginMember == null) {
-            bindingResult.reject("fail");
-        }
-
+        // 검증 결과: 오류
         if (bindingResult.hasErrors()) {
             return "login/loginForm";
         }
 
-        // 로그인 성공 -> 로그인 유지를 위한 세션 생성
-        HttpSession session = request.getSession();
-        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
-
-        return "redirect:" + redirectURL;
+        // 로그인
+        try {
+            Member member = memberService.findByLoginId(loginForm.getLoginId());
+            if (member.verify(loginForm.getLoginId(), loginForm.getPassword())) {
+                // 로그인 성공 -> 로그인 유지를 위한 세션 생성
+                HttpSession session = request.getSession();
+                session.setAttribute(SessionConst.LOGIN_MEMBER, member);
+                return "redirect:" + redirectURL;
+            } else {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            // 로그인 실패
+            bindingResult.reject("fail");
+            return "login/loginForm";
+        }
     }
 
     /**
@@ -68,22 +67,4 @@ public class LoginController {
         return "redirect:/";
     }
 
-    private Member login(LoginForm loginForm) {
-        String loginId = loginForm.getLoginId();
-        String password = loginForm.getPassword();
-
-        Member findMember = memberService.findByLoginId(loginId);
-        if (findMember == null) {
-            return null;
-        } else {
-            String findMemberPassword = findMember.getPassword();
-
-            if (password.equals(findMemberPassword)) {
-                return findMember;
-            } else {
-                return null;
-            }
-        }
-
-    }
 }

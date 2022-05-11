@@ -57,7 +57,7 @@
             </thead>
             <tbody>
             <tr th:each="review : ${reviews}">
-                <td th:text="${review.member.getNickname}">작성자</td>
+                <td th:text="${review.getNickname}">작성자</td>
                 <td th:text="${review.rate}">별점</td>
                 <td th:text="${review.comment}">코멘트</td>
                 <td th:text="${review.date}">작성날짜</td>

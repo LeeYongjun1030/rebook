@@ -33,7 +33,7 @@ public class initDb {
         bookService.save(new Book("코스모스", "사이언스북스", Category.SCIENCE, 16600));
 
         // 테스트용 회원 생성
-        Long memberId = memberService.save(new Member("관리자", "manager123", "manager123", Grade.NORMAL));
+        Long memberId = memberService.save(new Member("관리자", "manager123", "manager123", 2, Grade.NORMAL));
 
         // 테스트용 리뷰 생성
         Member findMember = memberService.findById(memberId);

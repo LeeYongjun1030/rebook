@@ -6,13 +6,16 @@ import org.springframework.transaction.annotation.Transactional;
 import project.rebook.domain.DiscountPolicy;
 import project.rebook.domain.Order;
 import project.rebook.domain.OrderBook;
+import project.rebook.domain.book.Book;
 import project.rebook.domain.member.Grade;
 import project.rebook.domain.member.Member;
 import project.rebook.repository.book.BookRepository;
 import project.rebook.repository.order.OrderRepository;
+import project.rebook.web.OrderForm;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,8 +43,8 @@ public class OrderService {
     }
 
     @Transactional
-    public void delete(Order order) {
-        orderRepository.delete(order);
+    public void delete(Long id) {
+        orderRepository.delete(id);
     }
 
     @Transactional
@@ -56,38 +59,26 @@ public class OrderService {
      * 인자로 받는 orderInfo의 키는 책 id, 값은 주문 수량이다.
      */
     @Transactional
-    public Order order(Member member, Map<Long, Integer> orderInfo) {
-
-        List<OrderBook> orderBooks = new ArrayList<>();
-        for (Long bookId : orderInfo.keySet()) {
-            Integer quantity = orderInfo.get(bookId);
-
-            OrderBook orderBook = OrderBook.makeOrderBook(bookRepository.findById(bookId), quantity);
-            orderBooks.add(orderBook);
-        }
-        return Order.makeOrder(member, orderBooks);
-    }
-
-    public int getOrderTotalPrice(Order order) {
+    public void order(Member member, OrderForm orderForm) {
+        int totalQuantities = 0;
         int totalPrice = 0;
 
-        List<OrderBook> orderBooks = order.getOrderBooks();
-        for (OrderBook orderBook : orderBooks) {
-            int price = orderBook.getBook().getPrice();
-            int quantity = orderBook.getQuantity();
-            totalPrice += price * quantity;
-        }
-        return totalPrice;
-    }
+        // 책과 수량을 확인하여 주문 생성
+        List<Long> ids = orderForm.getIds();
+        List<Integer> quantities = orderForm.getQuantities();
 
-    public int getOrderTotalQuantities(Order order) {
-        int totalQuantities = 0;
+        List<OrderBook> orderBooks = new ArrayList<>();
+        for (int i = 0; i < ids.size(); i++) {
+            Book book = bookRepository.findById(ids.get(i));
+            Integer quantity = quantities.get(i);
 
-        List<OrderBook> orderBooks = order.getOrderBooks();
-        for (OrderBook orderBook : orderBooks) {
-            totalQuantities += orderBook.getQuantity();
+            OrderBook orderBook = OrderBook.makeOrderBook(book, quantity);
+            orderBooks.add(orderBook);
+
+            totalQuantities += quantity;
+            totalPrice += book.getPrice()*quantity;
         }
-        return totalQuantities;
+        save(Order.makeOrder(member, orderBooks, totalQuantities, totalPrice));
     }
 
     public int getTotalPriceWithDiscount(Member member, int totalPrice) {

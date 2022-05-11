@@ -21,15 +21,21 @@ public class Member {
 
     private String password;
 
+    private int numberOfReviews;
+
     @Enumerated(EnumType.STRING)
     private Grade grade;
 
-    private int money;
-
-    public Member(String nickname, String loginId, String password, Grade grade) {
+    public Member(String nickname, String loginId, String password, int numberOfReviews, Grade grade) {
         this.nickname = nickname;
         this.loginId = loginId;
         this.password = password;
+        this.numberOfReviews = numberOfReviews;
         this.grade = grade;
     }
+
+    public boolean verify(String id, String password) {
+        return this.loginId.equals(id) && this.password.equals(password);
+    }
+
 }

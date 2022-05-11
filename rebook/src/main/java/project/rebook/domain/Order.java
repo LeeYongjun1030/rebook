@@ -23,6 +23,10 @@ public class Order {
 
     private LocalDate localDate;
 
+    private int totalQuantities;
+
+    private int totalPrice;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
@@ -30,16 +34,17 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderBook> orderBooks = new ArrayList<>();
 
-
     /**
      * 주문 생성
      * 주의할 점 : orderBooks는 연관관계의 주인이 아니다.
      * 연관관계 주인인 orderbook의 order에도 반드시 값을 대입해주어야 함
      */
-    public static Order makeOrder(Member member, List<OrderBook> orderBooks) {
+    public static Order makeOrder(Member member, List<OrderBook> orderBooks, int totalQuantities, int totalPrice) {
         Order order = new Order();
         order.setMember(member);
         order.setLocalDate(LocalDate.now());
+        order.setTotalQuantities(totalQuantities);
+        order.setTotalPrice(totalPrice);
 
         List<OrderBook> orderBookList = new ArrayList<>();
         for (OrderBook orderBook : orderBooks) {
