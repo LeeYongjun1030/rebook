@@ -40,7 +40,7 @@ public class LoginController {
         // 로그인
         try {
             Member member = memberService.findByLoginId(loginForm.getLoginId());
-            if (member.verify(loginForm.getLoginId(), loginForm.getPassword())) {
+            if (memberService.verify(member, loginForm.getLoginId(), loginForm.getPassword())) {
                 // 로그인 성공 -> 로그인 유지를 위한 세션 생성
                 HttpSession session = request.getSession();
                 session.setAttribute(SessionConst.LOGIN_MEMBER, member);

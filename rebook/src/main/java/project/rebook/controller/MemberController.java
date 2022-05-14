@@ -5,8 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import project.rebook.domain.member.Grade;
-import project.rebook.domain.member.Member;
 import project.rebook.service.MemberService;
 import project.rebook.web.AddMemberForm;
 
@@ -39,27 +37,21 @@ public class MemberController {
         }
 
         // 회원가입 성공 -> 회원 정보 저장
-        memberService.save(new Member(
-                addMemberForm.getNickname(),
-                addMemberForm.getLoginId(),
-                addMemberForm.getPassword(),
-                0,
-                Grade.NORMAL));
-
+        memberService.createMember(addMemberForm);
         return "redirect:/";
     }
 
     private void duplicateTest(AddMemberForm addMemberForm, BindingResult bindingResult) {
         try {
             memberService.findByLoginId(addMemberForm.getLoginId());
-        } catch (Exception e) {
             bindingResult.rejectValue("loginId", "duplicate");
+        } catch (Exception e) {
         }
 
         try {
             memberService.findByNickname(addMemberForm.getNickname());
-        } catch (Exception e) {
             bindingResult.rejectValue("nickname", "duplicate");
+        } catch (Exception e) {
         }
 
     }

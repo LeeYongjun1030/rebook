@@ -33,9 +33,4 @@ public class Member {
         this.numberOfReviews = numberOfReviews;
         this.grade = grade;
     }
-
-    public boolean verify(String id, String password) {
-        return this.loginId.equals(id) && this.password.equals(password);
-    }
-
 }

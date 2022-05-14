@@ -1,11 +1,13 @@
 package project.rebook.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.rebook.domain.member.Grade;
 import project.rebook.domain.member.Member;
 import project.rebook.repository.member.MemberRepository;
+import project.rebook.web.AddMemberForm;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,8 +16,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberService {
 
-    //memberRepository 자동 주입
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public Long save(Member member) {
@@ -35,7 +37,6 @@ public class MemberService {
     @Transactional(readOnly = true)
     public Member findByNickname(String nickname) throws Exception{
         return memberRepository.findByNickname(nickname);
-
     }
 
     @Transactional(readOnly = true)
@@ -46,5 +47,21 @@ public class MemberService {
     @Transactional
     public void clear() {
         memberRepository.clear();
+    }
+
+    @Transactional
+    public void createMember(AddMemberForm addMemberForm) {
+        save(new Member(addMemberForm.getNickname(),
+                addMemberForm.getLoginId(),
+                passwordEncoder.encode(addMemberForm.getPassword()),
+                0,
+                Grade.NORMAL));
+    }
+
+    @Transactional(readOnly = true)
+    public boolean verify(Member member, String id, String password) {
+        String existLoginId = member.getLoginId();
+        String existPassword = member.getPassword();
+        return existLoginId.equals(id) && passwordEncoder.matches(password, existPassword);
     }
 }
