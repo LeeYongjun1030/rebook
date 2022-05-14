@@ -41,6 +41,7 @@
 - [[Feb 27, 2022] optimization order list using fetch join](https://github.com/LeeYongjun1030/rebook/commit/51d54453a9e4c0480983c4c5e8f01658398df88b)<br>
 - [[Apr 27, 2022] findByLoginId add , transaction update](https://github.com/LeeYongjun1030/rebook/commit/e23e8c25b0e07ff28c6925305a0bc7b65a9305a4)<br>
 - [[May 12, 2022] refactoring service and controller](https://github.com/LeeYongjun1030/rebook/commit/cced3fa6c86addeec8291c6d1645de387bd00e49)<br>
+- [[May 15, 2022] encrypt password using spring security](https://github.com/LeeYongjun1030/rebook/commit/6705916c9d74498c423bde497795b7ff264d39c0)<br>
 
 
 ## :pushpin: 차례  
@@ -110,6 +111,7 @@ order 클래스 안에 orderBook 리스트 객체를 담도록 한다.<br>
 :heavy_check_mark: 회원가입, 로그인에는 검증 단계가 실행되어야 한다. 이를 위해 데이터가 입력되는 폼 객체에 Bean Validation을 적용한다.<br>
 :heavy_check_mark: 검증에 오류가 있다면 폼 객체를 다시 보여주도록 한다.<br>
 :heavy_check_mark: 회원가입 시에는 아이디, 닉네임의 중복 여부도 검증하도록 한다.<br>
+:heavy_check_mark: Spring Security를 활용하여 DB에는 암호화된 패스워드가 저장되도록 한다.<br>
 :heavy_check_mark: 검증 실패에 대한 에러 메시지는 resources안에 errors.properties 파일을 별도로 두어 에러 메시지를 관리하도록 한다.<br><br>
 :heavy_check_mark: 로그인 성공 시에는 세션을 생성하여 정해진 시간동안 세션 정보를 계속 사용할 수 있도록 한다.<br>
 :heavy_check_mark: 주문, 리뷰 작성 페이지에는 비로그인 사용자가 접속하면 안되므로 로그인 여부를 확인하는 절차를 거쳐야 한다.<br>
