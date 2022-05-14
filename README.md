@@ -2,7 +2,7 @@
 
 ##  :full_moon_with_face: 소개
 - 책을 주문할 수 있고, 책에 리뷰를 달 수 있는 웹사이트 제작 토이 프로젝트<br>
-- 개발 기간 2022.2.7~2022.2.16 [9일]<br>
+- 개발 기간 2022.2.7~2022.2.16 [9일] ... 하지만 계속 보완 중<br>
 - 개인 프로젝트<br>
 
 ##  :triangular_flag_on_post: 목적
@@ -26,7 +26,7 @@
 - <b>spring-boot 2.6.3</b><br>
 - <b>mysql 8.0.23</b><br>
 
-## :memo: 개발 일지(최종 업데이트 : 2022년 5월 12일)
+## :memo: 개발 일지(최종 업데이트 : 2022년 5월 15일)
 - [[Feb 7, 2022] member domain create](https://github.com/LeeYongjun1030/rebook/commit/0ab21186312a220322ba584441f30b8acdd35a79)<br>
 - [[Feb 8, 2022] domain create](https://github.com/LeeYongjun1030/rebook/commit/3b506422c83b1469ba60eaa3c09ca4a91185113b)<br>
 - [[Feb 9, 2022] login create](https://github.com/LeeYongjun1030/rebook/commit/331f2c404716a05b9340bfde31ef8bdc320962f2)<br>
