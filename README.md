@@ -76,16 +76,18 @@
 ### :ballot_box_with_check: 도메인 개발<br>
 :heavy_check_mark: lombok라이브러리를 활용하여 getter, setter, constructor 코드를 간단히 작성<br>
 :heavy_check_mark: 엔티티 매핑을 위해 엔티티 설정 및 PK 생성<br>
+:heavy_check_mark: 도메인 주도 개발을 위해 비즈니스 로직을 도메인에 작성한다.<br>
 
 ### :ballot_box_with_check: 리포지토리 개발<br>
 :heavy_check_mark: 어떠한 데이터베이스를 사용할 지 정해지지 않은 상황을 가정하였으므로, 데이터베이스는 유연하게 변경가능해야 한다.<br>
 :heavy_check_mark: 데이터베이스에 접근하는 리포지토리는 인터페이스를 활용하여 개발하고 구현체를 따로 만들어준다.<br>
 :heavy_check_mark: 이때 여러 구현체에 대해 중복 빈 문제가 발생할 수 있으므로 사용할 구현체에는 @Primary 어노테이션을 달아준다.<br>
 :heavy_check_mark: 엔티티 매니저를 주입하여 엔티티를 관리하고 db에 접근할 수 있도록 해준다.<br>
+:heavy_check_mark: fectch join을 통해 쿼리 중복 발생 문제를 막는다.<br>
 
 ### :ballot_box_with_check: 서비스 개발<br>
 :heavy_check_mark: 리포지토리에 접근할 수 있도록 연관관계를 주입시켜 준다. 연관관계 주입은 생성자 주입 방법을 사용한다.<br>
-:heavy_check_mark: 핵심 비즈니스 로직이 서비스 안에 담기도록 설계한다.<br>
+:heavy_check_mark: 도메인 내의 비즈니스 로직을 활용하여 핵심 서비스를 개발한다.<br>
 
 ### :ballot_box_with_check: 컨트롤러 개발<br>
 :heavy_check_mark: 서비스를 주입받아 필요 서비스를 수행할 수 있도록 한다.<br>
