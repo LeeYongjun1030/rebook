@@ -74,12 +74,12 @@
 </details>
 
 ### :ballot_box_with_check: 도메인 개발<br>
-:heavy_check_mark: lombok라이브러리를 활용하여 getter, setter, constructor 코드를 간단히 작성<br>
+:heavy_check_mark: lombok 라이브러리를 활용하여 getter, constructor 코드를 간단히 작성. setter는 만들지 않는다.<br>
 :heavy_check_mark: 엔티티 매핑을 위해 엔티티 설정 및 PK 생성<br>
 :heavy_check_mark: 도메인 주도 개발을 위해 비즈니스 로직을 도메인에 작성한다.<br>
 
 ### :ballot_box_with_check: 리포지토리 개발<br>
-:heavy_check_mark: 어떠한 데이터베이스를 사용할 지 정해지지 않은 상황을 가정하였으므로, 데이터베이스는 유연하게 변경가능해야 한다.<br>
+:heavy_check_mark: 어떠한 데이터베이스를 사용할 지 정해지지 않은 상황을 가정하였으므로, 데이터베이스는 유연하게 변경가능해야 한다.(OCP원칙)<br>
 :heavy_check_mark: 데이터베이스에 접근하는 리포지토리는 인터페이스를 활용하여 개발하고 구현체를 따로 만들어준다.<br>
 :heavy_check_mark: 이때 여러 구현체에 대해 중복 빈 문제가 발생할 수 있으므로 사용할 구현체에는 @Primary 어노테이션을 달아준다.<br>
 :heavy_check_mark: 엔티티 매니저를 주입하여 엔티티를 관리하고 db에 접근할 수 있도록 해준다.<br>
@@ -97,7 +97,7 @@
 :heavy_check_mark: 폼 객체 역시 별도로 두어 필요 정보만을 담을 수 있도록 한다.<br>
 
 
-### :ballot_box_with_check: 엔티티 매핑<br>
+### :ballot_box_with_check: ORM(Object Relational Mapping)<br>
 :heavy_check_mark: member와 review 엔티티는 1대N 매핑<br>
 :heavy_check_mark: book와 review 엔티티는 1대N 매핑<br>
 :heavy_check_mark: member와 order 엔티티는 1대N 매핑<br>
