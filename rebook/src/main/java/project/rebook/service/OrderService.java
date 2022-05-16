@@ -7,17 +7,12 @@ import project.rebook.domain.DiscountPolicy;
 import project.rebook.domain.Order;
 import project.rebook.domain.OrderBook;
 import project.rebook.domain.book.Book;
-import project.rebook.domain.member.Grade;
 import project.rebook.domain.member.Member;
 import project.rebook.repository.book.BookRepository;
 import project.rebook.repository.order.OrderRepository;
 import project.rebook.web.OrderForm;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -54,14 +49,12 @@ public class OrderService {
 
 
     /**
-     * orderBook, order를 만드는 메서드는 이미 클래스 안에 static으로 작성해두었다.
+     * orderBook, order를 만드는 메서드는 이미 클래스 안에 static으로 작성해두었다.(도메인 주도 설계)
      * 여기선 그 기능을 이용하여 직접 order를 작성해주는 서비스를 만들면 된다.
      * 인자로 받는 orderInfo의 키는 책 id, 값은 주문 수량이다.
      */
     @Transactional
     public void order(Member member, OrderForm orderForm) {
-        int totalQuantities = 0;
-        int totalPrice = 0;
 
         // 책과 수량을 확인하여 주문 생성
         List<Long> ids = orderForm.getIds();
@@ -69,19 +62,24 @@ public class OrderService {
 
         List<OrderBook> orderBooks = new ArrayList<>();
         for (int i = 0; i < ids.size(); i++) {
+
+            // 책 종류와 수량
             Book book = bookRepository.findById(ids.get(i));
             Integer quantity = quantities.get(i);
 
+            // orderbook 생성
             OrderBook orderBook = OrderBook.makeOrderBook(book, quantity);
             orderBooks.add(orderBook);
-
-            totalQuantities += quantity;
-            totalPrice += book.getPrice()*quantity;
         }
-        save(Order.makeOrder(member, orderBooks, totalQuantities, totalPrice));
+
+        // 주문 생성
+        Order order = Order.makeOrder(member, orderBooks);
+
+        // 주문 저장
+        save(order);
     }
 
-    public int getTotalPriceWithDiscount(Member member, int totalPrice) {
-        return discountPolicy.discount(member, totalPrice);
+    public int getPriceWithDiscount(Order order) {
+        return order.priceWithDiscount(discountPolicy);
     }
 }

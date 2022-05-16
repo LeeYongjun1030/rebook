@@ -54,9 +54,6 @@ public class ReviewController {
         Book book = bookService.findById(bookId);
         reviewService.createReview(addReviewForm, loginMember.getId(), book);
 
-        // 세션 업데이트
-        updateSession(loginMember);
-
         model.addAttribute("book", BookDto.from(book));
         return "redirect:/books/" + bookId;
     }
@@ -88,16 +85,7 @@ public class ReviewController {
         if(deleteReview.getIds() != null){
             reviewService.deleteReviews(loginMember.getId(), deleteReview.getIds());
         }
-
-        // 세션 업데이트
-        updateSession(loginMember);
         return "redirect:/review/list";
-    }
-
-    private void updateSession(Member loginMember) {
-        Member existMember = memberService.findById(loginMember.getId());
-        loginMember.setGrade(existMember.getGrade());
-        loginMember.setNumberOfReviews(existMember.getNumberOfReviews());
     }
 
 }

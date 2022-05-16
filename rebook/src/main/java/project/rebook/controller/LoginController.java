@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import project.rebook.domain.member.Member;
+import project.rebook.exception.UserNotFoundException;
 import project.rebook.service.MemberService;
 import project.rebook.web.LoginForm;
 import project.rebook.web.SessionConst;
@@ -46,7 +47,7 @@ public class LoginController {
                 session.setAttribute(SessionConst.LOGIN_MEMBER, member);
                 return "redirect:" + redirectURL;
             } else {
-                throw new Exception();
+                throw new UserNotFoundException();
             }
         } catch (Exception e) {
             // 로그인 실패

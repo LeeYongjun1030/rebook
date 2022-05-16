@@ -13,7 +13,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookService {
 
-    //bookRepository 자동 주입
     private final BookRepository bookRepository;
 
     @Transactional

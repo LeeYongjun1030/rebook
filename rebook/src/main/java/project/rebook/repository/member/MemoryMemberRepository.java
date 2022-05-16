@@ -1,7 +1,6 @@
 package project.rebook.repository.member;
 
 import org.springframework.stereotype.Repository;
-import project.rebook.domain.member.Grade;
 import project.rebook.domain.member.Member;
 
 import java.util.*;
@@ -14,7 +13,7 @@ public class MemoryMemberRepository implements MemberRepository {
 
     @Override
     public Long save(Member member){
-        member.setId(++sequence);
+        //member.setId(++sequence);
         Long id = member.getId();
         store.put(id, member);
         return id;
@@ -26,12 +25,12 @@ public class MemoryMemberRepository implements MemberRepository {
     }
 
     @Override
-    public Member findByLoginId(String loginId) throws Exception{
+    public Member findByLoginId(String loginId) throws RuntimeException{
         return null;
     }
 
     @Override
-    public Member findByNickname(String nickname) throws Exception {
+    public Member findByNickname(String nickname) throws RuntimeException {
         return null;
     }
 
@@ -40,9 +39,6 @@ public class MemoryMemberRepository implements MemberRepository {
         return new ArrayList<>(store.values());
     }
 
-    @Override
-    public void adjustNumberOfReviews(Long memberId, int change) {
-    }
 
     @Override
     public void clear() {

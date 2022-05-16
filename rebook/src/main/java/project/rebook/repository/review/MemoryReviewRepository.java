@@ -16,7 +16,7 @@ public class MemoryReviewRepository implements ReviewRepository {
 
     @Override
     public Long save(Review review) {
-        review.setId(++sequence);
+        //review.setId(++sequence);
         Long id = review.getId();
         store.put(id, review);
         return id;

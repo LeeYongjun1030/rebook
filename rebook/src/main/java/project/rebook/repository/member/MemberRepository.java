@@ -12,13 +12,11 @@ public interface MemberRepository {
 
     public Member findById(Long id);
 
-    public Member findByLoginId(String loginId) throws Exception;
+    public Member findByLoginId(String loginId) throws RuntimeException;
 
-    public Member findByNickname(String nickname) throws Exception;
+    public Member findByNickname(String nickname) throws RuntimeException;
 
     public List<Member> findAll();
-
-    public void adjustNumberOfReviews(Long memberId, int change);
 
     public void clear();
 }

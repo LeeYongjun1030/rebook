@@ -29,8 +29,8 @@
       <tr th:each="order : ${orders}">
         <td><a class="btn btn-info text-white" th:href="@{/orders/{orderId}(orderId=${order.id})}">상세 보기</a></td>
         <td th:text="${order.localDate}">주문 일시</td>
-        <td th:text="${order.totalOrderQuantities}">총 수량</td>
-        <td th:text="${#numbers.formatInteger(order.totalOrderPrice, 3, 'COMMA')}">총 가격</td>
+        <td th:text="${order.totalQuantities}">총 수량</td>
+        <td th:text="${#numbers.formatInteger(order.totalPrice, 3, 'COMMA')}">총 가격</td>
       </tr>
       </tbody>
     </table>

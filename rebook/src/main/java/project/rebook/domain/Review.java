@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Getter @Setter
+@Getter
 @NoArgsConstructor
 public class Review {
 

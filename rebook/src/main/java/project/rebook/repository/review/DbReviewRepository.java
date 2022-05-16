@@ -30,6 +30,7 @@ public class DbReviewRepository implements ReviewRepository {
     public List<Review> findByMemberId(Long memberId) {
         return em.createQuery(
                 "select r from Review r" +
+                        " join fetch r.book" +
                 " where r.member.id = :memberId", Review.class)
                 .setParameter("memberId", memberId)
                 .getResultList();
@@ -39,6 +40,7 @@ public class DbReviewRepository implements ReviewRepository {
     public List<Review> findByBookId(Long bookId) {
         return em.createQuery(
                 "select r from Review r" +
+                        " join fetch r.member" +
                         " where r.book.id = :bookId", Review.class)
                 .setParameter("bookId", bookId)
                 .getResultList();

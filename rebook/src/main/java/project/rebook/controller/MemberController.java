@@ -1,6 +1,7 @@
 package project.rebook.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -9,6 +10,7 @@ import project.rebook.service.MemberService;
 import project.rebook.web.AddMemberForm;
 
 @Controller
+@Slf4j
 @RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberController {
@@ -42,17 +44,18 @@ public class MemberController {
     }
 
     private void duplicateTest(AddMemberForm addMemberForm, BindingResult bindingResult) {
+        // 아이디 중복 검사
         try {
-            memberService.findByLoginId(addMemberForm.getLoginId());
+            memberService.isUsableLoginId(addMemberForm.getLoginId());
+        } catch (Exception e) {
             bindingResult.rejectValue("loginId", "duplicate");
-        } catch (Exception e) {
         }
 
+        // 닉네임 중복 검사
         try {
-            memberService.findByNickname(addMemberForm.getNickname());
-            bindingResult.rejectValue("nickname", "duplicate");
+            memberService.isUsableNickname(addMemberForm.getNickname());
         } catch (Exception e) {
+            bindingResult.rejectValue("nickname", "duplicate");
         }
-
     }
 }

@@ -7,7 +7,7 @@ import project.rebook.domain.member.Grade;
 import project.rebook.domain.member.Member;
 
 
-@Getter @Setter
+@Getter
 @AllArgsConstructor
 public class MemberDto {
 

@@ -6,11 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.rebook.domain.Order;
 import project.rebook.domain.dto.BookDto;
+import project.rebook.domain.dto.OrderDto;
 import project.rebook.domain.member.Member;
 import project.rebook.service.BookService;
 import project.rebook.service.OrderService;
-import project.rebook.domain.dto.MemberDto;
-import project.rebook.domain.dto.OrderDto;
+import project.rebook.domain.dto.OrderDetailDto;
 import project.rebook.web.OrderForm;
 import project.rebook.web.SessionConst;
 import java.util.List;
@@ -33,11 +33,15 @@ public class OrderController {
         return "order/orderForm";
     }
 
+    /**
+     * 주문 하기 폼
+     * 주문할 책 체크
+     */
     @PostMapping("/order")
     public String orderCheck(@ModelAttribute OrderForm orderForm, Model model) {
         List<Long> ids = orderForm.getIds();
         if (ids.isEmpty()) {
-            //선택된 항목이 없을 시 화면이 넘어가면 안됨
+            //체크된 항목이 없을 시 화면이 넘어가면 안됨
             return "redirect:/order";
         }
 
@@ -77,12 +81,10 @@ public class OrderController {
     public String orderDetail(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                               @PathVariable Long orderId, Model model) {
 
-        OrderDto orderDto = OrderDto.from(orderService.findById(orderId));
+        Order order = orderService.findById(orderId);
+        int priceWithDiscount = orderService.getPriceWithDiscount(order);
 
-        model.addAttribute("member", MemberDto.from(loginMember));
-        model.addAttribute("order", orderDto);
-        model.addAttribute("orderBooks", orderDto.getOrderBooks());
-        model.addAttribute("totalPriceWithDiscount", orderService.getTotalPriceWithDiscount(loginMember, orderDto.getTotalOrderPrice()));
+        model.addAttribute("order", OrderDetailDto.from(order, priceWithDiscount));
         return "order/detail";
     }
 

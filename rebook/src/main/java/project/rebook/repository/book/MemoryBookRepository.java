@@ -18,7 +18,7 @@ public class MemoryBookRepository implements BookRepository{
 
     @Override
     public Long save(Book book) {
-        book.setId(++sequence);
+        //book.setId(++sequence);
         Long id = book.getId();
         store.put(id, book);
         return id;

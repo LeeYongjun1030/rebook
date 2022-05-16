@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.rebook.domain.member.Grade;
 import project.rebook.domain.member.Member;
+import project.rebook.exception.UnusableLoginId;
+import project.rebook.exception.UnusableNickname;
 import project.rebook.repository.member.MemberRepository;
 import project.rebook.web.AddMemberForm;
 
@@ -30,13 +32,38 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public Member findByLoginId(String loginId) throws Exception {
+    public Member findByLoginId(String loginId) throws RuntimeException{
         return memberRepository.findByLoginId(loginId);
     }
 
     @Transactional(readOnly = true)
-    public Member findByNickname(String nickname) throws Exception{
-        return memberRepository.findByNickname(nickname);
+    public void isUsableLoginId(String loginId) {
+        boolean isAlreadyPresent;
+        try {
+            memberRepository.findByLoginId(loginId);
+            isAlreadyPresent = true;
+        } catch (Exception e) {
+            isAlreadyPresent = false;
+        }
+
+        if(isAlreadyPresent){
+            throw new UnusableLoginId();
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public void isUsableNickname(String nickname) {
+        boolean isAlreadyPresent;
+        try {
+            memberRepository.findByNickname(nickname);
+            isAlreadyPresent = true;
+        } catch (Exception e) {
+            isAlreadyPresent = false;
+        }
+
+        if(isAlreadyPresent){
+            throw new UnusableNickname();
+        }
     }
 
     @Transactional(readOnly = true)
@@ -58,10 +85,7 @@ public class MemberService {
                 Grade.NORMAL));
     }
 
-    @Transactional(readOnly = true)
-    public boolean verify(Member member, String id, String password) {
-        String existLoginId = member.getLoginId();
-        String existPassword = member.getPassword();
-        return existLoginId.equals(id) && passwordEncoder.matches(password, existPassword);
+    public boolean verify(Member member, String loginId, String password) {
+        return member.verify(loginId, password, passwordEncoder);
     }
 }

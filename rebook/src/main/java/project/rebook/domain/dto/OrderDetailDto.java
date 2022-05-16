@@ -12,19 +12,28 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class OrderDto {
+public class OrderDetailDto {
 
     private Long id;
+    private String memberName;
+    private int numOfReviews;
+    private Grade memberGrade;
     private LocalDate localDate;
     private int totalQuantities;
     private int totalPrice;
     private List<OrderBook> orderBooks = new ArrayList<>();
 
-    public static OrderDto from(Order order) {
-        return new OrderDto(order.getId(),
+    private int priceWithDiscount;
+
+    public static OrderDetailDto from(Order order, int priceWithDiscount) {
+        return new OrderDetailDto(order.getId(),
+                order.getMember().getNickname(),
+                order.getMember().getNumberOfReviews(),
+                order.getMember().getGrade(),
                 order.getLocalDate(),
                 order.getTotalQuantities(),
                 order.getTotalPrice(),
-                order.getOrderBooks());
+                order.getOrderBooks(),
+                priceWithDiscount);
     }
 }

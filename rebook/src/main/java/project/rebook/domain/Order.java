@@ -13,7 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "ORDERS")
-@Getter @Setter
+@Getter
 @NoArgsConstructor
 public class Order {
 
@@ -21,37 +21,59 @@ public class Order {
     @Column(name = "ORDER_ID")
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
+
     private LocalDate localDate;
 
     private int totalQuantities;
 
     private int totalPrice;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MEMBER_ID")
-    private Member member;
-
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderBook> orderBooks = new ArrayList<>();
 
-    /**
-     * 주문 생성
-     * 주의할 점 : orderBooks는 연관관계의 주인이 아니다.
-     * 연관관계 주인인 orderbook의 order에도 반드시 값을 대입해주어야 함
-     */
-    public static Order makeOrder(Member member, List<OrderBook> orderBooks, int totalQuantities, int totalPrice) {
-        Order order = new Order();
-        order.setMember(member);
-        order.setLocalDate(LocalDate.now());
-        order.setTotalQuantities(totalQuantities);
-        order.setTotalPrice(totalPrice);
 
-        List<OrderBook> orderBookList = new ArrayList<>();
+    public void addOrderInfo(Member member, LocalDate localDate, int totalQuantities, int totalPrice) {
+        this.member = member;
+        this.localDate = localDate;
+        this.totalQuantities = totalQuantities;
+        this.totalPrice = totalPrice;
+    }
+
+    // 연관 관계 편의 메서드
+    public void addOrderBook(OrderBook orderBook) {
+        this.orderBooks.add(orderBook);
+        orderBook.assignOrder(this);
+    }
+
+
+    /**
+     * 비즈니스 로직
+     */
+
+    // 주문 생성
+    public static Order makeOrder(Member member, List<OrderBook> orderBooks) {
+
+        Order order = new Order();
+
+        int totalQuantities = 0;
+        int totalPrice = 0;
+
         for (OrderBook orderBook : orderBooks) {
-            orderBook.setOrder(order); //연관관계 주인
-            orderBookList.add(orderBook); // 리스트 조회를 위한 메서드
+            int quantity = orderBook.getQuantity();
+            totalQuantities += quantity;
+            totalPrice += orderBook.getBook().getPrice()*quantity;
+
+            order.addOrderBook(orderBook);
         }
-        order.setOrderBooks(orderBookList);
+        order.addOrderInfo(member, LocalDate.now(), totalQuantities, totalPrice);
         return order;
+    }
+
+    // 결제 금액
+    public int priceWithDiscount(DiscountPolicy discountPolicy) {
+        return discountPolicy.discount(this.member, this.totalPrice);
     }
 }

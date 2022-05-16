@@ -8,7 +8,6 @@ import project.rebook.domain.Review;
 import java.time.LocalDate;
 
 @Getter
-@Setter
 @AllArgsConstructor
 public class ReviewDto {
 

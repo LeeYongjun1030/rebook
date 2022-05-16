@@ -7,7 +7,6 @@ import project.rebook.domain.book.Book;
 import project.rebook.domain.book.Category;
 
 @Getter
-@Setter
 @AllArgsConstructor
 public class BookDto {
 

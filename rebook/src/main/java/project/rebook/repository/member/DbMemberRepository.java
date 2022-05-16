@@ -31,11 +31,20 @@ public class DbMemberRepository implements MemberRepository {
     }
 
     @Override
-    public Member findByLoginId(String loginId) throws Exception {
+    public Member findByLoginId(String loginId) throws RuntimeException {
         return em.createQuery(
                 "select m from Member m" +
                         " where m.loginId = :loginId", Member.class)
                 .setParameter("loginId", loginId)
+                .getSingleResult();
+    }
+
+    @Override
+    public Member findByNickname(String nickname) throws RuntimeException {
+        return em.createQuery(
+                "select m from Member m" +
+                        " where m.nickname = :nickname", Member.class)
+                .setParameter("nickname", nickname)
                 .getSingleResult();
     }
 
@@ -45,28 +54,7 @@ public class DbMemberRepository implements MemberRepository {
                 .getResultList();
     }
 
-    @Override
-    public void adjustNumberOfReviews(Long memberId, int change) {
-        Member member = findById(memberId);
-        int current = member.getNumberOfReviews();
-        member.setNumberOfReviews(current+change);
 
-        // 리뷰 개수에 따른 등급 업데이트
-        if (member.getNumberOfReviews() >= GradeConst.NUM_of_REVIEWS_to_VIP) {
-            member.setGrade(Grade.VIP);
-        } else {
-            member.setGrade(Grade.NORMAL);
-        }
-    }
-
-    @Override
-    public Member findByNickname(String nickname) throws Exception {
-        return em.createQuery(
-                "select m from Member m" +
-                        " where m.nickname = :nickname", Member.class)
-                .setParameter("nickname", nickname)
-                .getSingleResult();
-    }
 
     @Override
     public void clear() {
