@@ -26,7 +26,7 @@
 - <b>spring-boot 2.6.3</b><br>
 - <b>mysql 8.0.23</b><br>
 
-## :memo: 개발 일지(최종 업데이트 : 2022년 5월 15일)
+## :memo: 개발 일지(최종 업데이트 : 2022년 5월 16일)
 - [[Feb 7, 2022] member domain create](https://github.com/LeeYongjun1030/rebook/commit/0ab21186312a220322ba584441f30b8acdd35a79)<br>
 - [[Feb 8, 2022] domain create](https://github.com/LeeYongjun1030/rebook/commit/3b506422c83b1469ba60eaa3c09ca4a91185113b)<br>
 - [[Feb 9, 2022] login create](https://github.com/LeeYongjun1030/rebook/commit/331f2c404716a05b9340bfde31ef8bdc320962f2)<br>
@@ -42,6 +42,7 @@
 - [[Apr 27, 2022] findByLoginId add , transaction update](https://github.com/LeeYongjun1030/rebook/commit/e23e8c25b0e07ff28c6925305a0bc7b65a9305a4)<br>
 - [[May 12, 2022] refactoring service and controller](https://github.com/LeeYongjun1030/rebook/commit/cced3fa6c86addeec8291c6d1645de387bd00e49)<br>
 - [[May 15, 2022] encrypt password using spring security](https://github.com/LeeYongjun1030/rebook/commit/6705916c9d74498c423bde497795b7ff264d39c0)<br>
+- [[May 16, 2022] exception, service refactoring](https://github.com/LeeYongjun1030/rebook/commit/09a2a15d14ba10da67b80a9c002f7b9d3bd6dcb1)<br>
 
 
 ## :pushpin: 차례  
