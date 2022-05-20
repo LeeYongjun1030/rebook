@@ -45,32 +45,39 @@ public class ReviewService {
     }
 
     @Transactional
-    public void deleteReviews(Long memberId, List<Long> ids) {
+    public Member deleteReviews(Long memberId, List<Long> ids) {
+
         // 선택된 리뷰들 삭제
-        ids.stream().map(this::findById).forEach(reviewRepository::delete);
+        for (Long id : ids) {
+            Review review = reviewRepository.findById(id);
+            reviewRepository.delete(review);
+        }
 
         // 리뷰 개수 업데이트
         Member member = memberRepository.findById(memberId);
         member.decreaseNumberOfReviews(ids.size());
+        return member;
     }
 
     @Transactional
-    public void createReview(AddReviewForm addReviewForm, Long memberId, Book book) {
+    public Member createReview(AddReviewForm addReviewForm, Long memberId, Book book) {
+
+        Member member = memberRepository.findById(memberId);
 
         // 리뷰 생성
         Review review = new Review(
                 addReviewForm.getComment(),
                 addReviewForm.getRate(),
                 LocalDate.now(),
-                memberRepository.findById(memberId),
+                member,
                 book);
 
         // 리뷰 저장
-        save(review);
+        reviewRepository.save(review);
 
         // 리뷰 개수 업데이트
-        Member member = memberRepository.findById(memberId);
         member.increaseNumberOfReviews();
+        return member;
     }
 
 }

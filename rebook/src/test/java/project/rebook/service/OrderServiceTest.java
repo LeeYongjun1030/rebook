@@ -1,108 +1,122 @@
 package project.rebook.service;
 
-import org.aspectj.weaver.ast.Or;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
 import project.rebook.domain.Order;
 import project.rebook.domain.OrderBook;
 import project.rebook.domain.book.Book;
-import project.rebook.domain.member.Grade;
 import project.rebook.domain.member.Member;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import project.rebook.repository.book.BookRepository;
+import project.rebook.repository.order.OrderRepository;
+import project.rebook.web.OrderForm;
+import java.util.*;
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.*;
 
-@Transactional
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class OrderServiceTest {
 
-    @Autowired OrderService orderService;
-    @Autowired MemberService memberService;
-    @Autowired BookService bookService;
+    @InjectMocks
+    OrderService orderService;
+
+    @Mock
+    OrderRepository orderRepository;
+
+    @Mock
+    BookRepository bookRepository;
 
     @Test
+    @DisplayName("주문 저장")
     void save() {
+
         //given
         Order order = new Order();
-        Long orderId = orderService.save(order);
+        Long orderId = 1L;
+
+        //mocking
+        given(orderRepository.save(any()))
+                .willReturn(orderId);
+        given(orderRepository.findById(orderId))
+                .willReturn(order);
 
         //when
-        Order findOrder = orderService.findById(orderId);
+        Long findId = orderService.save(order);
+        Order findOrder = orderRepository.findById(findId);
 
         //then
         assertThat(findOrder).isEqualTo(order);
     }
 
     @Test
+    @DisplayName("회원의 주문 목록 조회")
     void findByMemberId() {
         //given
-        Member member = new Member();
-        Long memberId = memberService.save(member);
+        List<Order> orders = new ArrayList<>();
+        Long memberId = 1L;
 
-        Order order1 = new Order();
-        order1.setMember(member);
-        orderService.save(order1);
-
-        Order order2 = new Order();
-        order2.setMember(member);
-        orderService.save(order2);
+        //mocking
+        given(orderRepository.findByMemberId(memberId))
+                .willReturn(orders);
 
         //when
-        List<Order> orders = orderService.findByMemberId(memberId);
+        List<Order> findOrders = orderService.findByMemberId(memberId);
 
         //then
-        assertThat(orders).contains(order1, order2);
+        assertThat(findOrders).isEqualTo(orders);
 
     }
 
     @Test
-    void getOrderTotalPrice() {
+    @DisplayName("주문 생성")
+    void createOrder() {
 
-        // given
-        Book book1 = new Book();
-        book1.setPrice(3000);
-        Long bookId1 = bookService.save(book1);
+        //static method mocking
+        MockedStatic<OrderBook> orderBook = mockStatic(OrderBook.class);
+        MockedStatic<Order> order = mockStatic(Order.class);
 
-        Book book2 = new Book();
-        book2.setPrice(4000);
-        Long bookId2 = bookService.save(book2);
+        //given
+        List<Long> ids = new ArrayList<>();
+        ids.add(1L);
+        ids.add(2L);
 
-        Map<Long, Integer> orderInfo = new HashMap<>();
-        orderInfo.put(bookId1, 3);
-        orderInfo.put(bookId2, 5);
+        List<Integer> quantities = new ArrayList<>();
+        quantities.add(10);
+        quantities.add(20);
 
-        Order order = orderService.order(null, orderInfo);
+        OrderForm orderForm = new OrderForm(ids, quantities);
+
+        Book book = new Book();
+        Long bookId = 1L;
+        Book book2= new Book();
+        Long book2Id = 2L;
+
+        List<OrderBook> orderBooks = new ArrayList<>();
+        OrderBook orderBook1 = OrderBook.makeOrderBook(book, quantities.get(0));
+        OrderBook orderBook2 = OrderBook.makeOrderBook(book2, quantities.get(1));
+        orderBooks.add(orderBook1);
+        orderBooks.add(orderBook2);
+
+        Member member = new Member();
+        Order mockOrder = Order.makeOrder(member, orderBooks);
+
+        //mocking
+        given(bookRepository.findById(bookId)).willReturn(book);
+        given(bookRepository.findById(book2Id)).willReturn(book2);
+        given(OrderBook.makeOrderBook(book, quantities.get(0))).willReturn(orderBook1);
+        given(OrderBook.makeOrderBook(book2, quantities.get(1))).willReturn(orderBook2);
+        given(Order.makeOrder(member, orderBooks)).willReturn(mockOrder);
 
         //when
-        Order findOrder = orderService.findById(orderId);
+        Order findOrder = orderService.order(new Member(), orderForm);
 
         //then
-        int orderTotalPrice = orderService.getOrderTotalPrice(findOrder);
-        assertThat(orderTotalPrice).isEqualTo(3000*3 + 4000*5);
-    }
+        Assertions.assertThat(findOrder).isEqualTo(mockOrder);
 
-    @Test
-    void getDiscountPrice() {
-
-        //NORMAL 멤버의 경우 가격 할인이 적용되지 않아야 한다.
-        Member member = new Member();
-        member.setGrade(Grade.NORMAL);
-        int totalPriceWithDiscount = orderService.getTotalPriceWithDiscount(member, 10000);
-        assertThat(totalPriceWithDiscount).isEqualTo(10000);
-
-        //VIP 멤버의 경우 가격 할인이 적용되어야 한다.
-        Member member2 = new Member();
-        member2.setGrade(Grade.VIP);
-        int totalPriceWithDiscount2 = orderService.getTotalPriceWithDiscount(member2, 10000);
-        assertThat(totalPriceWithDiscount2).isEqualTo(9000);
-
-
+        orderBook.close();
+        order.close();
     }
 }

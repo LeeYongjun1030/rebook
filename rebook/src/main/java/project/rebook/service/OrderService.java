@@ -54,7 +54,7 @@ public class OrderService {
      * 인자로 받는 orderInfo의 키는 책 id, 값은 주문 수량이다.
      */
     @Transactional
-    public void order(Member member, OrderForm orderForm) {
+    public Order order(Member member, OrderForm orderForm) {
 
         // 책과 수량을 확인하여 주문 생성
         List<Long> ids = orderForm.getIds();
@@ -76,10 +76,7 @@ public class OrderService {
         Order order = Order.makeOrder(member, orderBooks);
 
         // 주문 저장
-        save(order);
-    }
-
-    public int getPriceWithDiscount(Order order) {
-        return order.priceWithDiscount(discountPolicy);
+        orderRepository.save(order);
+        return order;
     }
 }

@@ -8,9 +8,15 @@ import org.hibernate.validator.constraints.Range;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
-@Getter @Setter
+@Getter
 public class OrderForm {
 
     private List<Long> ids;
     private List<Integer> quantities;
+
+
+    public OrderForm(List<Long> ids, List<Integer> quantities) {
+        this.ids = ids;
+        this.quantities = quantities;
+    }
 }

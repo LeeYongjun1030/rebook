@@ -77,15 +77,11 @@ public class MemberService {
     }
 
     @Transactional
-    public void createMember(AddMemberForm addMemberForm) {
-        save(new Member(addMemberForm.getNickname(),
+    public Long createMember(AddMemberForm addMemberForm) {
+        return memberRepository.save((new Member(addMemberForm.getNickname(),
                 addMemberForm.getLoginId(),
                 passwordEncoder.encode(addMemberForm.getPassword()),
                 0,
-                Grade.NORMAL));
-    }
-
-    public boolean verify(Member member, String loginId, String password) {
-        return member.verify(loginId, password, passwordEncoder);
+                Grade.NORMAL)));
     }
 }

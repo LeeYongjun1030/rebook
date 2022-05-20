@@ -1,6 +1,7 @@
 package project.rebook.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpSession;
 public class LoginController {
 
     private final MemberService memberService;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * 로그인
@@ -41,7 +43,7 @@ public class LoginController {
         // 로그인
         try {
             Member member = memberService.findByLoginId(loginForm.getLoginId());
-            if (memberService.verify(member, loginForm.getLoginId(), loginForm.getPassword())) {
+            if (member.verify(loginForm.getLoginId(), loginForm.getPassword(), passwordEncoder)) {
                 // 로그인 성공 -> 로그인 유지를 위한 세션 생성
                 HttpSession session = request.getSession();
                 session.setAttribute(SessionConst.LOGIN_MEMBER, member);

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import project.rebook.domain.DiscountPolicy;
 import project.rebook.domain.Order;
 import project.rebook.domain.dto.BookDto;
 import project.rebook.domain.dto.OrderDto;
@@ -22,6 +23,7 @@ public class OrderController {
 
     private final OrderService orderService;
     private final BookService bookService;
+    private final DiscountPolicy discountPolicy;
 
     /**
      * 주문 하기 폼
@@ -82,7 +84,7 @@ public class OrderController {
                               @PathVariable Long orderId, Model model) {
 
         Order order = orderService.findById(orderId);
-        int priceWithDiscount = orderService.getPriceWithDiscount(order);
+        int priceWithDiscount = order.priceWithDiscount(discountPolicy);
 
         model.addAttribute("order", OrderDetailDto.from(order, priceWithDiscount));
         return "order/detail";

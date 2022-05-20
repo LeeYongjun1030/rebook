@@ -1,158 +1,148 @@
 package project.rebook.service;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.BDDMockito;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import project.rebook.domain.Review;
 import project.rebook.domain.book.Book;
 import project.rebook.domain.book.Category;
+import project.rebook.domain.member.Grade;
 import project.rebook.domain.member.Member;
+import project.rebook.repository.member.MemberRepository;
+import project.rebook.repository.review.ReviewRepository;
+import project.rebook.web.AddReviewForm;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.BDDMockito.*;
 
-@SpringBootTest
-@Transactional
+@ExtendWith(MockitoExtension.class)
 class ReviewServiceTest {
 
-    @Autowired ReviewService reviewService;
-    @Autowired MemberService memberService;
-    @Autowired BookService bookService;
+    @InjectMocks
+    ReviewService reviewService;
+
+    @Mock
+    MemberRepository memberRepository;
+
+    @Mock
+    ReviewRepository reviewRepository;
 
     @Test
+    @DisplayName("리뷰 저장")
     void save() {
         //given
         Review review = new Review();
-        Long saveId = reviewService.save(review);
+        Long reviewId = 1L;
+
+        //mocking
+        given(reviewRepository.save(review))
+                .willReturn(reviewId);
+        given(reviewRepository.findById(reviewId))
+                .willReturn(review);
 
         //when
-        Review findReview = reviewService.findById(saveId);
+        Long findId = reviewService.save(review);
+        Review findReview = reviewRepository.findById(findId);
+
 
         //then
         assertThat(findReview).isEqualTo(review);
     }
 
-    /**
-     * findByMemberId()와 findByBookId() 테스트
-     * 상황 : 멤버는 A, B 두 명이 있고 책은 a, b, c 세 권이 있다.
-
-     * 멤버 A -> 책 a, b에 리뷰
-     * 멤버 B -> 책 b, c에 리뷰
-     */
-
     @Test
+    @DisplayName("멤버 아이디로 리뷰 목록 조회")
     void findByMemberId() {
         //given
-        Member memberA = new Member();
-        memberA.setNickname("member A");
-        Long saveIdA = memberService.save(memberA);
+        List<Review> reviews = new ArrayList<>();
+        reviews.add(new Review());
 
-        Member memberB = new Member();
-        memberB.setNickname("member B");
-        Long saveIdB = memberService.save(memberB);
-
-        Book bookA = new Book("bookA", "star", Category.SCIENCE, 10000);
-        bookService.save(bookA);
-
-        Book bookB = new Book("bookB", "moon", Category.SCIENCE, 20000);
-        bookService.save(bookB);
-
-        Book bookC = new Book("bookC", "sun", Category.SCIENCE, 30000);
-        bookService.save(bookC);
-
-        Review review1 = new Review();
-        review1.setComment("comment from member A to book A");
-        review1.setMember(memberA);
-        review1.setBook(bookA);
-        reviewService.save(review1);
-
-        Review review2 = new Review();
-        review2.setComment("comment from member A to book B");
-        review2.setMember(memberA);
-        review2.setBook(bookB);
-        reviewService.save(review2);
-
-        Review review3 = new Review();
-        review3.setComment("comment from member B to book B");
-        review3.setMember(memberB);
-        review3.setBook(bookB);
-        reviewService.save(review3);
-
-        Review review4 = new Review();
-        review4.setComment("comment from member B to book C");
-        review4.setMember(memberB);
-        review4.setBook(bookC);
-        reviewService.save(review4);
+        //mocking
+        given(reviewRepository.findByMemberId(any()))
+                .willReturn(reviews);
 
         //when
-        List<Review> reviewFromMemberA = reviewService.findByMemberId(saveIdA);
-        for (Review review : reviewFromMemberA) {
-            System.out.println("review.getComment = " + review.getComment());
-        }
-
-        List<Review> reviewFromMemberB = reviewService.findByMemberId(saveIdB);
-        for (Review review : reviewFromMemberB) {
-            System.out.println("review.getComment = " + review.getComment());
-        }
+        List<Review> findReviews = reviewService.findByMemberId(1L);
 
         //then
-        assertThat(reviewFromMemberA).contains(review1, review2); // 멤버 A가 쓴 리뷰는 2개여야 한다.
-        assertThat(reviewFromMemberB).contains(review3, review4); // 멤버 B가 쓴 리뷰는 2개여야 한다.
+        assertThat(findReviews).isEqualTo(reviews);
     }
 
     @Test
+    @DisplayName("책 아이디로 리뷰 목록 조회")
     void findByBookId() {
         //given
-        Member memberA = new Member();
-        memberA.setNickname("member A");
-        memberService.save(memberA);
+        List<Review> reviews = new ArrayList<>();
+        reviews.add(new Review());
 
-        Member memberB = new Member();
-        memberB.setNickname("member B");
-        memberService.save(memberB);
-
-        Book bookA = new Book("bookA", "star", Category.SCIENCE, 10000);
-        Long saveIdA = bookService.save(bookA);
-
-        Book bookB = new Book("bookB", "moon", Category.SCIENCE, 20000);
-        Long saveIdB = bookService.save(bookB);
-
-        Book bookC = new Book("bookC", "sun", Category.SCIENCE, 30000);
-        Long saveIdC = bookService.save(bookC);
-
-        Review review1 = new Review();
-        review1.setComment("comment from member A to book A");
-        review1.setMember(memberA);
-        review1.setBook(bookA);
-        reviewService.save(review1);
-
-        Review review2 = new Review();
-        review2.setComment("comment from member A to book B");
-        review2.setMember(memberA);
-        review2.setBook(bookB);
-        reviewService.save(review2);
-
-        Review review3 = new Review();
-        review3.setComment("comment from member B to book B");
-        review3.setMember(memberB);
-        review3.setBook(bookB);
-        reviewService.save(review3);
-
-        Review review4 = new Review();
-        review4.setComment("comment from member B to book C");
-        review4.setMember(memberB);
-        review4.setBook(bookC);
-        reviewService.save(review4);
+        //mocking
+        given(reviewRepository.findByBookId(any()))
+                .willReturn(reviews);
 
         //when
-        List<Review> reviewFromBookA = reviewService.findByBookId(saveIdA);
-        List<Review> reviewFromBookB = reviewService.findByBookId(saveIdB);
+        List<Review> findReviews = reviewService.findByBookId(1L);
 
         //then
-        assertThat(reviewFromBookA).contains(review1); // 책 A에는 리뷰가 1개 있어야 한다.
-        assertThat(reviewFromBookB).contains(review2, review3); // 책 B에는 리뷰가 2개 있어야 한다.
+        assertThat(findReviews).isEqualTo(reviews);
+
+    }
+
+    @Test
+    @DisplayName("리뷰 삭제 및 삭제 개수만큼 리뷰 수 감소")
+    void deleteReviews() {
+
+        //given
+        int initReviews = 10;
+        int deleteReviews = 2;
+        List<Long> ids = new ArrayList<>();
+        for (Long i = 0L; i < deleteReviews; i++) {
+            ids.add(i);
+        }
+
+        Member member = new Member("test", "testLoginId", "testPassword", initReviews, Grade.NORMAL);
+        Long memberId = 1L;
+        
+        //mocking
+        given(reviewRepository.findById(any()))
+                .willReturn(new Review());
+        given(memberRepository.findById(memberId))
+                .willReturn(member);
+
+        //when
+        Member findMember = reviewService.deleteReviews(memberId, ids);
+
+        //then
+        int laterReviews = initReviews - deleteReviews;
+        assertThat(findMember.getNumberOfReviews()).isEqualTo(laterReviews);
+
+    }
+
+    @Test
+    @DisplayName("리뷰 등록 및 리뷰 수 증가")
+    void createReview() {
+
+        //given
+        int initReviews = 10;
+        Member member = new Member("test", "testLoginId", "testPassword", initReviews, Grade.NORMAL);
+        Long memberId = 1L;
+
+        //mocking
+        given(memberRepository.findById(memberId))
+                .willReturn(member);
+
+        //when
+        Member findMember = reviewService.createReview(new AddReviewForm(), memberId, new Book());
+
+        //then : 리뷰 수 1 증가
+        int laterReviews = initReviews + 1;
+        assertThat(findMember.getNumberOfReviews()).isEqualTo(laterReviews);
+
     }
 
 }
