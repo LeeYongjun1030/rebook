@@ -37,7 +37,7 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public void isUsableLoginId(String loginId) {
+    public boolean isUsableLoginId(String loginId) {
         boolean isAlreadyPresent;
         try {
             memberRepository.findByLoginId(loginId);
@@ -46,13 +46,15 @@ public class MemberService {
             isAlreadyPresent = false;
         }
 
-        if(isAlreadyPresent){
+        if (isAlreadyPresent) {
             throw new UnusableLoginId();
+        } else {
+            return true;
         }
     }
 
     @Transactional(readOnly = true)
-    public void isUsableNickname(String nickname) {
+    public boolean isUsableNickname(String nickname) {
         boolean isAlreadyPresent;
         try {
             memberRepository.findByNickname(nickname);
@@ -61,8 +63,10 @@ public class MemberService {
             isAlreadyPresent = false;
         }
 
-        if(isAlreadyPresent){
+        if (isAlreadyPresent) {
             throw new UnusableNickname();
+        } else {
+            return true;
         }
     }
 
