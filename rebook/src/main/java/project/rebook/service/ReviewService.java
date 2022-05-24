@@ -24,17 +24,14 @@ public class ReviewService {
         return reviewRepository.save(review);
     }
 
-    @Transactional(readOnly = true)
     public Review findById(Long id) {
         return reviewRepository.findById(id);
     }
 
-    @Transactional(readOnly = true)
     public List<Review> findByMemberId(Long memberId) {
         return reviewRepository.findByMemberId(memberId);
     }
 
-    @Transactional(readOnly = true)
     public List<Review> findByBookId(Long bookId) {
         return reviewRepository.findByBookId(bookId);
     }

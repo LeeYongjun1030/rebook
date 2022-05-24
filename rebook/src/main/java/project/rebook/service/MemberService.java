@@ -26,17 +26,14 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-    @Transactional(readOnly = true)
     public Member findById(Long id) {
         return memberRepository.findById(id);
     }
 
-    @Transactional(readOnly = true)
     public Member findByLoginId(String loginId) throws RuntimeException{
         return memberRepository.findByLoginId(loginId);
     }
 
-    @Transactional(readOnly = true)
     public boolean isUsableLoginId(String loginId) {
         boolean isAlreadyPresent;
         try {
@@ -53,7 +50,6 @@ public class MemberService {
         }
     }
 
-    @Transactional(readOnly = true)
     public boolean isUsableNickname(String nickname) {
         boolean isAlreadyPresent;
         try {
@@ -70,7 +66,6 @@ public class MemberService {
         }
     }
 
-    @Transactional(readOnly = true)
     public List<Member> findAll() {
         return memberRepository.findAll();
     }

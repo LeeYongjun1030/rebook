@@ -20,17 +20,14 @@ public class BookService {
         return bookRepository.save(book);
     }
 
-    @Transactional(readOnly = true)
     public Book findById(Long id) {
         return bookRepository.findById(id);
     }
 
-    @Transactional(readOnly = true)
     public List<Book> findAll() {
         return bookRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
     public List<Book> findBooksFromIds(List<Long> ids) {
         List<Book> books = new ArrayList<>();
         for (Long id : ids) {

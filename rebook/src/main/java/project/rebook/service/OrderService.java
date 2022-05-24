@@ -20,19 +20,16 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final BookRepository bookRepository;
-    private final DiscountPolicy discountPolicy;
 
     @Transactional
     public Long save(Order order) {
         return orderRepository.save(order);
     }
 
-    @Transactional(readOnly = true)
     public Order findById(Long id) {
         return orderRepository.findById(id);
     }
 
-    @Transactional(readOnly = true)
     public List<Order> findByMemberId(Long memberId) {
         return orderRepository.findByMemberId(memberId);
     }
