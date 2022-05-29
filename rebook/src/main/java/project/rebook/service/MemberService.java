@@ -1,6 +1,7 @@
 package project.rebook.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,10 +12,12 @@ import project.rebook.exception.UnusableNickname;
 import project.rebook.repository.member.MemberRepository;
 import project.rebook.web.AddMemberForm;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class MemberService {
 
@@ -35,33 +38,21 @@ public class MemberService {
     }
 
     public boolean isUsableLoginId(String loginId) {
-        boolean isAlreadyPresent;
         try {
             memberRepository.findByLoginId(loginId);
-            isAlreadyPresent = true;
-        } catch (Exception e) {
-            isAlreadyPresent = false;
-        }
-
-        if (isAlreadyPresent) {
-            throw new UnusableLoginId();
-        } else {
+            return false;
+        } catch (RuntimeException e) {
+            // loginId 조회 결과 없음 -> 사용 가능한 loginId
             return true;
         }
     }
 
     public boolean isUsableNickname(String nickname) {
-        boolean isAlreadyPresent;
         try {
             memberRepository.findByNickname(nickname);
-            isAlreadyPresent = true;
-        } catch (Exception e) {
-            isAlreadyPresent = false;
-        }
-
-        if (isAlreadyPresent) {
-            throw new UnusableNickname();
-        } else {
+            return false;
+        } catch (RuntimeException e) {
+            // 닉네임 조회 결과 없음 -> 사용 가능한 닉네임
             return true;
         }
     }

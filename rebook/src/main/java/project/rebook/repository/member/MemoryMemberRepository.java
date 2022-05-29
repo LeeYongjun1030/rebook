@@ -25,12 +25,12 @@ public class MemoryMemberRepository implements MemberRepository {
     }
 
     @Override
-    public Member findByLoginId(String loginId) throws RuntimeException{
+    public Member findByLoginId(String loginId){
         return null;
     }
 
     @Override
-    public Member findByNickname(String nickname) throws RuntimeException {
+    public Member findByNickname(String nickname){
         return null;
     }
 

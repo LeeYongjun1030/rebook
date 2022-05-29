@@ -12,7 +12,7 @@ public class AddMemberForm {
     /**
      * 닉네임
      * 2~8자
-     * 한글 사용 가능
+     * 한글만 사용 가능
      */
     @Pattern(regexp="[가-힣]{2,8}")
     private String nickname;

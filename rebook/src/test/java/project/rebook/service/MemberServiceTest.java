@@ -14,6 +14,8 @@ import project.rebook.exception.UnusableLoginId;
 import project.rebook.exception.UnusableNickname;
 import project.rebook.repository.member.MemberRepository;
 import project.rebook.web.AddMemberForm;
+
+import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.List;
 import static org.assertj.core.api.Assertions.*;
@@ -106,12 +108,8 @@ class MemberServiceTest {
         given(memberRepository.findByLoginId(loginId))
                 .willReturn(new Member());
 
-
         //then
-        Assertions.assertThrows(UnusableLoginId.class, () -> {
-            memberService.isUsableLoginId(loginId);
-        });
-
+        assertThat(memberService.isUsableLoginId(loginId)).isEqualTo(false);
     }
 
     @Test
@@ -122,12 +120,10 @@ class MemberServiceTest {
 
         //mocking
         given(memberRepository.findByLoginId(loginId))
-                .willThrow(new RuntimeException());
+                .willThrow(new NoResultException());
 
         //then
-        Assertions.assertDoesNotThrow(()->{
-            memberService.isUsableLoginId(loginId);
-        });
+        assertThat(memberService.isUsableLoginId(loginId)).isEqualTo(true);
     }
 
     @Test
@@ -140,31 +136,22 @@ class MemberServiceTest {
         given(memberRepository.findByNickname(nickname))
                 .willReturn(new Member());
 
-
         //then
-        Assertions.assertThrows(UnusableNickname.class, () -> {
-            memberService.isUsableNickname(nickname);
-        });
-
-
+        assertThat(memberService.isUsableNickname(nickname)).isEqualTo(false);
     }
 
     @Test
     @DisplayName("닉네임이 중복되지 않으면 오류 발생 x")
     void 닉네임_중복x() {
         //given
-        String loginId = "test";
+        String nickname = "test";
 
         //mocking
-        given(memberRepository.findByLoginId(loginId))
+        given(memberRepository.findByNickname(nickname))
                 .willThrow(new RuntimeException());
 
         //then
-        Assertions.assertDoesNotThrow(()->{
-            memberService.isUsableLoginId(loginId);
-        });
-
-
+        assertThat(memberService.isUsableNickname(nickname)).isEqualTo(true);
     }
 
 }

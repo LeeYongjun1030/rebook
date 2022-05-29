@@ -31,7 +31,7 @@ public class DbMemberRepository implements MemberRepository {
     }
 
     @Override
-    public Member findByLoginId(String loginId) throws RuntimeException {
+    public Member findByLoginId(String loginId){
         return em.createQuery(
                 "select m from Member m" +
                         " where m.loginId = :loginId", Member.class)
@@ -40,7 +40,7 @@ public class DbMemberRepository implements MemberRepository {
     }
 
     @Override
-    public Member findByNickname(String nickname) throws RuntimeException {
+    public Member findByNickname(String nickname){
         return em.createQuery(
                 "select m from Member m" +
                         " where m.nickname = :nickname", Member.class)

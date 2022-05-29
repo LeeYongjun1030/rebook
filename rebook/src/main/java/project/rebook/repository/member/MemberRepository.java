@@ -12,9 +12,9 @@ public interface MemberRepository {
 
     public Member findById(Long id);
 
-    public Member findByLoginId(String loginId) throws RuntimeException;
+    public Member findByLoginId(String loginId);
 
-    public Member findByNickname(String nickname) throws RuntimeException;
+    public Member findByNickname(String nickname);
 
     public List<Member> findAll();
 
