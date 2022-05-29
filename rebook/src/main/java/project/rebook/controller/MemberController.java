@@ -45,12 +45,11 @@ public class MemberController {
 
     private void duplicateTest(AddMemberForm addMemberForm, BindingResult bindingResult) {
         // 아이디 중복 검사
-        if(!memberService.isUsableLoginId(addMemberForm.getLoginId())){
+        if(memberService.duplicateLoginId(addMemberForm.getLoginId())){
             bindingResult.rejectValue("loginId", "duplicate");
         }
-
         // 닉네임 중복 검사
-        if(!memberService.isUsableNickname(addMemberForm.getNickname())){
+        if(memberService.duplicateNickname(addMemberForm.getNickname())){
             bindingResult.rejectValue("nickname", "duplicate");
         }
     }

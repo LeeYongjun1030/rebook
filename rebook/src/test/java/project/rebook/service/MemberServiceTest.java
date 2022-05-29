@@ -99,7 +99,7 @@ class MemberServiceTest {
     }
 
     @Test
-    @DisplayName("로그인 아이디가 중복되면 오류 발생")
+    @DisplayName("로그인 아이디가 중복")
     void unusableLoginId() {
         //given
         String loginId = "test";
@@ -109,11 +109,11 @@ class MemberServiceTest {
                 .willReturn(new Member());
 
         //then
-        assertThat(memberService.isUsableLoginId(loginId)).isEqualTo(false);
+        assertThat(memberService.duplicateLoginId(loginId)).isEqualTo(true);
     }
 
     @Test
-    @DisplayName("로그인 아이디가 중복되지 않으면 오류 발생 x")
+    @DisplayName("로그인 아이디 중복 x")
     void usableLoginId() {
         //given
         String loginId = "test";
@@ -123,7 +123,7 @@ class MemberServiceTest {
                 .willThrow(new NoResultException());
 
         //then
-        assertThat(memberService.isUsableLoginId(loginId)).isEqualTo(true);
+        assertThat(memberService.duplicateLoginId(loginId)).isEqualTo(false);
     }
 
     @Test
@@ -137,7 +137,7 @@ class MemberServiceTest {
                 .willReturn(new Member());
 
         //then
-        assertThat(memberService.isUsableNickname(nickname)).isEqualTo(false);
+        assertThat(memberService.duplicateNickname(nickname)).isEqualTo(true);
     }
 
     @Test
@@ -151,7 +151,7 @@ class MemberServiceTest {
                 .willThrow(new RuntimeException());
 
         //then
-        assertThat(memberService.isUsableNickname(nickname)).isEqualTo(true);
+        assertThat(memberService.duplicateNickname(nickname)).isEqualTo(false);
     }
 
 }

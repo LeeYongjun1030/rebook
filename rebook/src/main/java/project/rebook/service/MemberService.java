@@ -37,23 +37,23 @@ public class MemberService {
         return memberRepository.findByLoginId(loginId);
     }
 
-    public boolean isUsableLoginId(String loginId) {
+    public boolean duplicateLoginId(String loginId) {
         try {
             memberRepository.findByLoginId(loginId);
-            return false;
+            return true;
         } catch (RuntimeException e) {
             // loginId 조회 결과 없음 -> 사용 가능한 loginId
-            return true;
+            return false;
         }
     }
 
-    public boolean isUsableNickname(String nickname) {
+    public boolean duplicateNickname(String nickname) {
         try {
             memberRepository.findByNickname(nickname);
-            return false;
+            return true;
         } catch (RuntimeException e) {
             // 닉네임 조회 결과 없음 -> 사용 가능한 닉네임
-            return true;
+            return false;
         }
     }
 

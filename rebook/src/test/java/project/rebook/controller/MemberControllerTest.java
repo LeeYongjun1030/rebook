@@ -10,9 +10,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import project.rebook.domain.member.Member;
-import project.rebook.exception.UnusableLoginId;
-import project.rebook.exception.UnusableNickname;
 import project.rebook.service.MemberService;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -67,7 +64,7 @@ class MemberControllerTest {
     @DisplayName("회원가입 실패 - 아이디 중복")
     void duplicateLoginId() throws Exception{
         //mocking
-        when(memberService.isUsableLoginId(any())).thenThrow(new UnusableLoginId());
+        when(memberService.duplicateLoginId(any())).thenReturn(true);
 
         mvc.perform(
                 post("/member/add")
@@ -82,7 +79,7 @@ class MemberControllerTest {
     @DisplayName("회원가입 실패 - 닉네임 중복")
     void duplicateNickname() throws Exception{
         //mocking
-        when(memberService.isUsableNickname(any())).thenThrow(new UnusableNickname());
+        when(memberService.duplicateNickname(any())).thenReturn(true);
 
         mvc.perform(
                 post("/member/add")
