@@ -159,6 +159,7 @@ order 클래스 안에 orderBook 리스트 객체를 담도록 한다.<br>
 :heavy_check_mark: 객체 지향 설계 원칙 최대한 지키면서 개발하기<br>
 :heavy_check_mark: 블로그 같은 웹 서칭도 좋지만 공식 문서 보는 습관 들이기<br>
 :heavy_check_mark: 개발 일지 잘 작성하기<br>
+:heavy_check_mark: 깊이있는 원리 학습이 제일 중요<br>
 
 <details markdown="1">
 <summary> :point_right: SOLID </summary>
@@ -833,12 +834,11 @@ Hibernate:
 개선을 통해 단 1번의 쿼리로 줄일 수 있게 되었다. <br>
  
 ## :pushpin: 6. 평가
-<br>
-:point_right: SOLID 원칙 준수<br>
+<SOLID 원칙 준수><br>
 SRP: 클래스를 역할에 맞게 잘 분리<br>
 OCP: 객체의 추상화(ex. 레포지터리)를 사용 및 느슨하게 연결 + 스프링 DI로 OCP 극대화<br>
 LSP: 하위 객체는 상위 객체의 철학을 맞춤(근데 상속, 구현을 사용할 일이 거의 없었음)<br>
-ISP: LSP와 마찬가지로 인터페이스를 사용할 일이 많이 없었음<br>
+ISP: 인터페이스를 잘 분리. 근데 LSP와 마찬가지로 인터페이스를 사용할 일이 많이 없었음<br>
 DIP: 추상화에 잘 의존함<br>
 
 <br>
