@@ -111,12 +111,20 @@
 :heavy_check_mark: 검증에 오류가 있다면 폼 객체를 다시 보여주도록 한다.<br>
 :heavy_check_mark: 회원가입 시에는 아이디, 닉네임의 중복 여부가 이루어져야 한다.<br>
 :heavy_check_mark: Spring Security를 활용하여 DB에는 암호화된 패스워드가 저장되도록 한다.<br>
-:heavy_check_mark: 검증 실패에 대한 에러 메시지는 resources안에 errors.properties 파일을 별도로 두어 에러 메시지를 관리하도록 한다.<br><br>
+
+<details markdown="1">
+<summary> :point_right: bcrypt 암호화 방법 자세히</summary>
+ <br>
+https://docs.spring.io/spring-security/reference/features/authentication/password-storage.html#authentication-password-storage<br>
+</details>
+
+:heavy_check_mark: 검증 실패에 대한 에러 메시지는 resources안에 errors.properties 파일을 별도로 두어 에러 메시지를 관리하도록 한다.<br>
 :heavy_check_mark: 로그인 성공 시에는 세션을 생성하여 정해진 시간동안 세션 정보를 계속 사용할 수 있도록 한다.<br>
 :heavy_check_mark: 주문, 리뷰 작성 페이지에는 비로그인 사용자가 접속하면 안되므로 로그인 여부를 확인하는 절차를 거쳐야 한다.<br>
 이를 위해 스프링 인터셉터를 사용한다. <br>
 :heavy_check_mark: 특정 페이지에는 컨트롤러에 매핑이 되기 전 인터셉트를 걸어서 로그인 여부를 판단하도록 하면 된다. 이때 비로그인이라면 로그인 화면으로 리다이렉트 시켜준다.<br>
 :heavy_check_mark: 현재 요청 주소를 RequestParam로 넘겨주어 로그인 성공 시 자동으로 원래 페이지로 redirect 될 수 있도록 해준다. <br>
+
 
 
 ### :ballot_box_with_check: 뷰 개발
@@ -145,14 +153,12 @@ order 클래스 안에 orderBook 리스트 객체를 담도록 한다.<br>
 
 
 <details markdown="1">
-<summary> :point_right: 컨트롤러 테스트 </summary>
-
+<summary> :point_right: 테스트 레퍼런스 </summary>
+스프링 공식 메뉴얼 : https://docs.spring.io/spring-security/reference/6.0.0-M5/servlet/test/index.html<br>
+컨트롤러 테스트 : https://esoongan.tistory.com/101<br>
+모킹(Mocking): https://galid1.tistory.com/772<br>
 </details>
 
-<details markdown="1">
-<summary> :point_right: 서비스 테스트 </summary>
-
-</details>
 
 
 ### :ballot_box_with_check: 기타
@@ -163,12 +169,16 @@ order 클래스 안에 orderBook 리스트 객체를 담도록 한다.<br>
 
 <details markdown="1">
 <summary> :point_right: SOLID </summary>
-
+내 블로그 참고 : https://yiyj1030.tistory.com/423?category=521632
 </details>
 
 
 <details markdown="1">
 <summary> :point_right: 스프링 공식 문서 </summary>
+
+스프링 MVC : https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc<br>
+스프링 부트 : https://docs.spring.io/spring-boot/docs/current/api/<br>
+스프링 부트 : https://docs.spring.io/spring-boot/docs/current/reference/html/index.html<br>
 
 </details>
 
