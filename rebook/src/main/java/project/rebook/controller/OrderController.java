@@ -47,7 +47,7 @@ public class OrderController {
             return "redirect:/order";
         }
 
-        List<BookDto> bookDtos = bookService.findBooksFromIds(ids).stream().map(BookDto::from).collect(Collectors.toList());
+        List<BookDto> bookDtos = bookService.selectBooks(ids).stream().map(BookDto::from).collect(Collectors.toList());
         model.addAttribute("books", bookDtos);
         return "order/addOrder";
     }

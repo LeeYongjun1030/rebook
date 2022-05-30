@@ -109,8 +109,6 @@ class ReviewServiceTest {
         Long memberId = 1L;
         
         //mocking
-        given(reviewRepository.findById(any()))
-                .willReturn(new Review());
         given(memberRepository.findById(memberId))
                 .willReturn(member);
 

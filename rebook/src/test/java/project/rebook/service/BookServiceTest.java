@@ -75,21 +75,23 @@ class BookServiceTest {
         Book book2 = new Book();
         Long book2Id = 2L;
 
+        List<Book> books = new ArrayList<>();
+        books.add(book);
+        books.add(book2);
+
         List<Long> testIds = new ArrayList<>();
         testIds.add(bookId);
         testIds.add(book2Id);
 
         //mocking
-        when(bookRepository.findById(bookId))
-                .thenReturn(book);
-        when(bookRepository.findById(book2Id))
-                .thenReturn(book2);
+        when(bookRepository.findByIdList(testIds))
+                .thenReturn(books);
 
 
         //when
-        List<Book> findBooks = bookService.findBooksFromIds(testIds);
+        List<Book> findBooks = bookService.selectBooks(testIds);
 
         //then
-        assertThat(findBooks).contains(book, book2);
+        assertThat(findBooks).isEqualTo(books);
     }
 }

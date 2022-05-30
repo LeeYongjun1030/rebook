@@ -45,10 +45,8 @@ public class ReviewService {
     public Member deleteReviews(Long memberId, List<Long> ids) {
 
         // 선택된 리뷰들 삭제
-        for (Long id : ids) {
-            Review review = reviewRepository.findById(id);
-            reviewRepository.delete(review);
-        }
+        reviewRepository.deleteByIdList(ids);
+
 
         // 리뷰 개수 업데이트
         Member member = memberRepository.findById(memberId);

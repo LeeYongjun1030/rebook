@@ -52,6 +52,15 @@ public class DbReviewRepository implements ReviewRepository {
     }
 
     @Override
+    public void deleteByIdList(List<Long> ids) {
+        em.createQuery(
+                "delete from Review r" +
+                         " where r.id in :ids")
+                .setParameter("ids", ids)
+                .executeUpdate();
+    }
+
+    @Override
     public void clear() {
         em.createQuery("delete from Review").executeUpdate();
     }

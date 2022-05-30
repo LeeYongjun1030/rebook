@@ -16,6 +16,8 @@ public interface ReviewRepository {
 
     public void delete(Review review);
 
+    public void deleteByIdList(List<Long> ids);
+
     public void clear();
 
 }

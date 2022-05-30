@@ -10,6 +10,8 @@ public interface BookRepository {
 
     public Book findById(Long id);
 
+    public List<Book> findByIdList(List<Long> ids);
+
     public List<Book> findAll();
 
     public void clear();

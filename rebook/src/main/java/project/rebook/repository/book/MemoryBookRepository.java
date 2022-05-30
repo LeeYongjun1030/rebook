@@ -30,6 +30,11 @@ public class MemoryBookRepository implements BookRepository{
     }
 
     @Override
+    public List<Book> findByIdList(List<Long> ids) {
+        return null;
+    }
+
+    @Override
     public List<Book> findAll() {
         return new ArrayList<>(store.values());
     }

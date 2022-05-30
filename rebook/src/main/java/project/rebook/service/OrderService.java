@@ -54,18 +54,13 @@ public class OrderService {
     public Order order(Member member, OrderForm orderForm) {
 
         // 책과 수량을 확인하여 주문 생성
-        List<Long> ids = orderForm.getIds();
+        List<Book> books = bookRepository.findByIdList(orderForm.getIds());
         List<Integer> quantities = orderForm.getQuantities();
 
         List<OrderBook> orderBooks = new ArrayList<>();
-        for (int i = 0; i < ids.size(); i++) {
-
-            // 책 종류와 수량
-            Book book = bookRepository.findById(ids.get(i));
-            Integer quantity = quantities.get(i);
-
+        for (int i = 0; i < books.size(); i++) {
             // orderbook 생성
-            OrderBook orderBook = OrderBook.makeOrderBook(book, quantity);
+            OrderBook orderBook = OrderBook.makeOrderBook(books.get(i), quantities.get(i));
             orderBooks.add(orderBook);
         }
 

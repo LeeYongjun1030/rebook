@@ -47,6 +47,11 @@ public class MemoryReviewRepository implements ReviewRepository {
     }
 
     @Override
+    public void deleteByIdList(List<Long> ids) {
+        //
+    }
+
+    @Override
     public void clear() {
         store.clear();
     }

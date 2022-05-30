@@ -28,13 +28,8 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public List<Book> findBooksFromIds(List<Long> ids) {
-        List<Book> books = new ArrayList<>();
-        for (Long id : ids) {
-            Book book = findById(id);
-            books.add(book);
-        }
-        return books;
+    public List<Book> selectBooks(List<Long> ids) {
+        return bookRepository.findByIdList(ids);
     }
 
     @Transactional
