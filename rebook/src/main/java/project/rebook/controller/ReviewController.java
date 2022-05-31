@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/review")
 public class ReviewController {
 
     private final MemberService memberService;
@@ -32,14 +31,17 @@ public class ReviewController {
     /**
      * 리뷰 쓰기
      */
-    @GetMapping("/add/{bookId}")
+    @GetMapping("/books/{bookId}/review")
     public String add(@PathVariable Long bookId,
                       @ModelAttribute AddReviewForm addReviewForm, Model model) {
         model.addAttribute("book", BookDto.from(bookService.findById(bookId)));
-        return "review/add";
+        return "review/addReviewForm";
     }
 
-    @PostMapping("/add/{bookId}")
+    /**
+     * 리뷰 생성
+     */
+    @PostMapping("/books/{bookId}/review")
     public String addReview(@PathVariable Long bookId,
                             @Validated @ModelAttribute AddReviewForm addReviewForm,
                             BindingResult bindingResult,
@@ -47,7 +49,7 @@ public class ReviewController {
                             Model model) {
         // 리뷰 검증
         if (bindingResult.hasErrors()) {
-            return "review/add";
+            return "/books/" + bookId + "/review";
         }
 
         // 리뷰 생성 및 저장
@@ -62,7 +64,7 @@ public class ReviewController {
     /**
      * 내가 쓴 리뷰 보기
      */
-    @GetMapping("/list")
+    @GetMapping("/reviews")
     public String reviewList(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                              @ModelAttribute DeleteReview deleteReview, Model model) {
 
@@ -72,20 +74,20 @@ public class ReviewController {
         model.addAttribute("reviews", reviewDtos);
         model.addAttribute("member", MemberDto.from(memberService.findById(loginMember.getId())));
         model.addAttribute("vipReview", GradeConst.NUM_of_REVIEWS_to_VIP);
-        return "review/reviews";
+        return "review/reviewList";
     }
 
     /**
      * 내가 쓴 리뷰 삭제 기능
      */
-    @PostMapping("/list")
+    @PostMapping("/reviews")
     public String reviewListPost(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                                  @ModelAttribute DeleteReview deleteReview, Model model) {
 
         if(deleteReview.getIds() != null){
             reviewService.deleteReviews(loginMember.getId(), deleteReview.getIds());
         }
-        return "redirect:/review/list";
+        return "redirect:/reviews";
     }
 
 }

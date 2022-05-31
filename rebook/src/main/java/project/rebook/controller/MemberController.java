@@ -20,22 +20,22 @@ public class MemberController {
     /**
      * 회원 가입 폼
      */
-    @GetMapping("/add")
-    public String add(@ModelAttribute AddMemberForm addMemberForm) {
-        return "/member/addForm";
+    @GetMapping("/form")
+    public String form(@ModelAttribute AddMemberForm addMemberForm) {
+        return "/member/addMemberForm";
     }
 
     /**
      * 회원 가입 검증 및 등록
      */
-    @PostMapping("/add")
+    @PostMapping
     public String addMember(@Validated @ModelAttribute AddMemberForm addMemberForm, BindingResult bindingResult) {
         // 아이디, 닉네임 중복 검사
         duplicateTest(addMemberForm, bindingResult);
 
         // 검증 오류로 인한 회원 가입 실패
         if (bindingResult.hasErrors()) {
-            return "/member/addForm";
+            return "/member/addMemberForm";
         }
 
         // 회원가입 성공 -> 회원 정보 저장

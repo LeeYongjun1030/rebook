@@ -28,7 +28,7 @@ public class BookController {
     public String books(Model model) {
         List<BookDto> bookDtos = bookService.findAll().stream().map(BookDto::from).collect(Collectors.toList());
         model.addAttribute("books", bookDtos);
-        return "book/books";
+        return "book/bookList";
     }
 
     /**
@@ -40,7 +40,7 @@ public class BookController {
 
         model.addAttribute("book", BookDto.from(bookService.findById(bookId)));
         model.addAttribute("reviews", reviewDtos);
-        return "book/detail";
+        return "book/bookDetail";
     }
 
 }

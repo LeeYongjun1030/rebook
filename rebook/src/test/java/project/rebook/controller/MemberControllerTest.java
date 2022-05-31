@@ -34,7 +34,7 @@ class MemberControllerTest {
     @DisplayName("회원가입 성공")
     void add() throws Exception{
         mvc.perform(
-                post("/member/add")
+                post("/member")
                         .param("loginId", "test1234")
                         .param("password", "testTEST1")
                         .param("nickname", "테스트"))
@@ -49,7 +49,7 @@ class MemberControllerTest {
     @DisplayName("회원가입 실패 - 폼 검증 오류")
     void invalidForm() throws Exception{
         mvc.perform(
-                post("/member/add")
+                post("/member")
                         .param("loginId", "test1234")
                         .param("password", "test1234")
                         .param("nickname", "test1234"))
@@ -67,7 +67,7 @@ class MemberControllerTest {
         when(memberService.duplicateLoginId(any())).thenReturn(true);
 
         mvc.perform(
-                post("/member/add")
+                post("/member")
                         .param("loginId", "test1234")
                         .param("password", "testTEST1")
                         .param("nickname", "테스트"))
@@ -82,7 +82,7 @@ class MemberControllerTest {
         when(memberService.duplicateNickname(any())).thenReturn(true);
 
         mvc.perform(
-                post("/member/add")
+                post("/member")
                         .param("loginId", "test1234")
                         .param("password", "testTEST1")
                         .param("nickname", "테스트"))

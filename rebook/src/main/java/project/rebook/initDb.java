@@ -1,6 +1,7 @@
 package project.rebook;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import project.rebook.domain.Review;
 import project.rebook.domain.book.Book;
@@ -21,6 +22,7 @@ public class initDb {
     private final MemberService memberService;
     private final BookService bookService;
     private final ReviewService reviewService;
+    private final PasswordEncoder passwordEncoder;
 
     @PostConstruct
     public void initData() {
@@ -33,7 +35,7 @@ public class initDb {
         bookService.save(new Book("코스모스", "사이언스북스", Category.SCIENCE, 16600));
 
         // 테스트용 회원 생성
-        Long memberId = memberService.save(new Member("관리자", "manager123", "manager123", 2, Grade.NORMAL));
+        Long memberId = memberService.save(new Member("관리자", "manager123", passwordEncoder.encode("manager123") , 2, Grade.NORMAL));
 
         // 테스트용 리뷰 생성
         Member findMember = memberService.findById(memberId);

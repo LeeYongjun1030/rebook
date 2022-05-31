@@ -31,9 +31,11 @@
 
   <div class="row">
     <div class="col">
-      <button class="btn btn-primary float-end"
-              th:onclick="|location.href='@{/order/cancel/{orderId}(orderId=${order.id})}'|"
-              type="button" th:text="#{button.orderCancel}">주문 취소</button>
+      <form action="" th:action="@{/orders/{orderId}(orderId=${order.id})}" method="post">
+        <button class="btn btn-primary float-end"
+                type="submit" th:text="#{button.orderCancel}" >주문 취소</button>
+      </form>
+
     </div>
   </div>
 

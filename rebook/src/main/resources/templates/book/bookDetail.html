@@ -39,7 +39,7 @@
         <div class="col">
             <button class="btn btn-primary float-end"
                     onclick="location.href='home.html'"
-                    th:onclick="|location.href='@{/review/add/{bookId}(bookId=${book.id})}'|"
+                    th:onclick="|location.href='@{/books/{bookId}/review(bookId=${book.id})}'|"
                     type="button" th:text="#{page.addReview}">리뷰 쓰기</button>
         </div>
     </div>
