@@ -103,6 +103,39 @@
 ### :ballot_box_with_check: 컨트롤러 개발<br>
 :heavy_check_mark: 서비스를 주입받아 필요 서비스를 수행할 수 있도록 한다.<br>
 
+
+<details markdown="1">
+<summary>:point_right: RESTful API</summary>
+A)<br>
+REST는 Representational State Transfer의 약자입니다. 간단히 말해서 URI와 HTTP 메소드를 이용해 객체화된 서비스에 접근하는 것입니다. <br>
+REST의 요소로는 크게 자원, 행위, 표현 3가지 요소로 구성됩니다. 예를 들어 "이름이 Tom인 사용자를 생성한다." 라는 호출이 있을 때 "사용자"는 생성되는 자원, "생성한다."는 행위, 그리고 "이름이 Tom인 사용자"는 표현이 됩니다. <br>
+REST에서 리소스는 http://myweb/users라는 형태의 URI로 표현되며, 행위는 HTTP 메서드, 표현은 JSON, xml 등의 형태로 표현됩니다.<br>
+HTTP에는 여러가지 메소드가 있지만 REST에서는 CRUD에 해당하는 4가지의 메소드 GET, POST, PUT, DELETE를 사용합니다. REST는 리소스 지향 아키텍쳐 스타일이라는 정의에 맞게 모든 것을 명사로 표현하며 각 세부 리소스에는 id를 붙입니다. <br>
+<br>
++)REST 특징: 서버-클라이언트 구조, 무상태, 캐시처리가능, 계층화(/), 인터페이스 일관성<br>
+
+<br>
+Restful하게 API를 디자인한다는 것은 URI를 규칙에 맞게 잘 설계했는지의 여부입니다. 규칙의 항목으로는 아래와 같습니다.<br>
+<br>
+1. 동일한 URI(End point)의 행위에 맞게 POST, GET, DELETE, PATCH등의 메소드를 사용한다.<br>
+2. 명사를 사용한다. 리스트를 표현할 때는 복수형을 사용한다.<br>
+3. 특정 항목의 경우 id를 사용하여 표현<br>
+4. 슬래시(/)로 계층 관계를 표현하며 마지막엔 슬래시를 포함하지 않는다.<br>
+5. 리소스 간 연관관계가 있는 경우 ex) /리소스명/리소스ID/다른 리소스명 (일반적으로 'has'의 관계를 표현할 때)<br>
+6. URI Path에 불필요한 파라미터를 넣지 않는다. 그 자체로 의미가 잘 드러나도록 단계를 심플하게 설계한다<br>
+
+<br>
+<img src="https://user-images.githubusercontent.com/78812317/168659542-a5dac6b8-745c-479a-9d8a-d81893ccde92.png">
+
+reference : https://meetup.toast.com/posts/92
+</details>
+
+
+
+
+
+
+
 ### :ballot_box_with_check: 웹 관련 개발<br>
 :heavy_check_mark: member의 로그인 정보 등 중요 정보가 외부로 노출되지 않도록 뷰에는 Dto를 만들어서 넘겨주도록 한다.<br>
 :heavy_check_mark: 폼 객체 역시 별도로 두어 필요 정보만을 담을 수 있도록 한다.<br>
