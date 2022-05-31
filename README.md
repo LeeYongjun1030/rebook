@@ -26,7 +26,7 @@
 - <b>spring-boot 2.6.3</b><br>
 - <b>mysql 8.0.23</b><br>
 
-## :memo: 개발 일지(최종 업데이트 : 2022년 5월 30일)
+## :memo: 개발 일지(최종 업데이트 : 2022년 6월 1일)
 - [[Feb 7, 2022] member domain create](https://github.com/LeeYongjun1030/rebook/commit/0ab21186312a220322ba584441f30b8acdd35a79)<br>
 - [[Feb 8, 2022] domain create](https://github.com/LeeYongjun1030/rebook/commit/3b506422c83b1469ba60eaa3c09ca4a91185113b)<br>
 - [[Feb 9, 2022] login create](https://github.com/LeeYongjun1030/rebook/commit/331f2c404716a05b9340bfde31ef8bdc320962f2)<br>
@@ -45,8 +45,8 @@
 - [[May 16, 2022] exception, service refactoring](https://github.com/LeeYongjun1030/rebook/commit/09a2a15d14ba10da67b80a9c002f7b9d3bd6dcb1)<br>
 - [[May 21, 2022] test refactoring using mocking](https://github.com/LeeYongjun1030/rebook/commit/c00faefb9ae2d7a920ae48be7d87703331d08222)<br>
 - [[May 29, 2022] member service update](https://github.com/LeeYongjun1030/rebook/commit/225692368beeef20dacb31f34267bb875b1cee2f)<br>
-- [[May 30, 2022] book, review repository updated](https://github.com/LeeYongjun1030/rebook/commit/96169d01b892bb2310a324760424139f71bfefa0)<br>
-
+- [[May 30, 2022] book, review repository update](https://github.com/LeeYongjun1030/rebook/commit/96169d01b892bb2310a324760424139f71bfefa0)<br>
+- [[JUN 1, 2022] request url update](https://github.com/LeeYongjun1030/rebook/commit/53492187895af06c8703b465d365eb6e96ba4754)<br>
 
 
 ## :pushpin: 차례  
