@@ -27,26 +27,26 @@
 - <b>mysql 8.0.23</b><br>
 
 ## :memo: 개발 일지(최종 업데이트 : 2022년 6월 1일)
-- [[Feb 7, 2022] member domain create](https://github.com/LeeYongjun1030/rebook/commit/0ab21186312a220322ba584441f30b8acdd35a79)<br>
-- [[Feb 8, 2022] domain create](https://github.com/LeeYongjun1030/rebook/commit/3b506422c83b1469ba60eaa3c09ca4a91185113b)<br>
-- [[Feb 9, 2022] login create](https://github.com/LeeYongjun1030/rebook/commit/331f2c404716a05b9340bfde31ef8bdc320962f2)<br>
-- [[Feb 10, 2022] review function create](https://github.com/LeeYongjun1030/rebook/commit/99c10800ebfbf73157844c93c34187bffbb9bbdb)<br>
-- [[Feb 11, 2022] review create](https://github.com/LeeYongjun1030/rebook/commit/8874f96a27034dcbd88a15c89f573eedbb140cc3)<br>
-- [[Feb 12, 2022] review delete function create ](https://github.com/LeeYongjun1030/rebook/commit/ca11fcd5e3650fa68d424649ef6144beae5082f5)<br>
-- [[Feb 13, 2022] order service create](https://github.com/LeeYongjun1030/rebook/commit/a614f95b06b0bedc3b3371aabe8478a4d1bfe9bd)<br>
-- [[Feb 14, 2022] order service create](https://github.com/LeeYongjun1030/rebook/commit/64c4b315fd13319f41f9e09296ba73a727ed267f)<br>
-- [[Feb 14, 2022] order cancel function create](https://github.com/LeeYongjun1030/rebook/commit/039f76210755ab6d0b26123d4c954321df11b6c1)<br>
-- [[Feb 16, 2022] add order service test](https://github.com/LeeYongjun1030/rebook/commit/140dc3faf7ac89c34e794a8863eee58f50948bb2)<br>
-- [[Feb 16, 2022] html modified](https://github.com/LeeYongjun1030/rebook/commit/db649957b4a005550ffc0fea01dfdd873a17a222)<br>
-- [[Feb 27, 2022] optimization order list using fetch join](https://github.com/LeeYongjun1030/rebook/commit/51d54453a9e4c0480983c4c5e8f01658398df88b)<br>
-- [[Apr 27, 2022] findByLoginId add , transaction update](https://github.com/LeeYongjun1030/rebook/commit/e23e8c25b0e07ff28c6925305a0bc7b65a9305a4)<br>
-- [[May 12, 2022] refactoring service and controller](https://github.com/LeeYongjun1030/rebook/commit/cced3fa6c86addeec8291c6d1645de387bd00e49)<br>
-- [[May 15, 2022] encrypt password using spring security](https://github.com/LeeYongjun1030/rebook/commit/6705916c9d74498c423bde497795b7ff264d39c0)<br>
-- [[May 16, 2022] exception, service refactoring](https://github.com/LeeYongjun1030/rebook/commit/09a2a15d14ba10da67b80a9c002f7b9d3bd6dcb1)<br>
-- [[May 21, 2022] test refactoring using mocking](https://github.com/LeeYongjun1030/rebook/commit/c00faefb9ae2d7a920ae48be7d87703331d08222)<br>
-- [[May 29, 2022] member service update](https://github.com/LeeYongjun1030/rebook/commit/225692368beeef20dacb31f34267bb875b1cee2f)<br>
-- [[May 30, 2022] book, review repository update](https://github.com/LeeYongjun1030/rebook/commit/96169d01b892bb2310a324760424139f71bfefa0)<br>
-- [[JUN 1, 2022] request url update](https://github.com/LeeYongjun1030/rebook/commit/53492187895af06c8703b465d365eb6e96ba4754)<br>
+:page_with_curl:[[Feb 7, 2022] member domain create](https://github.com/LeeYongjun1030/rebook/commit/0ab21186312a220322ba584441f30b8acdd35a79)<br>
+:page_with_curl:[[Feb 8, 2022] domain create](https://github.com/LeeYongjun1030/rebook/commit/3b506422c83b1469ba60eaa3c09ca4a91185113b)<br>
+:page_with_curl:[[Feb 9, 2022] login create](https://github.com/LeeYongjun1030/rebook/commit/331f2c404716a05b9340bfde31ef8bdc320962f2)<br>
+:page_with_curl:[[Feb 10, 2022] review function create](https://github.com/LeeYongjun1030/rebook/commit/99c10800ebfbf73157844c93c34187bffbb9bbdb)<br>
+:page_with_curl:[[Feb 11, 2022] review create](https://github.com/LeeYongjun1030/rebook/commit/8874f96a27034dcbd88a15c89f573eedbb140cc3)<br>
+:page_with_curl:[[Feb 12, 2022] review delete function create ](https://github.com/LeeYongjun1030/rebook/commit/ca11fcd5e3650fa68d424649ef6144beae5082f5)<br>
+:page_with_curl:[[Feb 13, 2022] order service create](https://github.com/LeeYongjun1030/rebook/commit/a614f95b06b0bedc3b3371aabe8478a4d1bfe9bd)<br>
+:page_with_curl:[[Feb 14, 2022] order service create](https://github.com/LeeYongjun1030/rebook/commit/64c4b315fd13319f41f9e09296ba73a727ed267f)<br>
+:page_with_curl:[[Feb 14, 2022] order cancel function create](https://github.com/LeeYongjun1030/rebook/commit/039f76210755ab6d0b26123d4c954321df11b6c1)<br>
+:page_with_curl:[[Feb 16, 2022] add order service test](https://github.com/LeeYongjun1030/rebook/commit/140dc3faf7ac89c34e794a8863eee58f50948bb2)<br>
+:page_with_curl:[[Feb 16, 2022] html modified](https://github.com/LeeYongjun1030/rebook/commit/db649957b4a005550ffc0fea01dfdd873a17a222)<br>
+:page_with_curl:[[Feb 27, 2022] optimization order list using fetch join](https://github.com/LeeYongjun1030/rebook/commit/51d54453a9e4c0480983c4c5e8f01658398df88b)<br>
+:page_with_curl:[[Apr 27, 2022] findByLoginId add , transaction update](https://github.com/LeeYongjun1030/rebook/commit/e23e8c25b0e07ff28c6925305a0bc7b65a9305a4)<br>
+:page_with_curl:[[May 12, 2022] refactoring service and controller](https://github.com/LeeYongjun1030/rebook/commit/cced3fa6c86addeec8291c6d1645de387bd00e49)<br>
+:page_with_curl:[[May 15, 2022] encrypt password using spring security](https://github.com/LeeYongjun1030/rebook/commit/6705916c9d74498c423bde497795b7ff264d39c0)<br>
+:page_with_curl:[[May 16, 2022] exception, service refactoring](https://github.com/LeeYongjun1030/rebook/commit/09a2a15d14ba10da67b80a9c002f7b9d3bd6dcb1)<br>
+:page_with_curl:[[May 21, 2022] test refactoring using mocking](https://github.com/LeeYongjun1030/rebook/commit/c00faefb9ae2d7a920ae48be7d87703331d08222)<br>
+:page_with_curl:[[May 29, 2022] member service update](https://github.com/LeeYongjun1030/rebook/commit/225692368beeef20dacb31f34267bb875b1cee2f)<br>
+:page_with_curl:[[May 30, 2022] book, review repository update](https://github.com/LeeYongjun1030/rebook/commit/96169d01b892bb2310a324760424139f71bfefa0)<br>
+:page_with_curl:[[JUN 1, 2022] request url update](https://github.com/LeeYongjun1030/rebook/commit/53492187895af06c8703b465d365eb6e96ba4754)<br>
 
 
 ## :pushpin: 차례  
