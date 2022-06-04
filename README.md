@@ -265,7 +265,7 @@ order 클래스 안에 orderBook 리스트 객체를 담도록 한다.<br>
  
 ## :pushpin: 5. 트러블슈팅 
 
-### :ballot_box_with_check: 트러블 슈팅 1. 필요없는 쿼리 지우기
+### :ballot_box_with_check: 트러블 슈팅 1. 필요없는 쿼리 발생 삭제
 쿼리를 확인해보니, order를 조회할 때 member를 조회하는 select 문이 나가는 것을 확인되었다. member 정보를 사용하지 않지만 쿼리가 발생한 이유는 현재 Order 클래스가 갖고 있는 Member 프로퍼티가 즉시로딩(default)로 설정되어 있기때문이었다. 이 설정을 지연 로딩으로 설정하면 member 정보를 사용할 때까지 조회를 미루기 때문에 불필요한 쿼리가 발생되는 것을 막을 수 있다.
  
 ```java
