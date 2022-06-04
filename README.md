@@ -263,106 +263,10 @@ order 클래스 안에 orderBook 리스트 객체를 담도록 한다.<br>
 
 
  
-## :pushpin: 5. 트러블슈팅
- 프로젝트의 모든 기능을 완성하고, 핵심 기능들을 실행해가며 실제로 날아가는 쿼리들을 확인하였다. 예상과는 다른 쿼리가 있다면 코드 상의 문제점이 있을 가능성이 있기 때문이다. 그러다 나의 주문 목록을 볼 때 필요 이상의 쿼리가 매우 많이 나가는 것을 발견했다.
+## :pushpin: 5. 트러블슈팅 
 
- <details>
-<summary> 발생 쿼리 </summary>
-<div markdown="1">
-
-```java
-
-Hibernate: 
-    select
-        order0_.order_id as order_id1_3_,
-        order0_.local_date as local_da2_3_,
-        order0_.member_id as member_i3_3_ 
-    from
-        orders order0_ 
-    where
-        order0_.member_id=?
-Hibernate: 
-    select
-        member0_.id as id1_1_0_,
-        member0_.grade as grade2_1_0_,
-        member0_.login_id as login_id3_1_0_,
-        member0_.money as money4_1_0_,
-        member0_.nickname as nickname5_1_0_,
-        member0_.password as password6_1_0_ 
-    from
-        member member0_ 
-    where
-        member0_.id=?
-OrderController.orders
-Hibernate: 
-    select
-        orderbooks0_.order_id as order_id4_2_0_,
-        orderbooks0_.order_book_id as order_bo1_2_0_,
-        orderbooks0_.order_book_id as order_bo1_2_1_,
-        orderbooks0_.book_id as book_id3_2_1_,
-        orderbooks0_.order_id as order_id4_2_1_,
-        orderbooks0_.quantity as quantity2_2_1_,
-        book1_.book_id as book_id1_0_2_,
-        book1_.book_name as book_nam2_0_2_,
-        book1_.category as category3_0_2_,
-        book1_.price as price4_0_2_,
-        book1_.publisher as publishe5_0_2_ 
-    from
-        order_book orderbooks0_ 
-    left outer join
-        book book1_ 
-            on orderbooks0_.book_id=book1_.book_id 
-    where
-        orderbooks0_.order_id=?
-Hibernate: 
-    select
-        orderbooks0_.order_id as order_id4_2_0_,
-        orderbooks0_.order_book_id as order_bo1_2_0_,
-        orderbooks0_.order_book_id as order_bo1_2_1_,
-        orderbooks0_.book_id as book_id3_2_1_,
-        orderbooks0_.order_id as order_id4_2_1_,
-        orderbooks0_.quantity as quantity2_2_1_,
-        book1_.book_id as book_id1_0_2_,
-        book1_.book_name as book_nam2_0_2_,
-        book1_.category as category3_0_2_,
-        book1_.price as price4_0_2_,
-        book1_.publisher as publishe5_0_2_ 
-    from
-        order_book orderbooks0_ 
-    left outer join
-        book book1_ 
-            on orderbooks0_.book_id=book1_.book_id 
-    where
-        orderbooks0_.order_id=?
-Hibernate: 
-    select
-        orderbooks0_.order_id as order_id4_2_0_,
-        orderbooks0_.order_book_id as order_bo1_2_0_,
-        orderbooks0_.order_book_id as order_bo1_2_1_,
-        orderbooks0_.book_id as book_id3_2_1_,
-        orderbooks0_.order_id as order_id4_2_1_,
-        orderbooks0_.quantity as quantity2_2_1_,
-        book1_.book_id as book_id1_0_2_,
-        book1_.book_name as book_nam2_0_2_,
-        book1_.category as category3_0_2_,
-        book1_.price as price4_0_2_,
-        book1_.publisher as publishe5_0_2_ 
-    from
-        order_book orderbooks0_ 
-    left outer join
-        book book1_ 
-            on orderbooks0_.book_id=book1_.book_id 
-    where
-        orderbooks0_.order_id=?
-
-```
-
-</div>
-</details>
- 
-
-### :ballot_box_with_check: 필요없는 쿼리 지우기
-쿼리를 확인해보니, member를 조회하는 select 문이 나가는 것을 확인되었다. member 정보를 사용하지 않지만 쿼리가 발생한 이유는 현재 Order 클래스가 갖고 있는 Member 프로퍼티가 즉시로딩(default)로 설정되어 있기때문이었다. 이 설정을 지연 로딩으로 설정하면 member 정보를 사용할 때까지 조회를 미루기 때문에 불필요한 쿼리가 발생되는 것을 막을 수 있다.
+### :ballot_box_with_check: 트러블 슈팅 1. 필요없는 쿼리 지우기
+쿼리를 확인해보니, order를 조회할 때 member를 조회하는 select 문이 나가는 것을 확인되었다. member 정보를 사용하지 않지만 쿼리가 발생한 이유는 현재 Order 클래스가 갖고 있는 Member 프로퍼티가 즉시로딩(default)로 설정되어 있기때문이었다. 이 설정을 지연 로딩으로 설정하면 member 정보를 사용할 때까지 조회를 미루기 때문에 불필요한 쿼리가 발생되는 것을 막을 수 있다.
  
 ```java
 public class Order{
@@ -457,10 +361,12 @@ Hibernate:
 </div>
 </details>
 
-### :ballot_box_with_check: N+1 문제 해결
-또 다른 문제는 각 주문(Order)마다 orderBooks를 조회하는 쿼리문을 발생시킨다는 것이였다. <br>
-이 경우 주문 목록에 100만개의 주문이 있다면, orderBooks를 조회하는 동일한 쿼리문을 100만 번 발생시킨다는 의미였다. <br>
+### :ballot_box_with_check: 트러블 슈팅 2. N+1 문제 해결
+나의 주문 목록을 볼 때 필요 이상의 쿼리가 매우 많이 나가는 것을 발견했다.<br>
+각 주문(Order)마다 orderBooks를 조회하는 쿼리문을 발생시키기 때문이였다. <br>
+이는 주문 목록에 100개의 주문이 있다면, orderBooks를 조회하는 동일한 쿼리문을 불필요하게 100번 발생시킨다는 의미였다.<br>
 우선 관련 부분의 코드를 살펴 원인을 파악하기로 했다.<br>
+
 ```java
     /**
      * 주문 목록 조회
@@ -843,6 +749,27 @@ Hibernate:
 결론적으로 주문을 N개 생성했을 때,<br>
 기존 쿼리가 주문 목록을 가져오기 위해 2+N개의 쿼리를 발생시켰던 반면,<br>
 개선을 통해 단 1번의 쿼리로 줄일 수 있게 되었다. <br>
+ 
+
+<br>
+
+### :ballot_box_with_check: 트러블 슈팅3. 트랜잭션 옵션
+기존에는 서비스 계층에서 DB 데이터를 조회하는 경우, 별다른 @Transactional 옵션을 붙여주지 않았다.<br>
+변경, 삭제, 추가 같은 작업이 아니기 때문에 조회 기능만을 사용하는 서비스에서는 트랜잭션을 걸어줄 필요가 없다고 생각했기 때문이다.<br>
+그런데 스프링에 대해 더 공부하던 중, @Transactional의 옵션에 readOnly=true 기능이 있음을 발견하였다.<br>
+그리고 서칭 결과 조회 서비스에서 @Transactional(readOnly=true) 옵션을 설정해주는 것이 좋다는 것을 발견하고 그 이유를 알아보았다.<br>
+<br>
+:white_check_mark: <b>readOnly 옵션의 원리 및 장점</b><br>
+@Transactional(readOnly = true) 옵션을 설정해주면 스프링 프레임워크가 하이버네이트 세션의 Flush 모드를 MANUAL로 설정하게 된다. <br>
+이러면 명시적으로 flush()를 호출하지 않는 한 flush()가 발생하지 않는다.<br>
+flush()를 사용하지 않으므로 영속성 컨텍스트 내의 엔티티들의 등록, 변경, 삭제와 같은 내용들을 DB에 반영할 수 없다. 따라서 이러한 기능이 불가능해진다.<br> 
+flush()가 없기 때문에 변경 감지(dirty checking)를 위한 스냅샷 비교를 수행하지 않는다. 이는 곧 성능 향상에 도움이 된다.<br>
+그리고 명시적으로 해당 메서드가 읽기전용이라는 것을 쉽게 알려줄 수 있으며 의도치 않은 데이터의 변경도 방지할 수 있다.<br>
+<br>
+:white_check_mark: <b>결론</b><br>
+조회 서비스에 @Transactional(readOnly=true)을 설정해주는 것이 좋다.
+ 
+ 
  
 ## :pushpin: 6. 평가
 <SOLID 원칙 준수><br>
