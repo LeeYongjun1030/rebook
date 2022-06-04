@@ -29,7 +29,7 @@ public class OrderController {
      * 주문 하기 폼
      */
     @GetMapping("/order/form")
-    public String orderForm(@ModelAttribute OrderForm orderForm, Model model) {
+    public String createForm(@ModelAttribute OrderForm orderForm, Model model) {
         List<BookDto> bookDtos = bookService.findAll().stream().map(BookDto::from).collect(Collectors.toList());
         model.addAttribute("books", bookDtos);
         return "order/checkBookForm";

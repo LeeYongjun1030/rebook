@@ -21,7 +21,7 @@ public class MemberController {
      * 회원 가입 폼
      */
     @GetMapping("/form")
-    public String form(@ModelAttribute AddMemberForm addMemberForm) {
+    public String createForm(@ModelAttribute AddMemberForm addMemberForm) {
         return "/member/addMemberForm";
     }
 

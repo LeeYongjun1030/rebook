@@ -7,17 +7,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.rebook.domain.member.Grade;
 import project.rebook.domain.member.Member;
-import project.rebook.exception.UnusableLoginId;
-import project.rebook.exception.UnusableNickname;
 import project.rebook.repository.member.MemberRepository;
 import project.rebook.web.AddMemberForm;
-
-import javax.persistence.NoResultException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MemberService {
 

@@ -32,7 +32,7 @@ public class ReviewController {
      * 리뷰 쓰기
      */
     @GetMapping("/books/{bookId}/review")
-    public String add(@PathVariable Long bookId,
+    public String createForm(@PathVariable Long bookId,
                       @ModelAttribute AddReviewForm addReviewForm, Model model) {
         model.addAttribute("book", BookDto.from(bookService.findById(bookId)));
         return "review/addReviewForm";
