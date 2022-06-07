@@ -9,6 +9,7 @@ import project.rebook.domain.member.Grade;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
@@ -21,11 +22,12 @@ public class OrderDetailDto {
     private LocalDate localDate;
     private int totalQuantities;
     private int totalPrice;
-    private List<OrderBook> orderBooks = new ArrayList<>();
-
+    private List<OrderBookDto> orderBooks = new ArrayList<>();
     private int priceWithDiscount;
 
     public static OrderDetailDto from(Order order, int priceWithDiscount) {
+        List<OrderBookDto> orderBookDtos = order.getOrderBooks().stream().map(OrderBookDto::from).collect(Collectors.toList());
+
         return new OrderDetailDto(order.getId(),
                 order.getMember().getNickname(),
                 order.getMember().getNumberOfReviews(),
@@ -33,7 +35,7 @@ public class OrderDetailDto {
                 order.getLocalDate(),
                 order.getTotalQuantities(),
                 order.getTotalPrice(),
-                order.getOrderBooks(),
+                orderBookDtos,
                 priceWithDiscount);
     }
 }
