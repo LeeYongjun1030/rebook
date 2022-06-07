@@ -750,9 +750,97 @@ Hibernate:
 결론적으로 주문을 N개 생성했을 때,<br>
 기존 쿼리가 주문 목록을 가져오기 위해 2+N개의 쿼리를 발생시켰던 반면,<br>
 개선을 통해 단 1번의 쿼리로 줄일 수 있게 되었다. <br>
- 
 
+
+:white_check_mark: <b>참고: 페이징</b><br>
+일대다 페치조인에서는 페이징을 쓸 수 없게 된다. 즉 위 방법에서는 페이징 기능을 사용할 수 없다.<br>
+페이징을 쓰려면 다른 방법을 써야한다.  <br>
+spring.jpa.hibernate.default_batch_fetch_size를 설정(100~1000)해주고<br>
+@XtoOne 관계만 페치조인으로 가져온 뒤 컬렉션 객체에는 지연로딩을 걸어준다.<br>
+그럼 컬렉션 객체의 정보들을 쿼리를 N번 날려 가져오는 것이 아니라 IN 쿼리를 이용하여 한번에 가져오게 된다.<br>
+이 방법으로도 일대다 문제를 풀어낼 수 있다. <br>
+이 방법의 좋은 점은 데이터의 뻥튀기 현상이 발생하지 않는다. 따라서 데이터 전송량이 최적화된다.<br>
+다만 페치조인의 경우보다 쿼리 발생 횟수는 증가하므로 이들 사이의 trade-off를 잘 따져봐야 한다.<br>
 <br>
+
+아래와 같이 @BatchSize로 특정 엔티티에 설정이 가능하다. <br>
+```Java
+
+public class Order{
+    ....
+    @BatchSize(size = 100)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<OrderBook> orderBooks = new ArrayList<>();
+}
+
+```
+
+그리고 V2를 설정한다. 기존의 distinct와 fetch join 부분을 지워주면 된다. <br>
+```Java
+public class DbOrderRepository implements OrderRepository {
+    ....
+    @Override
+    public List<Order> findByMemberIdV2(Long memberId) {
+        return em.createQuery(
+                "select o from Order o " +
+                        " where o.member.id = :memberId", Order.class)
+                .setParameter("memberId", memberId)
+                .getResultList();
+    }
+    ....
+}
+
+```
+
+아래의 발생 쿼리를 보면 IN 쿼리가 나갔음을 볼 수 있다.<br>
+이때 총 쿼리 횟수는 2회이다. order 조회 1번, orderBook을 인쿼리로 조회 1번<br>
+<details>
+<summary> 발생 쿼리</summary>
+<div markdown="1">
+
+```Java
+
+Hibernate: 
+    select
+        order0_.order_id as order_id1_3_,
+        order0_.local_date as local_da2_3_,
+        order0_.member_id as member_i5_3_,
+        order0_.total_price as total_pr3_3_,
+        order0_.total_quantities as total_qu4_3_ 
+    from
+        orders order0_ 
+    where
+        order0_.member_id=?
+Hibernate: 
+    select
+        orderbooks0_.order_id as order_id4_2_2_,
+        orderbooks0_.order_book_id as order_bo1_2_2_,
+        orderbooks0_.order_book_id as order_bo1_2_1_,
+        orderbooks0_.book_id as book_id3_2_1_,
+        orderbooks0_.order_id as order_id4_2_1_,
+        orderbooks0_.quantity as quantity2_2_1_,
+        book1_.book_id as book_id1_0_0_,
+        book1_.book_name as book_nam2_0_0_,
+        book1_.category as category3_0_0_,
+        book1_.price as price4_0_0_,
+        book1_.publisher as publishe5_0_0_ 
+    from
+        order_book orderbooks0_ 
+    left outer join
+        book book1_ 
+            on orderbooks0_.book_id=book1_.book_id 
+    where
+        orderbooks0_.order_id in (
+            ?, ?, ?
+        )
+```
+
+</div>
+</details>
+
+
+
+
 
 ### :ballot_box_with_check: 트러블 슈팅3. 트랜잭션 옵션
 기존에는 서비스 계층에서 DB 데이터를 조회하는 경우, 별다른 @Transactional 옵션을 붙여주지 않았다.<br>
@@ -769,6 +857,7 @@ flush()가 없기 때문에 변경 감지(dirty checking)를 위한 스냅샷 �
 <br>
 :white_check_mark: <b>결론</b><br>
 조회 서비스에 @Transactional(readOnly=true)을 설정해주는 것이 좋다.
+ 
  
  
  
