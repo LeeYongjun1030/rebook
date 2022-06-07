@@ -12,6 +12,8 @@ public interface OrderRepository {
 
     public List<Order> findByMemberId(Long memberId);
 
+    public List<Order> findByMemberIdV2(Long memberId);
+
     public void delete(Long id);
 
     public void clear();

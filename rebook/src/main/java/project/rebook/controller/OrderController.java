@@ -69,7 +69,9 @@ public class OrderController {
     public String orders(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                          Model model) {
 
-        List<Order> orders = orderService.findByMemberId(loginMember.getId());
+        //List<Order> orders = orderService.findByMemberId(loginMember.getId());
+        List<Order> orders = orderService.findByMemberIdV2(loginMember.getId());
+
         List<OrderDto> orderDtos = orders.stream().map(OrderDto::from).collect(Collectors.toList());
         model.addAttribute("orders", orderDtos);
         return "/order/orderList";

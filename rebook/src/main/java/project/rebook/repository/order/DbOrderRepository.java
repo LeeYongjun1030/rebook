@@ -37,6 +37,15 @@ public class DbOrderRepository implements OrderRepository {
     }
 
     @Override
+    public List<Order> findByMemberIdV2(Long memberId) {
+        return em.createQuery(
+                "select o from Order o " +
+                        " where o.member.id = :memberId", Order.class)
+                .setParameter("memberId", memberId)
+                .getResultList();
+    }
+
+    @Override
     public void delete(Long id) {
         Order order = findById(id);
         em.remove(order);

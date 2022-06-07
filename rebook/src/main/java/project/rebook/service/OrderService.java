@@ -34,6 +34,11 @@ public class OrderService {
         return orderRepository.findByMemberId(memberId);
     }
 
+    public List<Order> findByMemberIdV2(Long memberId) {
+        return orderRepository.findByMemberIdV2(memberId);
+    }
+
+
     @Transactional
     public void delete(Long id) {
         orderRepository.delete(id);
