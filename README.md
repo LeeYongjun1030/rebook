@@ -104,6 +104,7 @@
 :heavy_check_mark: 서비스를 주입받아 필요 서비스를 수행할 수 있도록 한다.<br>
 :heavy_check_mark: RESTful API 원칙을 잘 지키며 리퀘스트 매핑<br>
 :heavy_check_mark: member의 로그인 정보 등 중요 정보가 외부로 노출되지 않도록 뷰에는 Dto를 만들어서 넘겨주도록 한다.<br>
+:heavy_check_mark: Dto 안에 컬렉션 객체가 담겨있을 시 이 컬렉션 객체도 Dto로 만들어줘야한다.<br>
 :heavy_check_mark: 폼 객체 역시 별도로 두어 필요 정보만을 담을 수 있도록 한다.<br>
 
 
