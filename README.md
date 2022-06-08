@@ -47,7 +47,7 @@
 :page_with_curl:[[May 29, 2022] member service update](https://github.com/LeeYongjun1030/rebook/commit/225692368beeef20dacb31f34267bb875b1cee2f)<br>
 :page_with_curl:[[May 30, 2022] book, review repository update](https://github.com/LeeYongjun1030/rebook/commit/96169d01b892bb2310a324760424139f71bfefa0)<br>
 :page_with_curl:[[JUN 1, 2022] request url update](https://github.com/LeeYongjun1030/rebook/commit/53492187895af06c8703b465d365eb6e96ba4754)<br>
-
+:page_with_curl:[[JUN 8, 2022] batchsize update](https://github.com/LeeYongjun1030/rebook/commit/1007b460321583d934a8dc065555fcda56203f06)<br>
 
 ## :pushpin: 차례  
 - <b>1. 요구 사항 분석</b>  
