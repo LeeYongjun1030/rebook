@@ -150,10 +150,23 @@ order 클래스 안에 orderBook 리스트 객체를 담도록 한다.<br>
 
 
 ### :ballot_box_with_check: 테스트 코드 작성
-:heavy_check_mark: 작성한 서비스의 기능을 테스트하는 코드를 작성한다.<br>
-:heavy_check_mark: 필요 시 beforeEach, afterEach를 활용하여 데이터베이스를 초기화 시켜줘야 한다.<br>
+<테스트 원칙><br>
 :heavy_check_mark: 모든 테스트는 독립적으로 작동되도록 테스트한다.<br>
+:heavy_check_mark: 모든 테스트는 반복 실행 가능해야 한다.<br>
 
+<레포지토리 계층 테스트><br>
+:heavy_check_mark: <del>beforeEach, afterEach를 활용하여 데이터베이스를 초기화 시켜줘야 한다.</del> => @Transactional 사용하자. <br>
+테스트에서 @Transactional을 사용하게 되면 테스트 시작 전 트랜잭션을 시작해주고 테스트 종료 후 데이터를 자동으로 롤백해준다.<br>
+:heavy_check_mark: 레포지토리 테스트의 경우 임베디드 데이터베이스를 사용하는 것이 편하다. <br>
+이때 테이블 생성 코드가 필요한데, 테스트 폴더 하위의 resources 폴더 밑에 schema.sql이란 이름의 파일을 생성해주고<br>
+이곳에 DDL을 작성해주면 임베디드 데이터베이스 생성 시 테이블이 자동으로 생성된다.<br>
+
+<서비스 계층 테스트><br>
+:heavy_check_mark: 서비스 계층만을 테스트하기 위해 하위 계층인 레포지토리는 모킹해서 테스트해야 한다.<br>
+
+<컨트롤러 계층 테스트><br>
+:heavy_check_mark: 컨트롤러 계층만을 테스트하기 위해 하위 계층은 모킹해서 테스트해야 한다.<br>
+:heavy_check_mark: MockMvc를 사용하여 가상의 요청을 만들어내서 테스트한다.<br>
 
 <details markdown="1">
 <summary> :point_right: 테스트 레퍼런스 </summary>
@@ -161,7 +174,6 @@ order 클래스 안에 orderBook 리스트 객체를 담도록 한다.<br>
 컨트롤러 테스트 : https://esoongan.tistory.com/101<br>
 모킹(Mocking): https://galid1.tistory.com/772<br>
 </details>
-
 
 
 ### :ballot_box_with_check: 기타
