@@ -10,7 +10,6 @@ import javax.persistence.EntityManagerFactory;
 public class RebookApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(RebookApplication.class, args);
-		//test
-
+		//testdfd
 	}
 }
