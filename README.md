@@ -26,7 +26,7 @@
 - <b>spring-boot 2.6.3</b><br>
 - <b>mysql 8.0.23</b><br>
 
-## :memo: 개발 일지(최종 업데이트 : 2022년 6월 1일)
+## :memo: 개발 일지(최종 업데이트 : 2022년 6월 8일)
 :page_with_curl:[[Feb 7, 2022] member domain create](https://github.com/LeeYongjun1030/rebook/commit/0ab21186312a220322ba584441f30b8acdd35a79)<br>
 :page_with_curl:[[Feb 8, 2022] domain create](https://github.com/LeeYongjun1030/rebook/commit/3b506422c83b1469ba60eaa3c09ca4a91185113b)<br>
 :page_with_curl:[[Feb 9, 2022] login create](https://github.com/LeeYongjun1030/rebook/commit/331f2c404716a05b9340bfde31ef8bdc320962f2)<br>
@@ -47,6 +47,7 @@
 :page_with_curl:[[May 29, 2022] member service update](https://github.com/LeeYongjun1030/rebook/commit/225692368beeef20dacb31f34267bb875b1cee2f)<br>
 :page_with_curl:[[May 30, 2022] book, review repository update](https://github.com/LeeYongjun1030/rebook/commit/96169d01b892bb2310a324760424139f71bfefa0)<br>
 :page_with_curl:[[JUN 1, 2022] request url update](https://github.com/LeeYongjun1030/rebook/commit/53492187895af06c8703b465d365eb6e96ba4754)<br>
+:page_with_curl:[[JUN 8, 2022] batchsize update](https://github.com/LeeYongjun1030/rebook/commit/1007b460321583d934a8dc065555fcda56203f06)<br>
 
 
 ## :pushpin: 차례  
@@ -149,10 +150,25 @@ order 클래스 안에 orderBook 리스트 객체를 담도록 한다.<br>
 
 
 ### :ballot_box_with_check: 테스트 코드 작성
-:heavy_check_mark: 작성한 서비스의 기능을 테스트하는 코드를 작성한다.<br>
-:heavy_check_mark: 필요 시 beforeEach, afterEach를 활용하여 데이터베이스를 초기화 시켜줘야 한다.<br>
+<테스트 원칙><br>
 :heavy_check_mark: 모든 테스트는 독립적으로 작동되도록 테스트한다.<br>
+:heavy_check_mark: 모든 테스트는 반복 실행 가능해야 한다.<br>
 
+<레포지토리 계층 테스트><br>
+:heavy_check_mark: <del>beforeEach, afterEach를 활용하여 데이터베이스를 초기화 시켜줘야 한다.</del> => @Transactional 사용하자. <br>
+테스트에서 @Transactional을 사용하게 되면 테스트 시작 전 트랜잭션을 시작해주고 테스트 종료 후 데이터를 자동으로 롤백해준다.<br>
+:heavy_check_mark: 레포지토리 테스트의 경우 임베디드 데이터베이스를 사용하는 것이 편하다. <br>
+(스프링부트의 경우, 테스트 하위의 application.properties에 별도의 db 설정 정보를 입력하지 않으면 <br>
+자동으로 임베디드 데이터베이스를 사용하도록 데이터소스를 자동 등록해준다.)<br>
+이때 테이블 생성 코드가 필요한데, 테스트 폴더 하위의 resources 폴더 밑에 schema.sql이란 이름의 파일을 생성해주고<br>
+이곳에 DDL을 작성해주면 임베디드 데이터베이스 생성 시 테이블이 자동으로 생성된다.(테스트 후엔 메모리에서 사라짐)<br>
+
+<서비스 계층 테스트><br>
+:heavy_check_mark: 서비스 계층만을 테스트하기 위해 하위 계층인 레포지토리는 모킹해서 테스트해야 한다.<br>
+
+<컨트롤러 계층 테스트><br>
+:heavy_check_mark: 컨트롤러 계층만을 테스트하기 위해 하위 계층은 모킹해서 테스트해야 한다.<br>
+:heavy_check_mark: MockMvc를 사용하여 가상의 요청을 만들어내서 테스트한다.<br>
 
 <details markdown="1">
 <summary> :point_right: 테스트 레퍼런스 </summary>
@@ -160,7 +176,6 @@ order 클래스 안에 orderBook 리스트 객체를 담도록 한다.<br>
 컨트롤러 테스트 : https://esoongan.tistory.com/101<br>
 모킹(Mocking): https://galid1.tistory.com/772<br>
 </details>
-
 
 
 ### :ballot_box_with_check: 기타
